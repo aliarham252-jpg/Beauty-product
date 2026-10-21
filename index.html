@@ -23,6 +23,34 @@
         header { background: #e91e63; color: white; padding: 20px; text-align: center; }
         .contact-info { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; font-size: 14px; }
         .contact-info a { color: #e91e63; text-decoration: none; font-weight: bold; margin: 0 10px; }
+        
+        /* Customer Service Section */
+        .customer-service-bar { background: #fff3f8; border: 1px solid #f8bbd0; padding: 12px; margin: 15px auto; max-width: 800px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+        .customer-service-bar h4 { margin: 0 0 8px 0; color: #d81b60; font-size: 15px; }
+        .cs-btn { display: inline-block; background: #25D366; color: white; text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; margin: 3px 5px; }
+        .cs-btn.call-btn { background: #1e88e5; }
+
+        /* Amazon / Meesho Style Order Tracking Card */
+        .tracking-card { background: #ffffff; border: 1px solid #e0e0e0; padding: 20px; margin: 15px auto; max-width: 800px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); display: none; }
+        .tracking-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        .tracking-header h3 { margin: 0; color: #2e7d32; font-size: 18px; }
+        .delivery-date { font-weight: bold; color: #e91e63; font-size: 15px; }
+
+        .timeline-container { display: flex; justify-content: space-between; align-items: center; position: relative; margin: 25px 10px; }
+        .timeline-container::before { content: ''; position: absolute; top: 15px; left: 10%; right: 10%; height: 4px; background: #ddd; z-index: 1; }
+        .timeline-progress { position: absolute; top: 15px; left: 10%; width: 40%; height: 4px; background: #4caf50; z-index: 1; }
+        .step { position: relative; z-index: 2; text-align: center; background: #fff; padding: 0 5px; }
+        .step-icon { width: 32px; height: 32px; border-radius: 50%; background: #ccc; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px auto; font-size: 14px; font-weight: bold; }
+        .step.completed .step-icon { background: #4caf50; }
+        .step.active .step-icon { background: #2196f3; box-shadow: 0 0 0 4px rgba(33,150,243,0.2); }
+        .step-label { font-size: 12px; color: #555; font-weight: bold; }
+
+        /* Rating & Review Section inside Tracking */
+        .rating-box { background: #fdfdfd; border-top: 1px dashed #ddd; padding-top: 15px; margin-top: 15px; text-align: center; }
+        .star-rating { font-size: 24px; color: #ffca28; cursor: pointer; margin-bottom: 8px; }
+        .review-input { width: 90%; max-width: 450px; padding: 8px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 8px; }
+        .rate-btn { background: #ff9800; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13px; }
+
         .search-container { text-align: center; padding: 15px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .search-container input { width: 80%; max-width: 400px; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
         .category-filter { text-align: center; padding: 10px; background: #fff; border-top: 1px solid #eee; }
@@ -38,12 +66,14 @@
 
         /* Order Form Modal */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
-        .modal-content { background-color: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; }
+        .modal-content { background-color: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
         .close-btn { position: absolute; right: 15px; top: 10px; font-size: 20px; font-weight: bold; cursor: pointer; color: #888; }
         .modal-content h3 { margin-top: 0; color: #333; text-align: center; }
         .form-group { margin-bottom: 12px; text-align: left; }
         .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 4px; color: #555; }
-        .form-group input, .form-group textarea { width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .payment-options { background: #f4f4f4; padding: 10px; border-radius: 4px; margin-bottom: 12px; font-size: 13px; }
+        .payment-options label { display: block; margin-bottom: 8px; cursor: pointer; font-weight: bold; color: #333; }
         .submit-btn { background: #25D366; color: white; border: none; width: 100%; padding: 10px; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; }
 
         footer { background: #333; color: white; text-align: center; padding: 20px; margin-top: 30px; }
@@ -81,12 +111,72 @@
     <div id="mainContent">
         <header>
             <h1>Online Shopping Store</h1>
-            <p>Discover Beauty Products & Electronic Items</p>
+            <p>Discover Beauty Products & Electronic Items Under ₹1,000</p>
         </header>
 
         <div class="contact-info">
             Call Us: <a href="tel:8859058786">8859058786</a> | 
             Email: <a href="mailto:aliarham252@gmail.com">aliarham252@gmail.com</a>
+        </div>
+
+        <!-- Customer Service Banner -->
+        <div class="customer-service-bar">
+            <h4>💬 Need Assistance? Contact Customer Service</h4>
+            <a href="https://wa.me/918859058786?text=Hi,%20I%20need%20help%20with%20my%20order" class="cs-btn" target="_blank">Chat on WhatsApp</a>
+            <a href="tel:8859058786" class="cs-btn call-btn">Call Helpline</a>
+        </div>
+
+        <!-- Amazon / Meesho Style Live Order Tracking Card -->
+        <div class="tracking-card" id="trackingCard">
+            <div class="tracking-header">
+                <div>
+                    <h3>✅ Order Confirmed!</h3>
+                    <span style="font-size: 12px; color: #777;">Order ID: <strong id="trackOrderId">#ORD10248</strong></span>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 12px; color: #555;">Estimated Delivery</span><br>
+                    <span class="delivery-date" id="deliveryDateText">In 4 Days</span>
+                </div>
+            </div>
+
+            <p style="margin: 5px 0 15px 0; font-size: 14px; color: #333;">
+                Product: <strong id="trackProductName">-</strong> | Quantity: <strong id="trackProductQty">1</strong>
+            </p>
+
+            <!-- Visual Progress Timeline Bar -->
+            <div class="timeline-container">
+                <div class="timeline-progress"></div>
+                <div class="step completed">
+                    <div class="step-icon">✓</div>
+                    <div class="step-label">Ordered</div>
+                </div>
+                <div class="step active">
+                    <div class="step-icon">📦</div>
+                    <div class="step-label">Shipped</div>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🚚</div>
+                    <div class="step-label">Out for Delivery</div>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🏠</div>
+                    <div class="step-label">Delivered</div>
+                </div>
+            </div>
+
+            <!-- Product Rating Box Inside Tracking -->
+            <div class="rating-box">
+                <h5 style="margin: 0 0 5px 0; color: #444; font-size: 14px;">Once Received, Rate Your Product</h5>
+                <div class="star-rating" id="starContainer">
+                    <span onclick="setStars(1)">★</span>
+                    <span onclick="setStars(2)">★</span>
+                    <span onclick="setStars(3)">★</span>
+                    <span onclick="setStars(4)">★</span>
+                    <span onclick="setStars(5)">★</span>
+                </div>
+                <textarea id="reviewText" class="review-input" placeholder="Write your review..." rows="2"></textarea><br>
+                <button class="rate-btn" onclick="submitRating()">Submit Review</button>
+            </div>
         </div>
 
         <div class="search-container">
@@ -99,7 +189,7 @@
             <button class="category-btn" onclick="setCategory('electronics', this)">Electronics (50)</button>
         </div>
 
-        <!-- Product Grid where all 100 products will be loaded via JavaScript -->
+        <!-- Product Grid -->
         <div class="product-grid" id="productGrid"></div>
 
         <!-- Order Form Modal -->
@@ -136,15 +226,41 @@
                         <input type="text" id="custPincode" placeholder="Enter 6-digit Pincode" required>
                     </div>
 
-                    <button type="submit" class="submit-btn">Confirm & Place Order</button>
+                    <!-- Quantity Selection Dropdown -->
+                    <div class="form-group">
+                        <label for="custQty">Select Quantity *</label>
+                        <select id="custQty" required>
+                            <option value="1" selected>1 Item</option>
+                            <option value="2">2 Items</option>
+                            <option value="3">3 Items</option>
+                            <option value="4">4 Items</option>
+                            <option value="5">5 Items</option>
+                        </select>
+                    </div>
+
+                    <!-- Payment Method Section -->
+                    <div class="form-group">
+                        <label>Select Payment Method *</label>
+                        <div class="payment-options">
+                            <label>
+                                <input type="radio" name="payMethod" value="UPI Online (Pay ₹13 Advance, Rest COD)" checked> 
+                                🌐 Online UPI Payment (Pay ₹13 Advance, Rest COD)
+                            </label>
+                            <label style="margin-bottom: 0;">
+                                <input type="radio" name="payMethod" value="Full Cash on Delivery (COD)"> 
+                                💵 Full Cash on Delivery (COD)
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Proceed to Order & WhatsApp</button>
                 </form>
             </div>
         </div>
 
         <footer>
-            <h3>Contact Information</h3>
-            <p>Mobile: 8859058786</p>
-            <p>Email: aliarham252@gmail.com</p>
+            <h3>Customer Support</h3>
+            <p>Helpline: 8859058786 | Email: aliarham252@gmail.com</p>
             <p style="font-size: 12px; color: #aaa; margin-top: 10px;">&copy; 2026 Online Shopping Store. All Rights Reserved.</p>
         </footer>
     </div>
@@ -152,8 +268,8 @@
     <script>
         let userDatabase = { email: "", password: "", phone: "", name: "" };
         let currentCategory = 'all';
+        let selectedStarCount = 5;
 
-        // Automatically load all 100 products when page loads
         window.onload = function() {
             loadProducts();
         };
@@ -162,28 +278,42 @@
             let grid = document.getElementById('productGrid');
             let htmlContent = '';
 
-            // Generate 50 Beauty Products
+            let beautyImages = [
+                "1522337360788-8b13dee7a37e", "1512496015851-a90fb38ba796", "1571781926291-c477ebfd024b", 
+                "1535585209827-a15fcdbc4c2d", "1556228720-195a672e8a03", "1526947425960-945c6e72858f",
+                "1598440947619-2c35fc9aa908", "1608248597359-f5383a54b395", "1516975080664-ed2fc6a32937"
+            ];
+
+            let electronicImages = [
+                "1505740420928-5e560c06d30e", "1526738549149-8e07eca6c147", "1546868871-7041f2a55e12",
+                "1585790050230-5dd28404ccb9", "1511707171634-5f897ff02aa9", "1550745165-9bc0b252726f",
+                "1523275335684-37898b6baf30", "1593305841991-05c297ba4575", "1588872657578-7efd1f1555ed"
+            ];
+
+            // 50 Beauty Products
             for (let i = 1; i <= 50; i++) {
-                let price = (i * 50) + 199;
+                let price = 199 + ((i - 1) * 10);
+                let imgId = beautyImages[(i - 1) % beautyImages.length];
                 htmlContent += `
                     <div class="product-card" data-category="beauty" data-name="Beauty Item ${i}">
-                        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300" alt="Beauty Item ${i}">
+                        <img src="https://images.unsplash.com/photo-${imgId}?w=300" alt="Beauty Item ${i}">
                         <h4>Beauty Item ${i}</h4>
                         <p>₹${price}</p>
-                        <button class="buy-btn" onclick="openOrderModal('Beauty Item ${i}', '₹${price}')">Buy Now</button>
+                        <button class="buy-btn" onclick="openOrderModal('Beauty Item ${i}', ${price})">Buy Now</button>
                     </div>
                 `;
             }
 
-            // Generate 50 Electronic Items
+            // 50 Electronic Items
             for (let i = 1; i <= 50; i++) {
-                let price = (i * 100) + 499;
+                let price = 299 + ((i - 1) * 14);
+                let imgId = electronicImages[(i - 1) % electronicImages.length];
                 htmlContent += `
                     <div class="product-card" data-category="electronics" data-name="Electronic Item ${i}">
-                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300" alt="Electronic Item ${i}">
+                        <img src="https://images.unsplash.com/photo-${imgId}?w=300" alt="Electronic Item ${i}">
                         <h4>Electronic Item ${i}</h4>
                         <p>₹${price}</p>
-                        <button class="buy-btn" onclick="openOrderModal('Electronic Item ${i}', '₹${price}')">Buy Now</button>
+                        <button class="buy-btn" onclick="openOrderModal('Electronic Item ${i}', ${price})">Buy Now</button>
                     </div>
                 `;
             }
@@ -206,104 +336,4 @@
         }
 
         function handleSignup() {
-            let name = document.getElementById('signupName').value;
-            let phone = document.getElementById('signupPhone').value;
-            let email = document.getElementById('signupEmail').value;
-            let password = document.getElementById('signupPassword').value;
-
-            if (name === "" || phone.length < 10 || email === "" || password === "") {
-                alert("Please fill all details correctly.");
-                return;
-            }
-
-            userDatabase = { name, phone, email, password };
-            alert("Signup Successful! You can now access the store.");
-            grantAccess(name, phone, email);
-        }
-
-        function handleLogin() {
-            let email = document.getElementById('loginEmail').value;
-            let password = document.getElementById('loginPassword').value;
-
-            if (email === "" || password === "") {
-                alert("Please enter email and password.");
-                return;
-            }
-
-            grantAccess(userDatabase.name || "Customer", userDatabase.phone || "8859058786", email);
-        }
-
-        function grantAccess(name, phone, email) {
-            document.getElementById('authOverlay').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
-
-            document.getElementById('custName').value = name;
-            document.getElementById('custPhone').value = phone;
-            document.getElementById('custEmail').value = email;
-        }
-
-        function setCategory(cat, btn) {
-            currentCategory = cat;
-            let btns = document.getElementsByClassName('category-btn');
-            for (let b of btns) b.classList.remove('active');
-            btn.classList.add('active');
-            filterProducts();
-        }
-
-        function filterProducts() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('product-card');
-
-            for (let i = 0; i < cards.length; i++) {
-                let name = cards[i].getAttribute('data-name').toLowerCase();
-                let category = cards[i].getAttribute('data-category');
-                
-                let matchesCategory = (currentCategory === 'all' || category === currentCategory);
-                let matchesSearch = name.includes(input);
-
-                if (matchesCategory && matchesSearch) {
-                    cards[i].style.display = "";
-                } else {
-                    cards[i].style.display = "none";
-                }
-            }
-        }
-
-        function openOrderModal(productName, productPrice) {
-            document.getElementById('selectedProductName').value = productName;
-            document.getElementById('selectedProductPrice').value = productPrice;
-            document.getElementById('orderModal').style.display = 'flex';
-        }
-
-        function closeOrderModal() {
-            document.getElementById('orderModal').style.display = 'none';
-        }
-
-        function sendOrder(event) {
-            event.preventDefault();
             
-            let pName = document.getElementById('selectedProductName').value;
-            let pPrice = document.getElementById('selectedProductPrice').value;
-            let name = document.getElementById('custName').value;
-            let phone = document.getElementById('custPhone').value;
-            let email = document.getElementById('custEmail').value;
-            let address = document.getElementById('custAddress').value;
-            let pincode = document.getElementById('custPincode').value;
-
-            let message = `*NEW ORDER DETAILS*%0A%0A` +
-                          `*Product:* ${pName}%0A` +
-                          `*Price:* ${pPrice}%0A%0A` +
-                          `*Customer Name:* ${name}%0A` +
-                          `*Mobile:* ${phone}%0A` +
-                          `*Email:* ${email}%0A` +
-                          `*Address:* ${address}%0A` +
-                          `*Pincode:* ${pincode}`;
-
-            let whatsappUrl = `https://wa.me/918859058786?text=${message}`;
-            window.open(whatsappUrl, '_blank');
-            closeOrderModal();
-        }
-    </script>
-
-</body>
-</html>
