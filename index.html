@@ -1,403 +1,290 @@
 <!DOCTYPE html>
-<html lang="en" class="notranslate">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google" content="notranslate">
-    <title>Mega Beauty & Electronics Superstore</title>
+    <title>Beauty Care Store | ब्यूटी प्रोडक्ट्स</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
             background-color: #f8f9fa;
             color: #333;
         }
-        header {
-            background-color: #e91e63;
+
+        /* Top Contact Header */
+        .top-bar {
+            background-color: #2c3e50;
             color: white;
-            text-align: center;
-            padding: 25px 10px;
-        }
-        header h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.2em;
-        }
-        header p {
-            margin: 0;
-            font-size: 1.1em;
-        }
-        .container {
-            width: 92%;
-            max-width: 1400px;
-            margin: 30px auto;
-        }
-        .category-title {
-            text-align: center;
-            color: #ad1457;
-            margin: 40px 0 20px;
-            font-size: 1.8em;
-            border-bottom: 2px solid #e91e63;
-            padding-bottom: 10px;
-        }
-        .product-grid {
+            padding: 10px 20px;
             display: flex;
-            gap: 20px;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
             flex-wrap: wrap;
+            gap: 10px;
         }
+
+        .top-bar a {
+            color: #2ecc71;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Main Navigation */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e84393;
+            text-decoration: none;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #2d3436;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
         .product-card {
-            background-color: white;
+            background: white;
             border-radius: 10px;
             padding: 15px;
-            width: 250px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             text-align: center;
-            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #eee;
         }
+
         .product-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
+
         .product-card img {
             width: 100%;
-            height: 170px;
+            height: 150px;
             object-fit: cover;
             border-radius: 8px;
-            background-color: #f0f0f0;
+            margin-bottom: 12px;
         }
-        .product-card h3 {
-            color: #e91e63;
-            margin: 12px 0 6px;
-            font-size: 1.1em;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .product-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3436;
         }
-        .product-card p {
-            margin: 5px 0;
-            font-size: 0.85em;
-            color: #666;
-            height: 32px;
+
+        .product-price {
+            font-size: 17px;
+            color: #e84393;
+            font-weight: bold;
+            margin-bottom: 12px;
         }
-        .product-card .price {
-            font-size: 1.1em;
-            color: #111;
-            margin: 8px 0;
-        }
-        .order-form {
-            margin-top: 10px;
-            text-align: left;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-        }
-        .order-form input {
-            width: 100%;
-            padding: 8px;
-            margin: 4px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 0.85em;
-        }
-        .btn {
-            background-color: #e91e63;
+
+        .buy-btn {
+            background-color: #25d366;
             color: white;
             border: none;
-            padding: 10px;
-            width: 100%;
+            padding: 10px 12px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            margin-top: 6px;
-            font-size: 0.95em;
+            width: 100%;
+            transition: background 0.2s;
+            font-size: 14px;
         }
-        .btn:hover {
-            background-color: #c2185b;
+
+        .buy-btn:hover {
+            background-color: #1ebc57;
         }
+
+        /* Contact & Footer Section */
         footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #f8bbd0;
+            background-color: #2d3436;
+            color: white;
+            padding: 40px 20px 20px;
             margin-top: 50px;
-            font-size: 0.95em;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #e84393;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #b2bec3;
+            font-size: 14px;
+            line-height: 1.8;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #636e72;
+            color: #b2bec3;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
 
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div>
+            📞 कॉल / व्हाट्सएप: <a href="tel:8859058786">+91 8859058786</a>
+        </div>
+        <div>
+            📧 ईमेल: <a href="mailto:aliarham252@gmail.com">aliarham252@gmail.com</a>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
     <header>
-        <h1>Welcome to Mega Beauty & Electronics Store</h1>
-        <p>Your one-stop shop for Beauty Cosmetics & Electronic Gadgets</p>
+        <div class="nav-container">
+            <a href="#" class="logo">Beauty Care Store</a>
+            <p style="font-size: 14px; color: #666;">100% ओरिजिनल ब्यूटी प्रोडक्ट्स</p>
+        </div>
     </header>
 
+    <!-- Main Store Body -->
     <div class="container">
-        
-        <!-- ================= BEAUTY PRODUCTS SECTION (50 ITEMS) ================= -->
-        <h2 class="category-title">💄 Beauty & Skincare Essentials (50 Items)</h2>
-        <div class="product-grid">
+        <h2 class="section-title">हमारे ब्यूटी प्रोडक्ट्स (50 Items)</h2>
+        <div class="products-grid" id="products-list">
+            <!-- 50 Products dynamically rendered via JavaScript below -->
+        </div>
+    </div>
 
-            <!-- Beauty Item 1 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/1027/300/200" alt="Face Cream">
-                <h3>Glowing Face Cream</h3>
-                <p>Nourishing formula for radiant skin.</p>
-                <p class="price"><strong>Price: ₹499</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Glowing Face Cream - ₹499">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
+    <!-- Contact Details & Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Beauty Care Store</h4>
+                <p>आपके सौंदर्य और त्वचा की देखभाल के लिए सबसे बेहतरीन प्रोडक्ट्स। सीधा व्हाट्सएप पर ऑर्डर करें।</p>
             </div>
-
-            <!-- Beauty Item 2 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/1062/300/200" alt="Matte Lipstick">
-                <h3>Matte Lipstick</h3>
-                <p>Long-lasting vibrant red color.</p>
-                <p class="price"><strong>Price: ₹299</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Matte Lipstick - ₹299">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
+            <div class="footer-section">
+                <h4>संपर्क करें (Contact Details)</h4>
+                <ul class="contact-info">
+                    <li>📞 <strong>फ़ोन:</strong> <a href="tel:8859058786">+91 8859058786</a></li>
+                    <li>💬 <strong>व्हाट्सएप:</strong> <a href="https://wa.me/918859058786" target="_blank">+91 8859058786</a></li>
+                    <li>📧 <strong>ईमेल:</strong> <a href="mailto:aliarham252@gmail.com">aliarham252@gmail.com</a></li>
+                </ul>
             </div>
+        </div>
+        <div class="copyright">
+            &copy; Beauty Care Store. All Rights Reserved.
+        </div>
+    </footer>
 
-            <!-- Beauty Item 3 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/331/300/200" alt="Hair Serum">
-                <h3>Nourishing Hair Serum</h3>
-                <p>Smooth, silky, and frizz-free hair.</p>
-                <p class="price"><strong>Price: ₹399</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Nourishing Hair Serum - ₹399">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
+    <script>
+        // List of fixed images for beauty products
+        const imageUrls = [
+            "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300",
+            "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300",
+            "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=300",
+            "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=300",
+            "https://images.unsplash.com/photo-1617897903246-719242758050?w=300"
+        ];
 
-            <!-- Beauty Item 4 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/1084/300/200" alt="Gentle Face Wash">
-                <h3>Gentle Face Wash</h3>
-                <p>Deep cleansing for clear skin.</p>
-                <p class="price"><strong>Price: ₹249</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Gentle Face Wash - ₹249">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
+        const baseNames = [
+            "Glow Face Cream", "Vitamin C Serum", "Night Skin Care Cream", 
+            "Hydrating Face Wash", "Sunscreen SPF 50", "Aloe Vera Gel", 
+            "Herbal Lip Balm", "Nourishing Body Lotion", "Hair Growth Serum", "Deep Cleansing Scrub"
+        ];
 
-            <!-- Beauty Item 5 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/64/300/200" alt="Sunscreen Lotion">
-                <h3>Sunscreen Lotion SPF 50</h3>
-                <p>High UV protection for all day.</p>
-                <p class="price"><strong>Price: ₹349</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Sunscreen Lotion SPF 50 - ₹349">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
+        // Generating 50 beauty products
+        const products = [];
+        for (let i = 1; i <= 50; i++) {
+            const nameIndex = (i - 1) % baseNames.length;
+            const imgIndex = (i - 1) % imageUrls.length;
+            const price = 199 + ((i * 35) % 800);
 
-            <!-- Beauty Item 6 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/21/300/200" alt="Hydrating Moisturizer">
-                <h3>Hydrating Moisturizer</h3>
-                <p>Intense moisture for soft skin.</p>
-                <p class="price"><strong>Price: ₹449</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Hydrating Moisturizer - ₹449">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
+            products.push({
+                id: i,
+                name: `${baseNames[nameIndex]} #${i}`,
+                price: `₹${price}`,
+                img: imageUrls[imgIndex]
+            });
+        }
 
-            <!-- Beauty Item 7 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/292/300/200" alt="Vitamin C Serum">
-                <h3>Vitamin C Serum</h3>
-                <p>Brightens complexion & glow.</p>
-                <p class="price"><strong>Price: ₹599</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Vitamin C Serum - ₹599">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 8 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/111/300/200" alt="Herbal Shampoo">
-                <h3>Herbal Shampoo</h3>
-                <p>Natural hair fall control formula.</p>
-                <p class="price"><strong>Price: ₹299</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Herbal Shampoo - ₹299">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 9 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/225/300/200" alt="Eye Shadow Palette">
-                <h3>Eye Shadow Palette</h3>
-                <p>12 vibrant sparkling colors.</p>
-                <p class="price"><strong>Price: ₹699</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Eye Shadow Palette - ₹699">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 10 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/306/300/200" alt="Rose Water Toner">
-                <h3>Rose Water Toner</h3>
-                <p>Pure facial refresh mist spray.</p>
-                <p class="price"><strong>Price: ₹199</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Rose Water Toner - ₹199">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 11 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/360/300/200" alt="Nourishing Hair Mask">
-                <h3>Nourishing Hair Mask</h3>
-                <p>Deep conditioning treatment.</p>
-                <p class="price"><strong>Price: ₹499</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Nourishing Hair Mask - ₹499">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 12 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/431/300/200" alt="Night Repair Cream">
-                <h3>Night Repair Cream</h3>
-                <p>Overnight anti-aging action.</p>
-                <p class="price"><strong>Price: ₹549</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Night Repair Cream - ₹549">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 13 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/326/300/200" alt="Charcoal Peel Off Mask">
-                <h3>Charcoal Peel Off Mask</h3>
-                <p>Removes blackheads & deep dirt.</p>
-                <p class="price"><strong>Price: ₹299</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Charcoal Peel Off Mask - ₹299">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 14 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/338/300/200" alt="Aloe Vera Gel">
-                <h3>Pure Aloe Vera Gel</h3>
-                <p>Soothes skin and conditions hair.</p>
-                <p class="price"><strong>Price: ₹199</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Pure Aloe Vera Gel - ₹199">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 15 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/349/300/200" alt="Liquid Foundation">
-                <h3>Liquid Foundation</h3>
-                <p>Full coverage flawless skin finish.</p>
-                <p class="price"><strong>Price: ₹499</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Liquid Foundation - ₹499">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 16 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/352/300/200" alt="Volume Mascara">
-                <h3>Waterproof Mascara</h3>
-                <p>Instant thick lash lengthener.</p>
-                <p class="price"><strong>Price: ₹329</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Waterproof Mascara - ₹329">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 17 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/365/300/200" alt="Smudgeproof Eyeliner">
-                <h3>Smudgeproof Eyeliner</h3>
-                <p>Intense black matte eye pen.</p>
-                <p class="price"><strong>Price: ₹249</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Smudgeproof Eyeliner - ₹249">
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="tel" name="Phone" placeholder="Your Phone Number" required>
-                    <input type="text" name="Address" placeholder="Delivery Address" required>
-                    <button type="submit" class="btn">Place Order</button>
-                </form>
-            </div>
-
-            <!-- Beauty Item 18 -->
-            <div class="product-card">
-                <img src="https://picsum.photos/id/401/300/200" alt="Lip Gloss Set">
-                <h3>Shine Lip Gloss Set</h3>
-                <p>Glossy hydrating lip colors.</p>
-                <p class="price"><strong>Price: ₹399</strong></p>
-                <form class="order-form" action="https://formsubmit.co/Aliarham252@gmail.com" method="POST">
-                    <input type="hidden" name="Product" value="Shine Lip Gloss Set - ₹399">
-                    <input type
+        // Render products into HTML grid
+        const container = document.getElementById('products-list');
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${product.img}" alt="${product.name}">
+                <div class="product-title">${product.name}</div>
+                <div class="product-price">${product.price}</div>
+                <a href="https://wa.me/918859058786?text=नमस्ते,%20मुझे%20${encodeURIComponent(product.name)}%20(${product.price})%20ऑर्डर%20करना%20है।" target="_blank" style="text-decoration:none;">
+                    <button class="buy-btn">💬 व्हाट्सएप पर खरीदें</button>
+                </a>
+            `;
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>
