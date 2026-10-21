@@ -1,290 +1,271 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beauty Care Store | ब्यूटी प्रोडक्ट्स</title>
+    <title>Store - Beauty & Electronics</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
+        
+        /* Login / OTP Modal Overlay */
+        #authOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; }
+        .auth-box { background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 360px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .auth-box h2 { color: #e91e63; margin-top: 0; font-size: 20px; }
+        .auth-box p { font-size: 13px; color: #666; margin-bottom: 20px; }
+        .auth-input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; text-align: center; }
+        .auth-btn { background: #e91e63; color: white; border: none; padding: 10px; width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 15px; }
+        
+        /* Main Website Content (Hidden initially) */
+        #mainContent { display: none; }
 
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-        }
+        header { background: #e91e63; color: white; padding: 20px; text-align: center; }
+        .contact-info { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; font-size: 14px; }
+        .contact-info a { color: #e91e63; text-decoration: none; font-weight: bold; margin: 0 10px; }
+        .search-container { text-align: center; padding: 15px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .search-container input { width: 80%; max-width: 400px; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
+        .category-filter { text-align: center; padding: 10px; background: #fff; border-top: 1px solid #eee; }
+        .category-btn { background: #f0f0f0; border: 1px solid #ccc; padding: 8px 16px; margin: 0 5px; border-radius: 20px; cursor: pointer; font-size: 14px; }
+        .category-btn.active { background: #e91e63; color: white; border-color: #e91e63; }
+        .product-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px; max-width: 1200px; margin: auto; }
+        .product-card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 12px; width: 160px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .product-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 5px; }
+        .product-card h4 { font-size: 14px; margin: 8px 0; color: #333; }
+        .product-card p { color: #e91e63; font-weight: bold; margin: 5px 0; }
+        .product-card button.buy-btn { background: #e91e63; color: white; border: none; padding: 8px 12px; border-radius: 4px; margin-top: 8px; font-size: 13px; cursor: pointer; width: 100%; }
 
-        /* Top Contact Header */
-        .top-bar {
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+        /* Order Form Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+        .modal-content { background-color: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; }
+        .close-btn { position: absolute; right: 15px; top: 10px; font-size: 20px; font-weight: bold; cursor: pointer; color: #888; }
+        .modal-content h3 { margin-top: 0; color: #333; text-align: center; }
+        .form-group { margin-bottom: 12px; text-align: left; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 4px; color: #555; }
+        .form-group input, .form-group textarea { width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .submit-btn { background: #25D366; color: white; border: none; width: 100%; padding: 10px; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; }
 
-        .top-bar a {
-            color: #2ecc71;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* Main Navigation */
-        header {
-            background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #e84393;
-            text-decoration: none;
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 25px;
-            color: #2d3436;
-        }
-
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border: 1px solid #eee;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-
-        .product-title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #2d3436;
-        }
-
-        .product-price {
-            font-size: 17px;
-            color: #e84393;
-            font-weight: bold;
-            margin-bottom: 12px;
-        }
-
-        .buy-btn {
-            background-color: #25d366;
-            color: white;
-            border: none;
-            padding: 10px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            transition: background 0.2s;
-            font-size: 14px;
-        }
-
-        .buy-btn:hover {
-            background-color: #1ebc57;
-        }
-
-        /* Contact & Footer Section */
-        footer {
-            background-color: #2d3436;
-            color: white;
-            padding: 40px 20px 20px;
-            margin-top: 50px;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .footer-section h4 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #e84393;
-        }
-
-        .footer-section p, .footer-section a {
-            color: #b2bec3;
-            font-size: 14px;
-            line-height: 1.8;
-            text-decoration: none;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .contact-info {
-            list-style: none;
-        }
-
-        .contact-info li {
-            margin-bottom: 10px;
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #636e72;
-            color: #b2bec3;
-            font-size: 13px;
-        }
+        footer { background: #333; color: white; text-align: center; padding: 20px; margin-top: 30px; }
     </style>
 </head>
 <body>
 
-    <!-- Top Contact Bar -->
-    <div class="top-bar">
-        <div>
-            📞 कॉल / व्हाट्सएप: <a href="tel:8859058786">+91 8859058786</a>
+    <!-- Step 1: Login & OTP Screen Overlay -->
+    <div id="authOverlay">
+        <div class="auth-box" id="phoneStep">
+            <h2>Customer Login</h2>
+            <p>Please enter your details to browse our store</p>
+            <input type="tel" id="userMobile" class="auth-input" placeholder="Mobile Number" maxlength="10" required>
+            <input type="email" id="userEmail" class="auth-input" placeholder="Email Address" required>
+            <button class="auth-btn" onclick="requestOTP()">Get OTP</button>
         </div>
-        <div>
-            📧 ईमेल: <a href="mailto:aliarham252@gmail.com">aliarham252@gmail.com</a>
+
+        <div class="auth-box" id="otpStep" style="display:none;">
+            <h2>Verify OTP</h2>
+            <p>Enter 4-digit OTP sent to your mobile</p>
+            <input type="text" id="userOTP" class="auth-input" placeholder="Enter 4-Digit OTP" maxlength="4" required>
+            <button class="auth-btn" onclick="verifyOTP()">Verify & Continue</button>
         </div>
     </div>
 
-    <!-- Main Navigation Header -->
-    <header>
-        <div class="nav-container">
-            <a href="#" class="logo">Beauty Care Store</a>
-            <p style="font-size: 14px; color: #666;">100% ओरिजिनल ब्यूटी प्रोडक्ट्स</p>
-        </div>
-    </header>
+    <!-- Step 2: Main Store Website -->
+    <div id="mainContent">
+        <header>
+            <h1>Online Shopping Store</h1>
+            <p>Discover Beauty Products & Electronic Items</p>
+        </header>
 
-    <!-- Main Store Body -->
-    <div class="container">
-        <h2 class="section-title">हमारे ब्यूटी प्रोडक्ट्स (50 Items)</h2>
-        <div class="products-grid" id="products-list">
-            <!-- 50 Products dynamically rendered via JavaScript below -->
+        <div class="contact-info">
+            Call Us: <a href="tel:8859058786">8859058786</a> | 
+            Email: <a href="mailto:aliarham252@gmail.com">aliarham252@gmail.com</a>
         </div>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search beauty or electronic items..." onkeyup="filterProducts()">
+        </div>
+
+        <div class="category-filter">
+            <button class="category-btn active" onclick="setCategory('all', this)">All Items (100)</button>
+            <button class="category-btn" onclick="setCategory('beauty', this)">Beauty (50)</button>
+            <button class="category-btn" onclick="setCategory('electronics', this)">Electronics (50)</button>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <script>
+                let currentCategory = 'all';
+
+                // Generate 50 Beauty Products
+                for (let i = 1; i <= 50; i++) {
+                    document.write(`
+                        <div class="product-card" data-category="beauty" data-name="Beauty Item ${i}">
+                            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300" alt="Beauty Item ${i}">
+                            <h4>Beauty Item ${i}</h4>
+                            <p>₹${(i * 50) + 199}</p>
+                            <button class="buy-btn" onclick="openOrderModal('Beauty Item ${i}', '₹${(i * 50) + 199}')">Buy Now</button>
+                        </div>
+                    `);
+                }
+
+                // Generate 50 Electronic Items
+                for (let i = 1; i <= 50; i++) {
+                    document.write(`
+                        <div class="product-card" data-category="electronics" data-name="Electronic Item ${i}">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300" alt="Electronic Item ${i}">
+                            <h4>Electronic Item ${i}</h4>
+                            <p>₹${(i * 100) + 499}</p>
+                            <button class="buy-btn" onclick="openOrderModal('Electronic Item ${i}', '₹${(i * 100) + 499}')">Buy Now</button>
+                        </div>
+                    `);
+                }
+            </script>
+        </div>
+
+        <!-- Order Form Modal -->
+        <div id="orderModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeOrderModal()">&times;</span>
+                <h3>Customer Delivery Details</h3>
+                <form onsubmit="sendOrder(event)">
+                    <input type="hidden" id="selectedProductName">
+                    <input type="hidden" id="selectedProductPrice">
+
+                    <div class="form-group">
+                        <label for="custName">Full Name *</label>
+                        <input type="text" id="custName" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custPhone">Mobile Number *</label>
+                        <input type="tel" id="custPhone" placeholder="Enter 10-digit mobile number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custEmail">Email Address *</label>
+                        <input type="email" id="custEmail" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custAddress">Full Address *</label>
+                        <textarea id="custAddress" rows="2" placeholder="House/Street/Locality" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custPincode">Pincode *</label>
+                        <input type="text" id="custPincode" placeholder="Enter 6-digit Pincode" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Confirm & Place Order</button>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <h3>Contact Information</h3>
+            <p>Mobile: 8859058786</p>
+            <p>Email: aliarham252@gmail.com</p>
+            <p style="font-size: 12px; color: #aaa; margin-top: 10px;">&copy; 2026 Online Shopping Store. All Rights Reserved.</p>
+        </footer>
     </div>
-
-    <!-- Contact Details & Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h4>Beauty Care Store</h4>
-                <p>आपके सौंदर्य और त्वचा की देखभाल के लिए सबसे बेहतरीन प्रोडक्ट्स। सीधा व्हाट्सएप पर ऑर्डर करें।</p>
-            </div>
-            <div class="footer-section">
-                <h4>संपर्क करें (Contact Details)</h4>
-                <ul class="contact-info">
-                    <li>📞 <strong>फ़ोन:</strong> <a href="tel:8859058786">+91 8859058786</a></li>
-                    <li>💬 <strong>व्हाट्सएप:</strong> <a href="https://wa.me/918859058786" target="_blank">+91 8859058786</a></li>
-                    <li>📧 <strong>ईमेल:</strong> <a href="mailto:aliarham252@gmail.com">aliarham252@gmail.com</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            &copy; Beauty Care Store. All Rights Reserved.
-        </div>
-    </footer>
 
     <script>
-        // List of fixed images for beauty products
-        const imageUrls = [
-            "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300",
-            "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300",
-            "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=300",
-            "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=300",
-            "https://images.unsplash.com/photo-1617897903246-719242758050?w=300"
-        ];
+        let loggedInPhone = "";
+        let loggedInEmail = "";
 
-        const baseNames = [
-            "Glow Face Cream", "Vitamin C Serum", "Night Skin Care Cream", 
-            "Hydrating Face Wash", "Sunscreen SPF 50", "Aloe Vera Gel", 
-            "Herbal Lip Balm", "Nourishing Body Lotion", "Hair Growth Serum", "Deep Cleansing Scrub"
-        ];
+        // Login Flow Functions
+        function requestOTP() {
+            let phone = document.getElementById('userMobile').value;
+            let email = document.getElementById('userEmail').value;
 
-        // Generating 50 beauty products
-        const products = [];
-        for (let i = 1; i <= 50; i++) {
-            const nameIndex = (i - 1) % baseNames.length;
-            const imgIndex = (i - 1) % imageUrls.length;
-            const price = 199 + ((i * 35) % 800);
+            if (phone.length < 10 || email === "") {
+                alert("Please enter a valid 10-digit Mobile Number and Email.");
+                return;
+            }
 
-            products.push({
-                id: i,
-                name: `${baseNames[nameIndex]} #${i}`,
-                price: `₹${price}`,
-                img: imageUrls[imgIndex]
-            });
+            loggedInPhone = phone;
+            loggedInEmail = email;
+
+            document.getElementById('phoneStep').style.display = 'none';
+            document.getElementById('otpStep').style.display = 'block';
         }
 
-        // Render products into HTML grid
-        const container = document.getElementById('products-list');
-        products.forEach(product => {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <img src="${product.img}" alt="${product.name}">
-                <div class="product-title">${product.name}</div>
-                <div class="product-price">${product.price}</div>
-                <a href="https://wa.me/918859058786?text=नमस्ते,%20मुझे%20${encodeURIComponent(product.name)}%20(${product.price})%20ऑर्डर%20करना%20है।" target="_blank" style="text-decoration:none;">
-                    <button class="buy-btn">💬 Buy on WhatsApp </button>
-                </a>
-            `;
-            container.appendChild(card);
-        });
+        function verifyOTP() {
+            let otp = document.getElementById('userOTP').value;
+
+            if (otp.length < 4) {
+                alert("Please enter a 4-digit OTP.");
+                return;
+            }
+
+            // Successfully Verified -> Hide Login & Show Main Store
+            document.getElementById('authOverlay').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+
+            // Auto-fill order form with login details
+            document.getElementById('custPhone').value = loggedInPhone;
+            document.getElementById('custEmail').value = loggedInEmail;
+        }
+
+        // Store Functions
+        function setCategory(cat, btn) {
+            currentCategory = cat;
+            let btns = document.getElementsByClassName('category-btn');
+            for (let b of btns) b.classList.remove('active');
+            btn.classList.add('active');
+            filterProducts();
+        }
+
+        function filterProducts() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('product-card');
+
+            for (let i = 0; i < cards.length; i++) {
+                let name = cards[i].getAttribute('data-name').toLowerCase();
+                let category = cards[i].getAttribute('data-category');
+                
+                let matchesCategory = (currentCategory === 'all' || category === currentCategory);
+                let matchesSearch = name.includes(input);
+
+                if (matchesCategory && matchesSearch) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        function openOrderModal(productName, productPrice) {
+            document.getElementById('selectedProductName').value = productName;
+            document.getElementById('selectedProductPrice').value = productPrice;
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function sendOrder(event) {
+            event.preventDefault();
+            
+            let pName = document.getElementById('selectedProductName').value;
+            let pPrice = document.getElementById('selectedProductPrice').value;
+            let name = document.getElementById('custName').value;
+            let phone = document.getElementById('custPhone').value;
+            let email = document.getElementById('custEmail').value;
+            let address = document.getElementById('custAddress').value;
+            let pincode = document.getElementById('custPincode').value;
+
+            let message = `*NEW ORDER DETAILS*%0A%0A` +
+                          `*Product:* ${pName}%0A` +
+                          `*Price:* ${pPrice}%0A%0A` +
+                          `*Customer Name:* ${name}%0A` +
+                          `*Mobile:* ${phone}%0A` +
+                          `*Email:* ${email}%0A` +
+                          `*Address:* ${address}%0A` +
+                          `*Pincode:* ${pincode}`;
+
+            let whatsappUrl = `https://wa.me/918859058786?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+            closeOrderModal();
+        }
     </script>
+
 </body>
 </html>
