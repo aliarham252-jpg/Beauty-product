@@ -7,12 +7,14 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
         
-        /* Login / OTP Modal Overlay */
+        /* Login / Signup Overlay Modal */
         #authOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: flex; justify-content: center; align-items: center; }
         .auth-box { background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 360px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .auth-box h2 { color: #e91e63; margin-top: 0; font-size: 20px; }
-        .auth-box p { font-size: 13px; color: #666; margin-bottom: 20px; }
-        .auth-input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; text-align: center; }
+        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #eee; }
+        .tab-btn { flex: 1; padding: 10px; background: none; border: none; font-size: 16px; font-weight: bold; cursor: pointer; color: #888; }
+        .tab-btn.active { color: #e91e63; border-bottom: 2px solid #e91e63; margin-bottom: -2px; }
+        
+        .auth-input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
         .auth-btn { background: #e91e63; color: white; border: none; padding: 10px; width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 15px; }
         
         /* Main Website Content (Hidden initially) */
@@ -26,6 +28,7 @@
         .category-filter { text-align: center; padding: 10px; background: #fff; border-top: 1px solid #eee; }
         .category-btn { background: #f0f0f0; border: 1px solid #ccc; padding: 8px 16px; margin: 0 5px; border-radius: 20px; cursor: pointer; font-size: 14px; }
         .category-btn.active { background: #e91e63; color: white; border-color: #e91e63; }
+        
         .product-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px; max-width: 1200px; margin: auto; }
         .product-card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 12px; width: 160px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .product-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 5px; }
@@ -48,25 +51,33 @@
 </head>
 <body>
 
-    <!-- Step 1: Login & OTP Screen Overlay -->
+    <!-- Authentication Modal (Login / Signup with Password) -->
     <div id="authOverlay">
-        <div class="auth-box" id="phoneStep">
-            <h2>Customer Login</h2>
-            <p>Please enter your details to browse our store</p>
-            <input type="tel" id="userMobile" class="auth-input" placeholder="Mobile Number" maxlength="10" required>
-            <input type="email" id="userEmail" class="auth-input" placeholder="Email Address" required>
-            <button class="auth-btn" onclick="requestOTP()">Get OTP</button>
-        </div>
+        <div class="auth-box">
+            <div class="auth-tabs">
+                <button class="tab-btn active" id="loginTabBtn" onclick="switchTab('login')">Login</button>
+                <button class="tab-btn" id="signupTabBtn" onclick="switchTab('signup')">Sign Up</button>
+            </div>
 
-        <div class="auth-box" id="otpStep" style="display:none;">
-            <h2>Verify OTP</h2>
-            <p>Enter 4-digit OTP sent to your mobile</p>
-            <input type="text" id="userOTP" class="auth-input" placeholder="Enter 4-Digit OTP" maxlength="4" required>
-            <button class="auth-btn" onclick="verifyOTP()">Verify & Continue</button>
+            <!-- Login Form -->
+            <div id="loginForm">
+                <input type="email" id="loginEmail" class="auth-input" placeholder="Email Address" required>
+                <input type="password" id="loginPassword" class="auth-input" placeholder="Password" required>
+                <button class="auth-btn" onclick="handleLogin()">Login to Store</button>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signupForm" style="display:none;">
+                <input type="text" id="signupName" class="auth-input" placeholder="Full Name" required>
+                <input type="tel" id="signupPhone" class="auth-input" placeholder="Mobile Number" maxlength="10" required>
+                <input type="email" id="signupEmail" class="auth-input" placeholder="Email Address" required>
+                <input type="password" id="signupPassword" class="auth-input" placeholder="Create Password" required>
+                <button class="auth-btn" onclick="handleSignup()">Register & Continue</button>
+            </div>
         </div>
     </div>
 
-    <!-- Step 2: Main Store Website -->
+    <!-- Main Store Website -->
     <div id="mainContent">
         <header>
             <h1>Online Shopping Store</h1>
@@ -88,35 +99,8 @@
             <button class="category-btn" onclick="setCategory('electronics', this)">Electronics (50)</button>
         </div>
 
-        <div class="product-grid" id="productGrid">
-            <script>
-                let currentCategory = 'all';
-
-                // Generate 50 Beauty Products
-                for (let i = 1; i <= 50; i++) {
-                    document.write(`
-                        <div class="product-card" data-category="beauty" data-name="Beauty Item ${i}">
-                            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300" alt="Beauty Item ${i}">
-                            <h4>Beauty Item ${i}</h4>
-                            <p>₹${(i * 50) + 199}</p>
-                            <button class="buy-btn" onclick="openOrderModal('Beauty Item ${i}', '₹${(i * 50) + 199}')">Buy Now</button>
-                        </div>
-                    `);
-                }
-
-                // Generate 50 Electronic Items
-                for (let i = 1; i <= 50; i++) {
-                    document.write(`
-                        <div class="product-card" data-category="electronics" data-name="Electronic Item ${i}">
-                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300" alt="Electronic Item ${i}">
-                            <h4>Electronic Item ${i}</h4>
-                            <p>₹${(i * 100) + 499}</p>
-                            <button class="buy-btn" onclick="openOrderModal('Electronic Item ${i}', '₹${(i * 100) + 499}')">Buy Now</button>
-                        </div>
-                    `);
-                }
-            </script>
-        </div>
+        <!-- Product Grid where all 100 products will be loaded via JavaScript -->
+        <div class="product-grid" id="productGrid"></div>
 
         <!-- Order Form Modal -->
         <div id="orderModal" class="modal">
@@ -166,44 +150,98 @@
     </div>
 
     <script>
-        let loggedInPhone = "";
-        let loggedInEmail = "";
+        let userDatabase = { email: "", password: "", phone: "", name: "" };
+        let currentCategory = 'all';
 
-        // Login Flow Functions
-        function requestOTP() {
-            let phone = document.getElementById('userMobile').value;
-            let email = document.getElementById('userEmail').value;
+        // Automatically load all 100 products when page loads
+        window.onload = function() {
+            loadProducts();
+        };
 
-            if (phone.length < 10 || email === "") {
-                alert("Please enter a valid 10-digit Mobile Number and Email.");
-                return;
+        function loadProducts() {
+            let grid = document.getElementById('productGrid');
+            let htmlContent = '';
+
+            // Generate 50 Beauty Products
+            for (let i = 1; i <= 50; i++) {
+                let price = (i * 50) + 199;
+                htmlContent += `
+                    <div class="product-card" data-category="beauty" data-name="Beauty Item ${i}">
+                        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300" alt="Beauty Item ${i}">
+                        <h4>Beauty Item ${i}</h4>
+                        <p>₹${price}</p>
+                        <button class="buy-btn" onclick="openOrderModal('Beauty Item ${i}', '₹${price}')">Buy Now</button>
+                    </div>
+                `;
             }
 
-            loggedInPhone = phone;
-            loggedInEmail = email;
+            // Generate 50 Electronic Items
+            for (let i = 1; i <= 50; i++) {
+                let price = (i * 100) + 499;
+                htmlContent += `
+                    <div class="product-card" data-category="electronics" data-name="Electronic Item ${i}">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300" alt="Electronic Item ${i}">
+                        <h4>Electronic Item ${i}</h4>
+                        <p>₹${price}</p>
+                        <button class="buy-btn" onclick="openOrderModal('Electronic Item ${i}', '₹${price}')">Buy Now</button>
+                    </div>
+                `;
+            }
 
-            document.getElementById('phoneStep').style.display = 'none';
-            document.getElementById('otpStep').style.display = 'block';
+            grid.innerHTML = htmlContent;
         }
 
-        function verifyOTP() {
-            let otp = document.getElementById('userOTP').value;
+        function switchTab(tab) {
+            if (tab === 'login') {
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('signupForm').style.display = 'none';
+                document.getElementById('loginTabBtn').classList.add('active');
+                document.getElementById('signupTabBtn').classList.remove('active');
+            } else {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('signupForm').style.display = 'block';
+                document.getElementById('signupTabBtn').classList.add('active');
+                document.getElementById('loginTabBtn').classList.remove('active');
+            }
+        }
 
-            if (otp.length < 4) {
-                alert("Please enter a 4-digit OTP.");
+        function handleSignup() {
+            let name = document.getElementById('signupName').value;
+            let phone = document.getElementById('signupPhone').value;
+            let email = document.getElementById('signupEmail').value;
+            let password = document.getElementById('signupPassword').value;
+
+            if (name === "" || phone.length < 10 || email === "" || password === "") {
+                alert("Please fill all details correctly.");
                 return;
             }
 
-            // Successfully Verified -> Hide Login & Show Main Store
+            userDatabase = { name, phone, email, password };
+            alert("Signup Successful! You can now access the store.");
+            grantAccess(name, phone, email);
+        }
+
+        function handleLogin() {
+            let email = document.getElementById('loginEmail').value;
+            let password = document.getElementById('loginPassword').value;
+
+            if (email === "" || password === "") {
+                alert("Please enter email and password.");
+                return;
+            }
+
+            grantAccess(userDatabase.name || "Customer", userDatabase.phone || "8859058786", email);
+        }
+
+        function grantAccess(name, phone, email) {
             document.getElementById('authOverlay').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
 
-            // Auto-fill order form with login details
-            document.getElementById('custPhone').value = loggedInPhone;
-            document.getElementById('custEmail').value = loggedInEmail;
+            document.getElementById('custName').value = name;
+            document.getElementById('custPhone').value = phone;
+            document.getElementById('custEmail').value = email;
         }
 
-        // Store Functions
         function setCategory(cat, btn) {
             currentCategory = cat;
             let btns = document.getElementsByClassName('category-btn');
