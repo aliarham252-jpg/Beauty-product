@@ -31,7 +31,7 @@
         .cs-btn { display: inline-block; background: #25D366; color: white; text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; margin: 3px 5px; }
         .cs-btn.call-btn { background: #1e88e5; }
 
-        /* Order Tracking Card */
+        /* Tracking Card */
         .tracking-card { background: #ffffff; border: 1px solid #e0e0e0; padding: 20px; margin: 15px auto; max-width: 800px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); display: none; }
         .tracking-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
         .tracking-header h3 { margin: 0; color: #2e7d32; font-size: 18px; }
@@ -49,6 +49,7 @@
         /* Rating Box */
         .rating-box { background: #fdfdfd; border-top: 1px dashed #ddd; padding-top: 15px; margin-top: 15px; text-align: center; }
         .star-rating { font-size: 24px; color: #ffca28; cursor: pointer; margin-bottom: 8px; }
+        .star-rating span { color: #ccc; }
         .star-rating span.selected { color: #ff9800; }
         .review-input { width: 90%; max-width: 450px; padding: 8px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 8px; }
         .rate-btn { background: #ff9800; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13px; }
@@ -165,11 +166,11 @@
             <div class="rating-box">
                 <h5 style="margin: 0 0 5px 0; color: #444; font-size: 14px;">Once Received, Rate Your Product</h5>
                 <div class="star-rating" id="starContainer">
-                    <span onclick="setStars(1)">★</span>
-                    <span onclick="setStars(2)">★</span>
-                    <span onclick="setStars(3)">★</span>
-                    <span onclick="setStars(4)">★</span>
-                    <span onclick="setStars(5)">★</span>
+                    <span onclick="setStars(1)" class="selected">★</span>
+                    <span onclick="setStars(2)" class="selected">★</span>
+                    <span onclick="setStars(3)" class="selected">★</span>
+                    <span onclick="setStars(4)" class="selected">★</span>
+                    <span onclick="setStars(5)" class="selected">★</span>
                 </div>
                 <textarea id="reviewText" class="review-input" placeholder="Write your review..." rows="2"></textarea><br>
                 <button class="rate-btn" onclick="submitRating()">Submit Review</button>
@@ -238,5 +239,105 @@
                         <div class="payment-options">
                             <label>
                                 <input type="radio" name="payMethod" value="UPI Online (Pay ₹13 Advance, Rest COD)" checked> 
-                                🌐 Online UPI Payment (Pay ₹13 Advance
-                                
+                                🌐 Online UPI Payment (Pay ₹13 Advance, Rest COD)
+                            </label>
+                            <label style="margin-bottom: 0;">
+                                <input type="radio" name="payMethod" value="Full Cash on Delivery (COD)"> 
+                                💵 Full Cash on Delivery (COD)
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Proceed to Order & WhatsApp</button>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <h3>Customer Support</h3>
+            <p>Helpline: 8859058786 | Email: aliarham252@gmail.com</p>
+            <p style="font-size: 12px; color: #aaa; margin-top: 10px;">&copy; 2026 Online Shopping Store. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        let userDatabase = { email: "", password: "", phone: "", name: "" };
+        let currentCategory = 'all';
+        let selectedStarCount = 5;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            loadProducts();
+        });
+
+        function loadProducts() {
+            let grid = document.getElementById('productGrid');
+            if(!grid) return;
+            let htmlContent = '';
+
+            let beautyImages = [
+                "1522337360788-8b13dee7a37e", "1512496015851-a90fb38ba796", "1571781926291-c477ebfd024b", 
+                "1535585209827-a15fcdbc4c2d", "1556228720-195a672e8a03", "1526947425960-945c6e72858f",
+                "1598440947619-2c35fc9aa908", "1608248597359-f5383a54b395", "1516975080664-ed2fc6a32937"
+            ];
+
+            let electronicImages = [
+                "1505740420928-5e560c06d30e", "1526738549149-8e07eca6c147", "1546868871-7041f2a55e12",
+                "1585790050230-5dd28404ccb9", "1511707171634-5f897ff02aa9", "1550745165-9bc0b252726f",
+                "1523275335684-37898b6baf30", "1593305841991-05c297ba4575", "1588872657578-7efd1f1555ed"
+            ];
+
+            for (let i = 1; i <= 50; i++) {
+                let price = 199 + ((i - 1) * 10);
+                let imgId = beautyImages[(i - 1) % beautyImages.length];
+                htmlContent += `
+                    <div class="product-card" data-category="beauty" data-name="Beauty Item ${i}">
+                        <img src="https://images.unsplash.com/photo-${imgId}?w=300" alt="Beauty Item ${i}">
+                        <h4>Beauty Item ${i}</h4>
+                        <p>₹${price}</p>
+                        <button class="buy-btn" onclick="openOrderModal('Beauty Item ${i}', ${price})">Buy Now</button>
+                    </div>
+                `;
+            }
+
+            for (let i = 1; i <= 50; i++) {
+                let price = 299 + ((i - 1) * 14);
+                let imgId = electronicImages[(i - 1) % electronicImages.length];
+                htmlContent += `
+                    <div class="product-card" data-category="electronics" data-name="Electronic Item ${i}">
+                        <img src="https://images.unsplash.com/photo-${imgId}?w=300" alt="Electronic Item ${i}">
+                        <h4>Electronic Item ${i}</h4>
+                        <p>₹${price}</p>
+                        <button class="buy-btn" onclick="openOrderModal('Electronic Item ${i}', ${price})">Buy Now</button>
+                    </div>
+                `;
+            }
+
+            grid.innerHTML = htmlContent;
+        }
+
+        function switchTab(tab) {
+            if (tab === 'login') {
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('signupForm').style.display = 'none';
+                document.getElementById('loginTabBtn').classList.add('active');
+                document.getElementById('signupTabBtn').classList.remove('active');
+            } else {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('signupForm').style.display = 'block';
+                document.getElementById('signupTabBtn').classList.add('active');
+                document.getElementById('loginTabBtn').classList.remove('active');
+            }
+        }
+
+        function handleSignup() {
+            let name = document.getElementById('signupName').value.trim();
+            let phone = document.getElementById('signupPhone').value.trim();
+            let email = document.getElementById('signupEmail').value.trim();
+            let password = document.getElementById('signupPassword').value.trim();
+
+            if (name === "" || phone.length < 10 || email === "" || password === "") {
+                alert("Please fill all details correctly.");
+                return;
+            }
+
+        
