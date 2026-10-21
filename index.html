@@ -32,7 +32,7 @@
         .product-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px; max-width: 1200px; margin: auto; }
         .product-card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 12px; width: 160px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .product-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 5px; }
-        .product-card h4 { font-size: 14px; margin: 8px 0; color: #333; }
+        .product-card h4 { font-size: 13px; margin: 8px 0; color: #333; height: 32px; overflow: hidden; }
         .product-card p { color: #e91e63; font-weight: bold; margin: 5px 0; }
         .product-card button.buy-btn { background: #e91e63; color: white; border: none; padding: 8px 12px; border-radius: 4px; margin-top: 8px; font-size: 13px; cursor: pointer; width: 100%; }
 
@@ -51,7 +51,7 @@
 </head>
 <body>
 
-    <!-- Authentication Modal (Login / Signup with Password) -->
+    <!-- Authentication Modal -->
     <div id="authOverlay">
         <div class="auth-box">
             <div class="auth-tabs">
@@ -99,7 +99,7 @@
             <button class="category-btn" onclick="setCategory('electronics', this)">Electronics (50)</button>
         </div>
 
-        <!-- Product Grid where all 100 products will be loaded via JavaScript -->
+        <!-- Product Grid -->
         <div class="product-grid" id="productGrid"></div>
 
         <!-- Order Form Modal -->
@@ -153,7 +153,34 @@
         let userDatabase = { email: "", password: "", phone: "", name: "" };
         let currentCategory = 'all';
 
-        // Automatically load all 100 products when page loads
+        // 50 Real Beauty Product Names
+        const beautyNames = [
+            "Matte Lipstick", "Liquid Foundation", "Compact Powder", "Eyeliner Pen", "Mascara Volume",
+            "Eyeshadow Palette", "Blush On", "Highlighter Glow", "Makeup Fixing Spray", "Nail Polish Set",
+            "BB Cream", "CC Cream", "Kajal Pencil", "Lip Gloss", "Lip Balm organic",
+            "Eyebrow Pencil", "Makeup Remover", "Face Primer", "Contour Kit", "Loose Powder",
+            "False Eyelashes", "Glitter Eye Palette", "Tinted Lip Oil", "Makeup Brush Set", "Beauty Blender Sponge",
+            "Herbal Face Wash", "Aloevera Gel", "Rose Water Toner", "Vitamin C Serum", "Anti-Aging Cream",
+            "Night Repair Cream", "Day Moisturizer", "Sunscreen SPF 50", "Ubtan Face Scrub", "Charcoal Peel-Off Mask",
+            "Gold Facial Kit", "Papaya Face Pack", "Neem Purifying Wash", "Under Eye Cream", "Lip Scrub Exfoliator",
+            "Hair Serum", "Anti-Dandruff Shampoo", "Herbal Hair Oil", "Keratin Hair Mask", "Hair Styling Gel",
+            "Body Lotion", "Exfoliating Body Scrub", "Bathing Soap Bar", "Shower Gel", "Hand Cream Lotion"
+        ];
+
+        // 50 Real Electronic Product Names
+        const electronicNames = [
+            "Wireless Bluetooth Earbuds", "Over-Ear Headphones", "Smart Fitness Watch", "Portable Bluetooth Speaker", "Mini Power Bank 10000mAh",
+            "Fast USB Charger", "Type-C Data Cable", "RGB Gaming Mouse", "Mechanical Wired Keyboard", "USB Desk Fan",
+            "LED Ring Light", "Mini Selfie Stick", "Mobile Phone Holder", "Wireless Charging Pad", "Car Mobile Mount",
+            "OTG Cable Adapter", "AUX Audio Cable", "HDMI Cable 1.5m", "Smart LED Bulb", "Extension Cord Board",
+            "Mini Pocket Trimmer", "Hair Straightener Brush", "Electric Face Massager", "Digital Kitchen Weighing Scale", "Automatic Lint Remover",
+            "Rechargeable Table Lamp", "Smart Door Sensor", "Bluetooth Selfie Remote", "USB LED Night Light", "Laptop Cooling Pad",
+            "Webcam HD 720p", "Microphone for Podcasting", "Memory Card 32GB", "Pendrive 64GB", "Wi-Fi Range Extender",
+            "Smart Plug Adapter", "Electric Mosquito Bat", "Digital Alarm Clock", "Smart Thermometer", "Earphone Splitter",
+            "VR Box 3D Glasses", "Gaming Finger Sleeves", "Phone Camera Lens Kit", "Mini Bluetooth Tracker", "Smart Band Strap",
+            "Type-C Hub Multiport", "Mini Air Humidifier", "Electric Lint Shaver", "Rechargeable Hand Warmer", "Solar Power Bank Mini"
+        ];
+
         window.onload = function() {
             loadProducts();
         };
@@ -162,150 +189,5 @@
             let grid = document.getElementById('productGrid');
             let htmlContent = '';
 
-            // Generate 50 Beauty Products (Prices under ₹1000, unique image IDs)
-            for (let i = 1; i <= 50; i++) {
-                let price = 149 + (i * 15) % 800; // कीमत ₹1000 से कम रहेगी
-                let imageId = 10 + i; // अलग-अलग इमेज के लिए ID बदल रही है
-                htmlContent += `
-                    <div class="product-card" data-category="beauty" data-name="Beauty Item ${i}">
-                        <img src="https://picsum.photos/seed/beauty${imageId}/300/300" alt="Beauty Item ${i}">
-                        <h4>Beauty Item ${i}</h4>
-                        <p>₹${price}</p>
-                        <button class="buy-btn" onclick="openOrderModal('Beauty Item ${i}', '₹${price}')">Buy Now</button>
-                    </div>
-                `;
-            }
-
-            // Generate 50 Electronic Items (Prices under ₹1000, unique image IDs)
-            for (let i = 1; i <= 50; i++) {
-                let price = 199 + (i * 17) % 790; // कीमत ₹1000 से कम रहेगी
-                let imageId = 100 + i; // अलग-अलग इमेज के लिए ID बदल रही है
-                htmlContent += `
-                    <div class="product-card" data-category="electronics" data-name="Electronic Item ${i}">
-                        <img src="https://picsum.photos/seed/elec${imageId}/300/300" alt="Electronic Item ${i}">
-                        <h4>Electronic Item ${i}</h4>
-                        <p>₹${price}</p>
-                        <button class="buy-btn" onclick="openOrderModal('Electronic Item ${i}', '₹${price}')">Buy Now</button>
-                    </div>
-                `;
-            }
-
-            grid.innerHTML = htmlContent;
-        }
-
-        function switchTab(tab) {
-            if (tab === 'login') {
-                document.getElementById('loginForm').style.display = 'block';
-                document.getElementById('signupForm').style.display = 'none';
-                document.getElementById('loginTabBtn').classList.add('active');
-                document.getElementById('signupTabBtn').classList.remove('active');
-            } else {
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('signupForm').style.display = 'block';
-                document.getElementById('signupTabBtn').classList.add('active');
-                document.getElementById('loginTabBtn').classList.remove('active');
-            }
-        }
-
-        function handleSignup() {
-            let name = document.getElementById('signupName').value;
-            let phone = document.getElementById('signupPhone').value;
-            let email = document.getElementById('signupEmail').value;
-            let password = document.getElementById('signupPassword').value;
-
-            if (name === "" || phone.length < 10 || email === "" || password === "") {
-                alert("Please fill all details correctly.");
-                return;
-            }
-
-            userDatabase = { name, phone, email, password };
-            alert("Signup Successful! You can now access the store.");
-            grantAccess(name, phone, email);
-        }
-
-        function handleLogin() {
-            let email = document.getElementById('loginEmail').value;
-            let password = document.getElementById('loginPassword').value;
-
-            if (email === "" || password === "") {
-                alert("Please enter email and password.");
-                return;
-            }
-
-            grantAccess(userDatabase.name || "Customer", userDatabase.phone || "8859058786", email);
-        }
-
-        function grantAccess(name, phone, email) {
-            document.getElementById('authOverlay').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
-
-            document.getElementById('custName').value = name;
-            document.getElementById('custPhone').value = phone;
-            document.getElementById('custEmail').value = email;
-        }
-
-        function setCategory(cat, btn) {
-            currentCategory = cat;
-            let btns = document.getElementsByClassName('category-btn');
-            for (let b of btns) b.classList.remove('active');
-            btn.classList.add('active');
-            filterProducts();
-        }
-
-        function filterProducts() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('product-card');
-
-            for (let i = 0; i < cards.length; i++) {
-                let name = cards[i].getAttribute('data-name').toLowerCase();
-                let category = cards[i].getAttribute('data-category');
-                
-                let matchesCategory = (currentCategory === 'all' || category === currentCategory);
-                let matchesSearch = name.includes(input);
-
-                if (matchesCategory && matchesSearch) {
-                    cards[i].style.display = "";
-                } else {
-                    cards[i].style.display = "none";
-                }
-            }
-        }
-
-        function openOrderModal(productName, productPrice) {
-            document.getElementById('selectedProductName').value = productName;
-            document.getElementById('selectedProductPrice').value = productPrice;
-            document.getElementById('orderModal').style.display = 'flex';
-        }
-
-        function closeOrderModal() {
-            document.getElementById('orderModal').style.display = 'none';
-        }
-
-        function sendOrder(event) {
-            event.preventDefault();
-            
-            let pName = document.getElementById('selectedProductName').value;
-            let pPrice = document.getElementById('selectedProductPrice').value;
-            let name = document.getElementById('custName').value;
-            let phone = document.getElementById('custPhone').value;
-            let email = document.getElementById('custEmail').value;
-            let address = document.getElementById('custAddress').value;
-            let pincode = document.getElementById('custPincode').value;
-
-            let message = `*NEW ORDER DETAILS*%0A%0A` +
-                          `*Product:* ${pName}%0A` +
-                          `*Price:* ${pPrice}%0A%0A` +
-                          `*Customer Name:* ${name}%0A` +
-                          `*Mobile:* ${phone}%0A` +
-                          `*Email:* ${email}%0A` +
-                          `*Address:* ${address}%0A` +
-                          `*Pincode:* ${pincode}`;
-
-            let whatsappUrl = `https://wa.me/918859058786?text=${message}`;
-            window.open(whatsappUrl, '_blank');
-            closeOrderModal();
-        }
-    </script>
-
-</body>
-</html>
+            // Generate 50 Beauty Products with unique Unsplash Beauty images and prices under ₹1000
+            for (let
