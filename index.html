@@ -3,270 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ऑनलाइन स्टोर | ब्यूटी एवं कॉस्मेटिक्स</title>
+    <title>Store - Beauty & Electronics</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
+        
+        /* Auth Overlay */
+        #authOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .auth-box { background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 360px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: relative; z-index: 10000; }
+        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #eee; }
+        .tab-btn { flex: 1; padding: 10px; background: none; border: none; font-size: 16px; font-weight: bold; cursor: pointer; color: #888; outline: none; }
+        .tab-btn.active { color: #e91e63; border-bottom: 2px solid #e91e63; margin-bottom: -2px; }
+        
+        .auth-input { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; outline: none; }
+        .auth-btn { background: #e91e63; color: white; border: none; padding: 12px; width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 15px; margin-top: 5px; }
+        .forgot-link { display: block; margin-top: 12px; font-size: 13px; color: #1e88e5; text-decoration: none; cursor: pointer; }
 
-        body {
-            background-color: #f4f7f6;
-            color: #333;
-        }
+        /* Main Content */
+        #mainContent { display: none; }
 
-        /* Header / Navbar */
-        header {
-            background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+        header { background: #e91e63; color: white; padding: 20px; text-align: center; }
+        .contact-info { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; font-size: 14px; }
+        .contact-info a { color: #e91e63; text-decoration: none; font-weight: bold; margin: 0 10px; }
+        
+        .customer-service-bar { background: #fff3f8; border: 1px solid #f8bbd0; padding: 12px; margin: 15px auto; max-width: 800px; border-radius: 8px; text-align: center; }
+        .customer-service-bar h4 { margin: 0 0 8px 0; color: #d81b60; font-size: 15px; }
+        .cs-btn { display: inline-block; background: #25D366; color: white; text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; margin: 3px 5px; }
+        .cs-btn.call-btn { background: #1e88e5; }
 
-        .top-bar {
-            background-color: #2c3e50;
-            color: white;
-            padding: 8px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+        /* Tracking Card */
+        .tracking-card { background: #ffffff; border: 1px solid #e0e0e0; padding: 20px; margin: 15px auto; max-width: 800px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); display: none; }
+        .tracking-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        .tracking-header h3 { margin: 0; color: #2e7d32; font-size: 18px; }
+        .delivery-date { font-weight: bold; color: #e91e63; font-size: 15px; }
 
-        .top-bar a {
-            color: #4cd137;
-            text-decoration: none;
-            font-weight: bold;
-        }
+        .timeline-container { display: flex; justify-content: space-between; align-items: center; position: relative; margin: 25px 10px; }
+        .timeline-container::before { content: ''; position: absolute; top: 15px; left: 10%; right: 10%; height: 4px; background: #ddd; z-index: 1; }
+        .timeline-progress { position: absolute; top: 15px; left: 10%; width: 40%; height: 4px; background: #4caf50; z-index: 1; }
+        .step { position: relative; z-index: 2; text-align: center; background: #fff; padding: 0 5px; }
+        .step-icon { width: 32px; height: 32px; border-radius: 50%; background: #ccc; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px auto; font-size: 14px; font-weight: bold; }
+        .step.completed .step-icon { background: #4caf50; }
+        .step.active .step-icon { background: #2196f3; box-shadow: 0 0 0 4px rgba(33,150,243,0.2); }
+        .step-label { font-size: 12px; color: #555; font-weight: bold; }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .rating-box { background: #fdfdfd; border-top: 1px dashed #ddd; padding-top: 15px; margin-top: 15px; text-align: center; }
+        .star-rating { font-size: 24px; color: #ffca28; cursor: pointer; margin-bottom: 8px; }
+        .star-rating span { color: #ccc; }
+        .star-rating span.selected { color: #ff9800; }
+        .review-input { width: 90%; max-width: 450px; padding: 8px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 8px; }
+        .rate-btn { background: #ff9800; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13px; }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #e84393;
-            text-decoration: none;
-        }
+        .search-container { text-align: center; padding: 15px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .search-container input { width: 80%; max-width: 400px; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; outline: none; }
+        .category-filter { text-align: center; padding: 10px; background: #fff; border-top: 1px solid #eee; }
+        .category-btn { background: #f0f0f0; border: 1px solid #ccc; padding: 8px 16px; margin: 0 5px; border-radius: 20px; cursor: pointer; font-size: 14px; }
+        .category-btn.active { background: #e91e63; color: white; border-color: #e91e63; }
+        
+        .product-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px; max-width: 1200px; margin: auto; }
+        .product-card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 12px; width: 160px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .product-card img { width: 100%; height: 120px; object-fit: cover; border-radius: 5px; }
+        .product-card h4 { font-size: 14px; margin: 8px 0; color: #333; }
+        .product-card p { color: #e91e63; font-weight: bold; margin: 5px 0; }
+        .product-card button.buy-btn { background: #e91e63; color: white; border: none; padding: 8px 12px; border-radius: 4px; margin-top: 8px; font-size: 13px; cursor: pointer; width: 100%; }
 
-        /* Main Container */
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 10001; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+        .modal-content { background-color: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-btn { position: absolute; right: 15px; top: 10px; font-size: 20px; font-weight: bold; cursor: pointer; color: #888; }
+        .modal-content h3 { margin-top: 0; color: #333; text-align: center; }
+        .form-group { margin-bottom: 12px; text-align: left; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 4px; color: #555; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
+        .payment-options { background: #f4f4f4; padding: 10px; border-radius: 4px; margin-bottom: 12px; font-size: 13px; }
+        .payment-options label { display: block; margin-bottom: 8px; cursor: pointer; font-weight: bold; color: #333; }
+        .submit-btn { background: #25D366; color: white; border: none; width: 100%; padding: 10px; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; }
 
-        .section-title {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 25px;
-            color: #2d3436;
-        }
-
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-
-        .product-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #2d3436;
-        }
-
-        .product-price {
-            font-size: 18px;
-            color: #e84393;
-            font-weight: bold;
-            margin-bottom: 12px;
-        }
-
-        .buy-btn {
-            background-color: #00b894;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            transition: background 0.2s;
-        }
-
-        .buy-btn:hover {
-            background-color: #009688;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #2d3436;
-            color: white;
-            padding: 40px 20px 20px;
-            margin-top: 50px;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .footer-section h4 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #e84393;
-        }
-
-        .footer-section p, .footer-section a {
-            color: #b2bec3;
-            font-size: 14px;
-            line-height: 1.8;
-            text-decoration: none;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .contact-info {
-            list-style: none;
-        }
-
-        .contact-info li {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #636e72;
-            color: #b2bec3;
-            font-size: 13px;
-        }
+        footer { background: #333; color: white; text-align: center; padding: 20px; margin-top: 30px; }
     </style>
 </head>
 <body>
 
-    <!-- Top Bar with Direct Contact Info -->
-    <header>
-        <div class="top-bar">
-            <div>
-                📞 कॉल / व्हाट्सएप: <a href="tel:8859058786">+91 8859058786</a>
+    <!-- Auth Modal -->
+    <div id="authOverlay">
+        <div class="auth-box">
+            <div class="auth-tabs">
+                <button type="button" class="tab-btn active" id="loginTabBtn">Login</button>
+                <button type="button" class="tab-btn" id="signupTabBtn">Sign Up</button>
             </div>
-            <div>
-                📧 ईमेल: <a href="mailto:aliarham252@gmail.com">aliarham252@gmail.com</a>
-            </div>
-        </div>
-        <div class="nav-container">
-            <a href="#" class="logo">ब्यूटी केयर स्टोर</a>
-            <p style="font-size: 14px; color: #666;">सर्वोत्तम गुणवत्ता प्रोडक्ट्स</p>
-        </div>
-    </header>
 
-    <!-- Main Products List -->
-    <div class="container">
-        <h2 class="section-title">हमारे प्रोडक्ट्स</h2>
-        <div class="products-grid" id="products-list">
-            <!-- JavaScript will insert products here -->
+            <!-- Login Form -->
+            <div id="loginForm">
+                <input type="email" id="loginEmail" class="auth-input" placeholder="Email Address">
+                <input type="password" id="loginPassword" class="auth-input" placeholder="Password">
+                <button type="button" class="auth-btn" id="loginSubmitBtn">Login to Store</button>
+                <a class="forgot-link" id="forgotPassBtn">Forgot Password?</a>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signupForm" style="display:none;">
+                <input type="text" id="signupName" class="auth-input" placeholder="Full Name">
+                <input type="tel" id="signupPhone" class="auth-input" placeholder="Mobile Number" maxlength="10">
+                <input type="email" id="signupEmail" class="auth-input" placeholder="Email Address">
+                <input type="password" id="signupPassword" class="auth-input" placeholder="Create Password">
+                <button type="button" class="auth-btn" id="signupSubmitBtn">Register & Continue</button>
+            </div>
         </div>
     </div>
 
-    <!-- Footer with Contact Section -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h4>हमारे बारे में</h4>
-                <p>हम आपको बेहतरीन ब्यूटी और स्किनकेयर प्रोडक्ट्स प्रदान करते हैं। गुणवत्ता और ग्राहक संतुष्टि हमारी पहली प्राथमिकता है।</p>
+    <!-- Main Content -->
+    <div id="mainContent">
+        <header>
+            <h1>Online Shopping Store</h1>
+            <p>Beauty Products & Electronic Items Under ₹1,000</p>
+        </header>
+
+        <div class="contact-info">
+            Call Us: <a href="tel:8859058786">8859058786</a> | 
+            Email: <a href="mailto:aliarham252@gmail.com">aliarham252@gmail.com</a>
+        </div>
+
+        <div class="customer-service-bar">
+            <h4>💬 Need Assistance? Contact Customer Service</h4>
+            <a href="https://wa.me/918859058786?text=Hi,%20I%20need%20help" class="cs-btn" target="_blank">Chat on WhatsApp</a>
+            <a href="tel:8859058786" class="cs-btn call-btn">Call Helpline</a>
+        </div>
+
+        <!-- Tracking Card -->
+        <div class="tracking-card" id="trackingCard">
+            <div class="tracking-header">
+                <div>
+                    <h3>✅ Order Confirmed!</h3>
+                    <span style="font-size: 12px; color: #777;">Order ID: <strong id="trackOrderId">#ORD10248</strong></span>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 12px; color: #555;">Estimated Delivery</span><br>
+                    <span class="delivery-date" id="deliveryDateText">In 4 Days</span>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4>संपर्क करें (Contact Us)</h4>
-                <ul class="contact-info">
-                    <li>📞 <strong>फोन:</strong> <a href="tel:8859058786">+91 8859058786</a></li>
-                    <li>💬 <strong>व्हाट्सएप:</strong> <a href="https://wa.me/918859058786" target="_blank">+91 8859058786</a></li>
-                    <li>📧 <strong>ईमेल:</strong> <a href="mailto:aliarham252@gmail.com">aliarham252@gmail.com</a></li>
-                </ul>
+
+            <p style="margin: 5px 0 15px 0; font-size: 14px; color: #333;">
+                Product: <strong id="trackProductName">-</strong> | Quantity: <strong id="trackProductQty">1</strong>
+            </p>
+
+            <div class="timeline-container">
+                <div class="timeline-progress"></div>
+                <div class="step completed">
+                    <div class="step-icon">✓</div>
+                    <div class="step-label">Ordered</div>
+                </div>
+                <div class="step active">
+                    <div class="step-icon">📦</div>
+                    <div class="step-label">Shipped</div>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🚚</div>
+                    <div class="step-label">Out for Delivery</div>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🏠</div>
+                    <div class="step-label">Delivered</div>
+                </div>
+            </div>
+
+            <div class="rating-box">
+                <h5 style="margin: 0 0 5px 0; color: #444; font-size: 14px;">Once Received, Rate Your Product</h5>
+                <div class="star-rating" id="starContainer">
+                    <span onclick="setStars(1)" class="selected">★</span>
+                    <span onclick="setStars(2)" class="selected">★</span>
+                    <span onclick="setStars(3)" class="selected">★</span>
+                    <span onclick="setStars(4)" class="selected">★</span>
+                    <span onclick="setStars(5)" class="selected">★</span>
+                </div>
+                <textarea id="reviewText" class="review-input" placeholder="Write your review..." rows="2"></textarea><br>
+                <button class="rate-btn" onclick="submitRating()">Submit Review</button>
             </div>
         </div>
-        <div class="copyright">
-            &copy; 2026 ब्यूटी केयर स्टोर. सभी अधिकार सुरक्षित।
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search beauty or electronic items..." onkeyup="filterProducts()">
         </div>
-    </footer>
+
+        <div class="category-filter">
+            <button class="category-btn active" onclick="setCategory('all', this)">All Items (100)</button>
+            <button class="category-btn" onclick="setCategory('beauty', this)">Beauty (50)</button>
+            <button class="category-btn" onclick="setCategory('electronics', this)">Electronics (50)</button>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+
+        <!-- Order Form Modal -->
+        <div id="orderModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeOrderModal()">&times;</span>
+                <h3>Customer Delivery Details</h3>
+                <form onsubmit="sendOrder(event)">
+                    <input type="hidden" id="selectedProductName">
+                    <input type="hidden" id="selectedProductPrice">
+
+                    <div class="form-group">
+                        <label for="custName">Full Name *</label>
+                        <input type="text" id="custName" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custPhone">Mobile Number *</label>
+                        <input type="tel" id="custPhone" placeholder="Enter 10-digit mobile number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custEmail">Email Address *</label>
+                        <input type="email" id="custEmail" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custAddress">Full Address *</label>
+                        <textarea id="custAddress" rows="2" placeholder="House/Street/Locality" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custPincode">Pincode *</label>
+                        <input type="text" id="custPincode" placeholder="Enter 6-digit Pincode" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custQty">Select Quantity *</label>
+                        <select id="custQty" required>
+                            <option value="1" selected>1 Item</option>
+                            <option value="2">2 Items</option>
+                            <option value="3">3 Items</option>
+                            <option value="4">4 Items</option>
+                            <option value="5">5 Items</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Payment Method *</label>
+                        <div class="payment-options">
+                            <label>
+                                <input type="radio" name="payMethod" value="UPI Online (Pay ₹13 Advance, Rest COD)" checked> 
+                                🌐 Online UPI Payment (Pay ₹13 Advance, Rest COD)
+                            </label>
+                            <label style="margin-bottom: 0;">
+                                <input type="radio" name="payMethod" value="Full Cash on Delivery (COD)"> 
+                                💵 Full Cash on Delivery (COD)
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Proceed to Order & WhatsApp</button>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <h3>Customer Support</h3>
+            <p>Helpline: 8859058786 | Email: aliarham252@gmail.com</p>
+            <p style="font-size: 12px; color: #aaa; margin-top: 10px;">&copy; 2026 Online Shopping Store. All Rights Reserved.</p>
+        </footer>
+    </div>
 
     <script>
-        // Array of products
-        const products = [
-            { id: 1, name: "Face Cream", price: "₹499", img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300" },
-            { id: 2, name: "Night Repair Cream", price: "₹549", img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=300" },
-            { id: 3, name: "Vitamin C Serum", price: "₹699", img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=300" },
-            { id: 4, name: "Face Wash", price: "₹299", img: "https://images.unsplash.com/photo-1556228722-d119f42a0378?w=300" },
-            { id: 5, name: "Sunscreen SPF 50", price: "₹399", img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=300" },
-            { id: 6, name: "Aloe Vera Gel", price: "₹199", img: "https://images.unsplash.com/photo-1567928256511-0fd5001a374c?w=300" },
-            { id: 7, name: "Lip Balm", price: "₹149", img: "https://images.unsplash.com/photo-1617897903246-719242758050?w=300" },
-            { id: 8, name: "Body Lotion", price: "₹349", img: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=300" },
-            { id: 9, name: "Hair Serum", price: "₹449", img: "https://images.unsplash.com/photo-1608248597260-842247f02758?w=300" },
-            { id: 10, name: "Face Scrub", price: "₹279", img: "https://images.unsplash.com/photo-1567928256501-bc8e20d20d75?w=300" }
-        ];
+        // Store user credentials safely
+        let registeredUser = null;
+        let currentCategory = 'all';
+        let selectedStarCount = 5;
 
-        const container = document.getElementById('products-list');
+        document.addEventListener("DOMContentLoaded", function() {
+            loadProducts();
 
-        products.forEach(product => {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <img src="${product.img}" alt="${product.name}">
-                <div class="product-title">${product.name}</div>
-                <div class="product-price">${product.price}</div>
-                <a href="https://wa.me/918859058786?text=नमस्ते,%20मुझे%20${encodeURIComponent(product.name)}%20(${product.price})%20खरीदना%20है।" target="_blank" style="text-decoration:none;">
-                    <button class="buy-btn">अभी ऑर्डर करें</button>
-                </a>
-            `;
-            container.appendChild(card);
-        });
-    </script>
-</body>
-</html>
+            // Tab Switching Logic
+            document.getElementById("loginTabBtn").addEventListener("click", function() {
+                document.getElementById("loginForm").style.display = "block";
+                document.getElementById("signupForm").style.display = "none";
+                document.getElementById("loginTabBtn").classList.add("active");
+                document.getElementById("signupTabBtn").classList.remove("active");
+            });
+
+            document.getElementById("signupTabBtn").addEventListener("click", function() {
+                document.getElementById("loginForm").style.display = "none";
+                document.getElementById("signupForm").style.display = "block";
+                document.getElementById("signupTabBtn").classList.add("active");
+                document.getElementById("loginTabBtn").classList.remove("active");
+            });
+
+            // Signup Action
+            document.getElementById("signupSubmitBtn").addEventListener("click", function() {
+                let name = document.getElementById("signupName").value.trim();
+                let phone = document.getElementById("signupPhone").value.trim();
+                let email = document.getElementById("signupEmail").value.trim();
+                let pass = document.getElementById("signupPassword").value.trim();
+
+                if(name === "" || phone.length < 10 || email === "" || pass === "") {
+                    alert("कृपया सभी विवरण सही ढंग से भरें। (Mobile number must be 10 digits)");
+                    return;
+                }
+
+                registeredUser = { name, phone, email, password: pass };
+                alert("पंजीकरण सफल! (Registration Successful). अब आप लॉगिन कर सकते हैं।");
+                
+                // Switch back to Login Tab automatically
+                document.getElementById("loginTabBtn").click();
+                document.getElementById("loginEmail").value = email;
+            });
+
+            // Login Action
+            document.getElementById("loginSubmitBtn").addEventListener("click", function() {
+                let email = document.getElementById("loginEmail").value.trim();
+                let pass = document.getElementById("loginPassword").value.trim();
+
+                if(email === "" || pass === "") {
+                    alert("कृपया ईमेल और पासवर्ड दर्ज करें।");
+                    return;
+                }
+
+                if(!registeredUser) {
+                    alert("कोई खाता नहीं मिला। कृपया पहले Sign Up करें।");
+                    return;
+                }
+
+                if(registeredUser.email === email && registeredUser.password === pass) {
+                    grantAccess(registeredUser.name, registeredUser.phone, registeredUser.email);
+                } else {
+                    alert("गलत ईमेल या पासवर्ड! (Invalid Email or Password)");
+                }
+            });
+
+            // Forgot Password Action
+            document.getElementById("forgotPassBtn").addEventListener("click", function() {
+                let emailInput = prompt("अपना रजिस्टर्ड ईमेल दर्ज करें (Enter your registered Email):");
+                if(emailInput) {
+                    if(registeredUser && registeredUser.email === emailInput) {
+                        let newPass = prompt("नया पासवर्ड दर्ज करें (Enter New Password):");
+                        if(newPass) {
+                            registeredUse
