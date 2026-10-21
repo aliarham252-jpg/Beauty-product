@@ -38,9 +38,16 @@
 
         /* Order Form Modal */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
-        .modal-content { background-color: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; }
+        .modal-content { background-color: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; }
         .close-btn { position: absolute; right: 15px; top: 10px; font-size: 20px; font-weight: bold; cursor: pointer; color: #888; }
         .modal-content h3 { margin-top: 0; color: #333; text-align: center; }
+        
+        /* Modal Product Preview Box */
+        .modal-product-preview { display: flex; align-items: center; background: #fdfdfd; border: 1px solid #eee; border-radius: 6px; padding: 8px; margin-bottom: 15px; gap: 12px; }
+        .modal-product-preview img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; }
+        .modal-product-info h4 { margin: 0 0 4px 0; font-size: 14px; color: #333; text-align: left; }
+        .modal-product-info p { margin: 0; font-size: 14px; color: #e91e63; font-weight: bold; text-align: left; }
+
         .form-group { margin-bottom: 12px; text-align: left; }
         .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 4px; color: #555; }
         .form-group input, .form-group textarea { width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
@@ -107,6 +114,16 @@
             <div class="modal-content">
                 <span class="close-btn" onclick="closeOrderModal()">&times;</span>
                 <h3>Customer Delivery Details</h3>
+                
+                <!-- Selected Product Image & Details Preview -->
+                <div class="modal-product-preview">
+                    <img id="modalProductImg" src="" alt="Product Image">
+                    <div class="modal-product-info">
+                        <h4 id="modalProductNameText">Product Name</h4>
+                        <p id="modalProductPriceText">₹0</p>
+                    </div>
+                </div>
+
                 <form onsubmit="sendOrder(event)">
                     <input type="hidden" id="selectedProductName">
                     <input type="hidden" id="selectedProductPrice">
@@ -189,5 +206,155 @@
             let grid = document.getElementById('productGrid');
             let htmlContent = '';
 
-            // Generate 50 Beauty Products with unique Unsplash Beauty images and prices under ₹1000
-            for (let
+            // Generate 50 Beauty Products (Prices under ₹1000)
+            for (let i = 0; i < 50; i++) {
+                let price = 149 + (i * 15) % 800;
+                let productName = beautyNames[i];
+                let imageId = 200 + i;
+                let imageUrl = `https://picsum.photos/seed/beauty${imageId}/300/300`;
+                
+                htmlContent += `
+                    <div class="product-card" data-category="beauty" data-name="${productName}">
+                        <img src="${imageUrl}" alt="${productName}">
+                        <h4>${productName}</h4>
+                        <p>₹${price}</p>
+                        <button class="buy-btn" onclick="openOrderModal('${productName}', '₹${price}', '${imageUrl}')">Buy Now</button>
+                    </div>
+                `;
+            }
+
+            // Generate 50 Electronic Items (Prices under ₹1000)
+            for (let i = 0; i < 50; i++) {
+                let price = 199 + (i * 17) % 790;
+                let productName = electronicNames[i];
+                let imageId = 500 + i;
+                let imageUrl = `https://picsum.photos/seed/tech${imageId}/300/300`;
+                
+                htmlContent += `
+                    <div class="product-card" data-category="electronics" data-name="${productName}">
+                        <img src="${imageUrl}" alt="${productName}">
+                        <h4>${productName}</h4>
+                        <p>₹${price}</p>
+                        <button class="buy-btn" onclick="openOrderModal('${productName}', '₹${price}', '${imageUrl}')">Buy Now</button>
+                    </div>
+                `;
+            }
+
+            grid.innerHTML = htmlContent;
+        }
+
+        function switchTab(tab) {
+            if (tab === 'login') {
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('signupForm').style.display = 'none';
+                document.getElementById('loginTabBtn').classList.add('active');
+                document.getElementById('signupTabBtn').classList.remove('active');
+            } else {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('signupForm').style.display = 'block';
+                document.getElementById('signupTabBtn').classList.add('active');
+                document.getElementById('loginTabBtn').classList.remove('active');
+            }
+        }
+
+        function handleSignup() {
+            let name = document.getElementById('signupName').value;
+            let phone = document.getElementById('signupPhone').value;
+            let email = document.getElementById('signupEmail').value;
+            let password = document.getElementById('signupPassword').value;
+
+            if (name === "" || phone.length < 10 || email === "" || password === "") {
+                alert("Please fill all details correctly.");
+                return;
+            }
+
+            userDatabase = { name, phone, email, password };
+            alert("Signup Successful! You can now access the store.");
+            grantAccess(name, phone, email);
+        }
+
+        function handleLogin() {
+            let email = document.getElementById('loginEmail').value;
+            let password = document.getElementById('loginPassword').value;
+
+            if (email === "" || password === "") {
+                alert("Please enter email and password.");
+                return;
+            }
+
+            grantAccess(userDatabase.name || "Customer", userDatabase.phone || "8859058786", email);
+        }
+
+        function grantAccess(name, phone, email) {
+            document.getElementById('authOverlay').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+
+            document.getElementById('custName').value = name;
+            document.getElementById('custPhone').value = phone;
+            document.getElementById('custEmail').value = email;
+        }
+
+        function setCategory(cat, btn) {
+            currentCategory = cat;
+            let btns = document.getElementsByClassName('category-btn');
+            for (let b of btns) b.classList.remove('active');
+            btn.classList.add('active');
+            filterProducts();
+        }
+
+        function filterProducts() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('product-card');
+
+            for (let i = 0; i < cards.length; i++) {
+                let name = cards[i].getAttribute('data-name').toLowerCase();
+                let category = cards[i].getAttribute('data-category');
+                
+                let matchesCategory = (currentCategory === 'all' || category === currentCategory);
+                let matchesSearch = name.includes(input);
+
+                if (matchesCategory && matchesSearch) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        function openOrderModal(productName, productPrice, productImage) {
+            document.getElementById('selectedProductName').value = productName;
+            document.getElementById('selectedProductPrice').value = productPrice;
+            
+            // आर्डर फॉर्म के अंदर इमेज और नाम-कीमत दिखाना
+            document.getElementById('modalProductImg').src = productImage;
+            document.getElementById('modalProductNameText').innerText = productName;
+            document.getElementById('modalProductPriceText').innerText = productPrice;
+
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function sendOrder(event) {
+            event.preventDefault();
+            
+            let pName = document.getElementById('selectedProductName').value;
+            let pPrice = document.getElementById('selectedProductPrice').value;
+            let name = document.getElementById('custName').value;
+            let phone = document.getElementById('custPhone').value;
+            let email = document.getElementById('custEmail').value;
+            let address = document.getElementById('custAddress').value;
+            let pincode = document.getElementById('custPincode').value;
+
+            let message = `*NEW ORDER DETAILS*%0A%0A` +
+                          `*Product:* ${pName}%0A` +
+                          `*Price:* ${pPrice}%0A%0A` +
+                          `*Customer Name:* ${name}%0A` +
+                          `*Mobile:* ${phone}%0A` +
+                          `*Email:* ${email}%0A` +
+                          `*Address:* ${address}%0A` +
+                          `*Pincode:* ${pincode}`;
+
+            let whatsappUrl = `https://wa.me/9188
