@@ -1,643 +1,1148 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store - Beauty & Electronics</title>
-    <style>
-        * { box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
-        
-        /* Auth Overlay */
-        #authOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; justify-content: center; align-items: center; }
-        .auth-box { background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 360px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #eee; }
-        .tab-btn { flex: 1; padding: 10px; background: none; border: none; font-size: 16px; font-weight: bold; cursor: pointer; color: #888; }
-        .tab-btn.active { color: #e91e63; border-bottom: 2px solid #e91e63; margin-bottom: -2px; }
-        .auth-input { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; }
-        .auth-btn { background: #e91e63; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; margin-top: 5px; }
-        .forgot-link { display: block; margin-top: 12px; font-size: 13px; color: #1e88e5; text-decoration: none; cursor: pointer; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* Main Content */
-        #mainContent { display: none; }
+  <title>DG Store | Online Shopping</title>
+  <meta name="description"
+        content="DG Store - Shop electronics, beauty products and everyday essentials.">
 
-        header { background: #e91e63; color: white; padding: 20px; text-align: center; position: relative; }
-        .header-btns { position: absolute; right: 10px; top: 15px; display: flex; gap: 8px; }
-        .top-btn { background: rgba(255,255,255,0.25); color: white; border: 1px solid white; padding: 5px 10px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; text-decoration: none; }
-        
-        .contact-info { background: #fff; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; font-size: 14px; }
-        .contact-info a { color: #e91e63; text-decoration: none; font-weight: bold; margin: 0 10px; }
-        
-        .customer-service-bar { background: #fff3f8; border: 1px solid #f8bbd0; padding: 12px; margin: 15px auto; max-width: 800px; border-radius: 8px; text-align: center; }
-        .customer-service-bar h4 { margin: 0 0 8px 0; color: #d81b60; font-size: 15px; }
-        .cs-btn { display: inline-block; background: #25D366; color: white; text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; margin: 3px 5px; }
-        .cs-btn.call-btn { background: #1e88e5; }
+  <style>
+    /* =========================
+       DG STORE - BURGUNDY THEME
+       ========================= */
 
-        /* Order Tracking Card */
-        .tracking-card { background: #ffffff; border: 1px solid #e0e0e0; padding: 20px; margin: 15px auto; max-width: 800px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); display: none; }
-        .tracking-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
-        .tracking-header h3 { margin: 0; color: #2e7d32; font-size: 18px; }
-        .delivery-date { font-weight: bold; color: #e91e63; font-size: 15px; }
+    :root {
+      --burgundy: #6d1028;
+      --dark-burgundy: #430817;
+      --light-burgundy: #8b2945;
+      --cream: #fffaf5;
+      --soft: #f7eeee;
+      --white: #ffffff;
+      --gold: #c9a45c;
+      --text: #242124;
+      --muted: #6d6869;
+      --border: #eadcdf;
+      --green: #087a52;
+    }
 
-        .timeline-container { display: flex; justify-content: space-between; align-items: center; position: relative; margin: 25px 10px; }
-        .timeline-container::before { content: ''; position: absolute; top: 15px; left: 10%; right: 10%; height: 4px; background: #ddd; z-index: 1; }
-        .timeline-progress { position: absolute; top: 15px; left: 10%; width: 40%; height: 4px; background: #4caf50; z-index: 1; }
-        .step { position: relative; z-index: 2; text-align: center; background: #fff; padding: 0 5px; }
-        .step-icon { width: 32px; height: 32px; border-radius: 50%; background: #ccc; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px auto; font-size: 14px; font-weight: bold; }
-        .step.completed .step-icon { background: #4caf50; }
-        .step.active .step-icon { background: #2196f3; box-shadow: 0 0 0 4px rgba(33,150,243,0.2); }
-        .step-label { font-size: 12px; color: #555; font-weight: bold; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* Rating System */
-        .rating-box { background: #fdfdfd; border-top: 1px dashed #ddd; padding-top: 15px; margin-top: 15px; text-align: center; }
-        .star-rating { font-size: 24px; color: #ffca28; cursor: pointer; margin-bottom: 8px; }
-        .star-rating span { color: #ccc; }
-        .star-rating span.selected { color: #ff9800; }
-        .review-input { width: 90%; max-width: 450px; padding: 8px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 8px; }
-        .rate-btn { background: #ff9800; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13px; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        /* Search and Categories */
-        .search-container { text-align: center; padding: 15px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .search-container input { width: 80%; max-width: 400px; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 20px; outline: none; }
-        .category-filter { text-align: center; padding: 10px; background: #fff; border-top: 1px solid #eee; }
-        .category-btn { background: #f0f0f0; border: 1px solid #ccc; padding: 8px 16px; margin: 0 5px; border-radius: 20px; cursor: pointer; font-size: 14px; }
-        .category-btn.active { background: #e91e63; color: white; border-color: #e91e63; }
-        
-        /* Product Grid */
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; max-width: 1200px; margin: auto; }
-        @media (min-width: 600px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (min-width: 900px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-        .product-card { background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
-        .product-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 6px; cursor: pointer; }
-        .product-card h4 { font-size: 13px; margin: 8px 0 4px 0; color: #333; height: 32px; overflow: hidden; }
-        .product-card p { color: #e91e63; font-weight: bold; margin: 4px 0; font-size: 15px; }
-        .card-actions { display: flex; justify-content: space-around; margin: 6px 0; font-size: 16px; color: #666; }
-        .action-icon { cursor: pointer; transition: transform 0.2s; }
-        .action-icon:hover { transform: scale(1.2); }
-        .product-card button.buy-btn { background: #e91e63; color: white; border: none; padding: 8px; border-radius: 4px; font-size: 13px; cursor: pointer; width: 100%; font-weight: bold; }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-        /* Detail Modal */
-        .detail-modal { display: none; position: fixed; z-index: 10002; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
-        .detail-content { background-color: white; padding: 15px; border-radius: 12px; width: 92%; max-width: 450px; position: relative; max-height: 90vh; overflow-y: auto; text-align: left; }
-        
-        .gallery-container { display: flex; overflow-x: auto; gap: 10px; scroll-snap-type: x mandatory; padding-bottom: 10px; }
-        .gallery-container img { min-width: 100%; height: 260px; object-fit: cover; border-radius: 8px; scroll-snap-align: start; }
-        .gallery-dots { text-align: center; font-size: 12px; color: #888; margin-bottom: 10px; }
+    /* =========================
+       HEADER
+       ========================= */
 
-        .product-info-box { border-top: 1px solid #eee; padding-top: 10px; }
-        .product-info-box h3 { margin: 5px 0; font-size: 18px; color: #222; }
-        .product-info-box .price { font-size: 20px; color: #e91e63; font-weight: bold; margin: 5px 0; }
-        .product-info-box .desc { font-size: 13px; color: #555; line-height: 1.5; margin: 10px 0; }
-        .detail-actions { display: flex; gap: 10px; margin-top: 15px; }
-        .btn-flex { flex: 1; padding: 10px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; text-align: center; }
+    header {
+      background: var(--dark-burgundy);
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 18px rgba(0,0,0,.15);
+    }
 
-        /* Checkout Modal */
-        .modal { display: none; position: fixed; z-index: 10001; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
-        .modal-content { background-color: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; position: relative; max-height: 90vh; overflow-y: auto; }
-        .close-btn { position: absolute; right: 15px; top: 10px; font-size: 22px; font-weight: bold; cursor: pointer; color: #888; }
-        .form-group { margin-bottom: 12px; text-align: left; }
-        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 4px; color: #555; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
-        .payment-options { background: #f4f4f4; padding: 10px; border-radius: 4px; margin-bottom: 12px; font-size: 13px; }
-        .payment-options label { display: block; margin-bottom: 8px; cursor: pointer; font-weight: bold; color: #333; }
-        .submit-btn { background: #25D366; color: white; border: none; width: 100%; padding: 10px; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+    .navbar {
+      max-width: 1250px;
+      margin: auto;
+      min-height: 76px;
+      padding: 0 25px;
 
-        footer { background: #333; color: white; text-align: center; padding: 20px; margin-top: 30px; }
-    </style>
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: max-content;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      border: 2px solid white;
+      border-radius: 8px 8px 12px 12px;
+      display: grid;
+      place-items: center;
+      font-size: 21px;
+    }
+
+    .logo-text strong {
+      display: block;
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .logo-text small {
+      color: #ead9dd;
+      font-size: 11px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    nav a {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--gold);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      border: 1px solid rgba(255,255,255,.5);
+      color: white;
+      background: transparent;
+      border-radius: 25px;
+      padding: 9px 15px;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      background: white;
+      color: var(--burgundy);
+    }
+
+    /* =========================
+       HERO
+       ========================= */
+
+    .hero {
+      background:
+        linear-gradient(
+          105deg,
+          var(--cream) 0%,
+          var(--cream) 57%,
+          var(--burgundy) 57%,
+          var(--dark-burgundy) 100%
+        );
+
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-container {
+      width: min(1250px, 92%);
+      margin: auto;
+
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 15px;
+      border-radius: 25px;
+      background: #f2dfe3;
+      color: var(--burgundy);
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: 1.02;
+      color: var(--dark-burgundy);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: var(--burgundy);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 19px;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      background: var(--burgundy);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      border: 2px solid var(--burgundy);
+      transition: .2s;
+    }
+
+    .primary-btn:hover {
+      background: var(--dark-burgundy);
+      transform: translateY(-2px);
+    }
+
+    .secondary-btn {
+      display: inline-block;
+      background: transparent;
+      color: var(--burgundy);
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      border: 2px solid var(--burgundy);
+    }
+
+    .secondary-btn:hover {
+      background: var(--burgundy);
+      color: white;
+    }
+
+    .hero-visual {
+      min-height: 390px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .shopping-box {
+      width: min(420px, 90%);
+      padding: 45px 30px;
+      border-radius: 30px;
+      text-align: center;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.25);
+      box-shadow: 0 25px 60px rgba(0,0,0,.2);
+      color: white;
+    }
+
+    .shopping-icon {
+      font-size: 80px;
+      margin-bottom: 15px;
+    }
+
+    .shopping-box h2 {
+      font-size: 32px;
+    }
+
+    .shopping-box p {
+      color: #f4dfe4;
+      margin-top: 8px;
+    }
+
+    /* =========================
+       TRUST BAR
+       ========================= */
+
+    .trust {
+      width: min(1150px, 92%);
+      margin: -35px auto 0;
+      position: relative;
+      z-index: 5;
+
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 12px 35px rgba(0,0,0,.08);
+
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      overflow: hidden;
+    }
+
+    .trust-item {
+      padding: 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-right: 1px solid var(--border);
+    }
+
+    .trust-item:last-child {
+      border-right: 0;
+    }
+
+    .trust-icon {
+      width: 48px;
+      height: 48px;
+      background: #f4e2e6;
+      color: var(--burgundy);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+    }
+
+    .trust-item strong {
+      display: block;
+      color: var(--burgundy);
+    }
+
+    .trust-item small {
+      color: var(--muted);
+    }
+
+    /* =========================
+       GENERAL SECTIONS
+       ========================= */
+
+    section {
+      padding: 80px 5%;
+    }
+
+    .section-heading {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 45px;
+    }
+
+    .section-heading h2 {
+      color: var(--dark-burgundy);
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+    }
+
+    /* =========================
+       SEARCH
+       ========================= */
+
+    .search-area {
+      max-width: 650px;
+      margin: 0 auto 45px;
+    }
+
+    .search-area input {
+      width: 100%;
+      padding: 17px 22px;
+      border: 1px solid var(--border);
+      border-radius: 35px;
+      background: white;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .search-area input:focus {
+      border-color: var(--burgundy);
+      box-shadow: 0 0 0 4px rgba(109,16,40,.08);
+    }
+
+    /* =========================
+       CATEGORIES
+       ========================= */
+
+    .category-grid {
+      max-width: 1200px;
+      margin: auto;
+
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .category-card {
+      background: white;
+      padding: 30px 22px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      transition: .25s;
+    }
+
+    .category-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--light-burgundy);
+      box-shadow: 0 15px 35px rgba(109,16,40,.1);
+    }
+
+    .category-icon {
+      width: 55px;
+      height: 55px;
+      display: grid;
+      place-items: center;
+      background: var(--burgundy);
+      color: white;
+      border-radius: 50%;
+      font-size: 25px;
+      margin-bottom: 20px;
+    }
+
+    .category-card h3 {
+      color: var(--burgundy);
+      margin-bottom: 8px;
+    }
+
+    .category-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* =========================
+       PRODUCTS
+       ========================= */
+
+    .products-section {
+      background: #f9f1f2;
+    }
+
+    .product-grid {
+      max-width: 1200px;
+      margin: auto;
+
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .product-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: .25s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,.1);
+    }
+
+    .product-image {
+      height: 190px;
+      display: grid;
+      place-items: center;
+      background: #f8eeee;
+      font-size: 65px;
+    }
+
+    .product-info {
+      padding: 20px;
+    }
+
+    .product-info h3 {
+      margin-bottom: 5px;
+    }
+
+    .product-info p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      color: var(--burgundy);
+      font-size: 21px;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .buy-btn {
+      display: block;
+      text-align: center;
+      background: var(--burgundy);
+      color: white;
+      padding: 10px;
+      border-radius: 25px;
+      font-weight: 700;
+    }
+
+    .buy-btn:hover {
+      background: var(--dark-burgundy);
+    }
+
+    /* =========================
+       CONTACT
+       ========================= */
+
+    .contact-box {
+      max-width: 1150px;
+      margin: auto;
+      background: var(--dark-burgundy);
+      color: white;
+      padding: 45px;
+      border-radius: 25px;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .contact-box h2 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .contact-box p {
+      color: #ead9dd;
+    }
+
+    .contact-details {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-item {
+      background: rgba(255,255,255,.08);
+      padding: 14px 18px;
+      border-radius: 12px;
+    }
+
+    .contact-item strong {
+      color: var(--gold);
+    }
+
+    .whatsapp {
+      display: inline-block;
+      background: var(--green);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: 700;
+      margin-top: 15px;
+    }
+
+    /* =========================
+       FOOTER
+       ========================= */
+
+    footer {
+      background: #2b050f;
+      color: #eee;
+      padding: 40px 5% 25px;
+    }
+
+    .footer-content {
+      max-width: 1150px;
+      margin: auto;
+
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    footer h3 {
+      color: white;
+      margin-bottom: 12px;
+    }
+
+    footer p,
+    footer a {
+      color: #cdbfc2;
+      font-size: 14px;
+    }
+
+    footer a {
+      display: block;
+      margin: 6px 0;
+    }
+
+    footer a:hover {
+      color: var(--gold);
+    }
+
+    .copyright {
+      max-width: 1150px;
+      margin: 30px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      text-align: center;
+      color: #cdbfc2;
+      font-size: 13px;
+    }
+
+    .copyright span {
+      color: var(--gold);
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 900px) {
+
+      .navbar {
+        flex-wrap: wrap;
+        padding: 15px 20px;
+      }
+
+      nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .hero {
+        background: var(--cream);
+        padding: 65px 5%;
+      }
+
+      .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .category-grid,
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .trust {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .contact-box {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 550px) {
+
+      .logo-text strong {
+        font-size: 22px;
+      }
+
+      .nav-actions {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 45px;
+      }
+
+      .category-grid,
+      .product-grid,
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 60px 5%;
+      }
+
+      .contact-box {
+        padding: 30px 22px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <!-- Auth Modal -->
-    <div id="authOverlay">
-        <div class="auth-box">
-            <div class="auth-tabs">
-                <button type="button" class="tab-btn active" id="loginTabBtn">Login</button>
-                <button type="button" class="tab-btn" id="signupTabBtn">Sign Up</button>
-            </div>
+  <!-- =========================
+       HEADER
+       ========================= -->
 
-            <div id="loginForm">
-                <input type="email" id="loginEmail" class="auth-input" placeholder="Email Address">
-                <input type="password" id="loginPassword" class="auth-input" placeholder="Password">
-                <button type="button" class="auth-btn" id="loginSubmitBtn">Login to Store</button>
-                <a class="forgot-link" id="forgotPassBtn">Forgot Password?</a>
-            </div>
+  <header>
+    <div class="navbar">
 
-            <div id="signupForm" style="display:none;">
-                <input type="text" id="signupName" class="auth-input" placeholder="Full Name">
-                <input type="tel" id="signupPhone" class="auth-input" placeholder="Mobile Number" maxlength="10">
-                <input type="email" id="signupEmail" class="auth-input" placeholder="Email Address">
-                <input type="password" id="signupPassword" class="auth-input" placeholder="Create Password">
-                <button type="button" class="auth-btn" id="signupSubmitBtn">Register & Continue</button>
-            </div>
+      <a href="#" class="logo">
+        <div class="logo-icon">🛍</div>
+
+        <div class="logo-text">
+          <strong>DG Store</strong>
+          <small>Your One Stop Shopping Destination</small>
         </div>
+      </a>
+
+      <nav>
+        <a href="#home" class="active">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="#categories">Categories</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-btn" onclick="showMessage('Search coming soon')">
+          🔍
+        </button>
+
+        <button class="nav-btn" onclick="showMessage('Cart is currently empty')">
+          🛒
+        </button>
+      </div>
+
     </div>
+  </header>
 
-    <!-- Main Store Content -->
-    <div id="mainContent">
-        <header>
-            <div class="header-btns">
-                <button class="top-btn" onclick="shareApp()">🔗 Share App</button>
-                <button class="top-btn" onclick="logoutUser()">Logout</button>
-            </div>
-            <h1>Online Shopping Store</h1>
-            <p>Explore Beauty & Electronics Essentials (Under ₹1,000)</p>
-        </header>
 
-        <div class="contact-info">
-            Call Us: <a href="tel:8859058786">8859058786</a> | 
-            Email: <a href="mailto:aliarham252@gmail.com">aliarham252@gmail.com</a>
+  <!-- =========================
+       HERO
+       ========================= -->
+
+  <main id="home">
+
+    <section class="hero">
+
+      <div class="hero-container">
+
+        <div class="hero-content">
+
+          <span class="badge">✦ Trusted Online Store</span>
+
+          <h1>
+            Online
+            <span>Shopping Store</span>
+          </h1>
+
+          <p>
+            Discover quality electronics, beauty products and
+            everyday essentials — all in one place.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#shop" class="primary-btn">
+              Shop Now →
+            </a>
+
+            <a href="#contact" class="secondary-btn">
+              Contact Us
+            </a>
+          </div>
+
         </div>
 
-        <div class="customer-service-bar">
-            <h4>💬 Need Assistance? Contact Customer Service</h4>
-            <a href="https://wa.me/918859058786?text=Hi,%20I%20need%20help" class="cs-btn" target="_blank">Chat on WhatsApp</a>
-            <a href="tel:8859058786" class="cs-btn call-btn">Call Helpline</a>
-        </div>
+        <div class="hero-visual">
 
-        <!-- Live Tracking Card -->
-        <div class="tracking-card" id="trackingCard">
-            <div class="tracking-header">
-                <div>
-                    <h3>✅ Order Confirmed!</h3>
-                    <span style="font-size: 12px; color: #777;">Order ID: <strong id="trackOrderId">#ORD10248</strong></span>
-                </div>
-                <div style="text-align: right;">
-                    <span style="font-size: 12px; color: #555;">Estimated Delivery</span><br>
-                    <span class="delivery-date" id="deliveryDateText">In 4 Days</span>
-                </div>
-            </div>
+          <div class="shopping-box">
 
-            <p style="margin: 5px 0 15px 0; font-size: 14px; color: #333;">
-                Product: <strong id="trackProductName">-</strong> | Quantity: <strong id="trackProductQty">1</strong>
+            <div class="shopping-icon">🛍️</div>
+
+            <h2>DG Store</h2>
+
+            <p>
+              Shop Smart. Shop Simply.
             </p>
 
-            <div class="timeline-container">
-                <div class="timeline-progress"></div>
-                <div class="step completed">
-                    <div class="step-icon">✓</div>
-                    <div class="step-label">Ordered</div>
-                </div>
-                <div class="step active">
-                    <div class="step-icon">📦</div>
-                    <div class="step-label">Shipped</div>
-                </div>
-                <div class="step">
-                    <div class="step-icon">🚚</div>
-                    <div class="step-label">Out for Delivery</div>
-                </div>
-                <div class="step">
-                    <div class="step-icon">🏠</div>
-                    <div class="step-label">Delivered</div>
-                </div>
-            </div>
+            <p>
+              Electronics • Beauty • Essentials
+            </p>
 
-            <div class="rating-box">
-                <h5 style="margin: 0 0 5px 0; color: #444; font-size: 14px;">Once Received, Rate Your Product</h5>
-                <div class="star-rating" id="starContainer">
-                    <span onclick="setStars(1)" class="selected">★</span>
-                    <span onclick="setStars(2)" class="selected">★</span>
-                    <span onclick="setStars(3)" class="selected">★</span>
-                    <span onclick="setStars(4)" class="selected">★</span>
-                    <span onclick="setStars(5)" class="selected">★</span>
-                </div>
-                <textarea id="reviewText" class="review-input" placeholder="Write your review..." rows="2"></textarea><br>
-                <button class="rate-btn" onclick="submitRating()">Submit Review</button>
-            </div>
+          </div>
+
         </div>
 
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search beauty or electronic items..." onkeyup="filterProducts()">
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         TRUST
+         ========================= -->
+
+    <div class="trust">
+
+      <div class="trust-item">
+        <div class="trust-icon">✓</div>
+
+        <div>
+          <strong>Trusted Store</strong>
+          <small>Quality products</small>
         </div>
+      </div>
 
-        <div class="category-filter">
-            <button class="category-btn active" onclick="setCategory('all', this)">All Items (100)</button>
-            <button class="category-btn" onclick="setCategory('beauty', this)">Beauty (50)</button>
-            <button class="category-btn" onclick="setCategory('electronics', this)">Electronics (50)</button>
+      <div class="trust-item">
+        <div class="trust-icon">🚚</div>
+
+        <div>
+          <strong>Fast Delivery</strong>
+          <small>Safe & reliable</small>
         </div>
+      </div>
 
-        <div class="product-grid" id="productGrid"></div>
+      <div class="trust-item">
+        <div class="trust-icon">☎</div>
 
-        <!-- Zoom Detail Modal -->
-        <div id="detailModal" class="detail-modal">
-            <div class="detail-content">
-                <span class="close-btn" onclick="closeDetailModal()">&times;</span>
-                <div class="gallery-container" id="gallerySlider"></div>
-                <div class="gallery-dots">👈 Scroll photos horizontally to view more 👉</div>
-                
-                <div class="product-info-box">
-                    <h3 id="modalProductName">Product Title</h3>
-                    <div class="price" id="modalProductPrice">₹0</div>
-                    <p class="desc" id="modalProductDesc">Authentic premium product under ₹1000. Free Cash on Delivery available with 100% Quality Assurance.</p>
-                    
-                    <div class="detail-actions">
-                        <button class="btn-flex" style="background:#f0f0f0;" onclick="toggleModalLike(this)">❤️ Like</button>
-                        <button class="btn-flex" style="background:#25D366; color:white;" onclick="shareSingleProduct()">↗️ Share Item</button>
-                        <button class="btn-flex" style="background:#e91e63; color:white;" id="modalBuyBtn">Buy Now</button>
-                    </div>
-                </div>
-            </div>
+        <div>
+          <strong>Customer Support</strong>
+          <small>We're here to help</small>
         </div>
+      </div>
 
-        <!-- Order Form Modal (WhatsApp & Direct Email Enabled) -->
-        <div id="orderModal" class="modal">
-            <div class="modal-content">
-                <span class="close-btn" onclick="closeOrderModal()">&times;</span>
-                <h3>Customer Delivery Details</h3>
-                
-                <form id="orderCheckoutForm" action="https://formsubmit.co/aliarham252@gmail.com" method="POST" onsubmit="sendOrder(event)">
-                    <input type="hidden" name="_subject" value="New Order Placed on Store!">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_captcha" value="false">
-
-                    <input type="hidden" id="selectedProductName" name="Product Name">
-                    <input type="hidden" id="selectedProductPrice" name="Unit Price">
-
-                    <div class="form-group">
-                        <label for="custName">Full Name *</label>
-                        <input type="text" id="custName" name="Customer Name" placeholder="Enter your name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="custPhone">Mobile Number *</label>
-                        <input type="tel" id="custPhone" name="Mobile Number" placeholder="Enter 10-digit mobile number" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="custEmail">Email Address *</label>
-                        <input type="email" id="custEmail" name="Email Address" placeholder="Enter your email" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="custAddress">Full Address *</label>
-                        <textarea id="custAddress" name="Full Address" rows="2" placeholder="House/Street/Locality" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="custPincode">Pincode *</label>
-                        <input type="text" id="custPincode" name="Pincode" placeholder="Enter 6-digit Pincode" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="custQty">Select Quantity *</label>
-                        <select id="custQty" name="Quantity" required>
-                            <option value="1" selected>1 Item</option>
-                            <option value="2">2 Items</option>
-                            <option value="3">3 Items</option>
-                            <option value="4">4 Items</option>
-                            <option value="5">5 Items</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Select Payment Method *</label>
-                        <div class="payment-options">
-                            <label>
-                                <input type="radio" name="Payment Method" value="UPI Online (Pay ₹13 Advance, Rest COD)" checked> 
-                                🌐 Online UPI Payment (Pay ₹13 Advance, Rest COD)
-                            </label>
-                            <label style="margin-bottom: 0;">
-                                <input type="radio" name="Payment Method" value="Full Cash on Delivery (COD)"> 
-                                💵 Full Cash on Delivery (COD)
-                            </label>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="submit-btn">Proceed to Order & Send on WhatsApp</button>
-                </form>
-            </div>
-        </div>
-
-        <footer>
-            <h3>Customer Support</h3>
-            <p>Helpline: 8859058786 | Email: aliarham252@gmail.com</p>
-            <p style="font-size: 12px; color: #aaa; margin-top: 10px;">&copy; 2026 Online Shopping Store. All Rights Reserved.</p>
-        </footer>
     </div>
 
-    <script>
-        let currentCategory = 'all';
-        let selectedStarCount = 5;
-        let activeProductForShare = "";
 
-        document.addEventListener("DOMContentLoaded", function() {
-            loadProducts();
+    <!-- =========================
+         CATEGORIES
+         ========================= -->
 
-            let savedUser = localStorage.getItem("storeUser");
-            let isLoggedIn = localStorage.getItem("isLoggedIn");
+    <section id="categories">
 
-            if (isLoggedIn === "true" && savedUser) {
-                let userObj = JSON.parse(savedUser);
-                grantAccess(userObj.name, userObj.phone, userObj.email);
-            }
+      <div class="section-heading">
 
-            document.getElementById("loginTabBtn").addEventListener("click", function() {
-                document.getElementById("loginForm").style.display = "block";
-                document.getElementById("signupForm").style.display = "none";
-                document.getElementById("loginTabBtn").classList.add("active");
-                document.getElementById("signupTabBtn").classList.remove("active");
-            });
+        <h2>Shop by Category</h2>
 
-            document.getElementById("signupTabBtn").addEventListener("click", function() {
-                document.getElementById("loginForm").style.display = "none";
-                document.getElementById("signupForm").style.display = "block";
-                document.getElementById("signupTabBtn").classList.add("active");
-                document.getElementById("loginTabBtn").classList.remove("active");
-            });
+        <p>
+          Explore our most popular shopping categories.
+        </p>
 
-            document.getElementById("signupSubmitBtn").addEventListener("click", function() {
-                let name = document.getElementById("signupName").value.trim();
-                let phone = document.getElementById("signupPhone").value.trim();
-                let email = document.getElementById("signupEmail").value.trim();
-                let pass = document.getElementById("signupPassword").value.trim();
+      </div>
 
-                if(name === "" || phone.length < 10 || email === "" || pass === "") {
-                    alert("Please fill all details correctly.");
-                    return;
-                }
+      <div class="category-grid">
 
-                let userData = { name, phone, email, password: pass };
-                localStorage.setItem("storeUser", JSON.stringify(userData));
-                localStorage.setItem("isLoggedIn", "true");
+        <div class="category-card">
+          <div class="category-icon">🛍</div>
+          <h3>All Items</h3>
+          <p>Explore our complete range of products.</p>
+        </div>
 
-                alert("Signup successful!");
-                grantAccess(name, phone, email);
-            });
+        <div class="category-card">
+          <div class="category-icon">📱</div>
+          <h3>Electronics</h3>
+          <p>Useful gadgets and electronics at great prices.</p>
+        </div>
 
-            document.getElementById("loginSubmitBtn").addEventListener("click", function() {
-                let email = document.getElementById("loginEmail").value.trim();
-                let pass = document.getElementById("loginPassword").value.trim();
+        <div class="category-card">
+          <div class="category-icon">💄</div>
+          <h3>Beauty & Care</h3>
+          <p>Beauty and personal-care products.</p>
+        </div>
 
-                if(email === "" || pass === "") {
-                    alert("Please enter email and password.");
-                    return;
-                }
+        <div class="category-card">
+          <div class="category-icon">🏠</div>
+          <h3>Essentials</h3>
+          <p>Everyday products for your home and life.</p>
+        </div>
 
-                let savedUser = localStorage.getItem("storeUser");
-                if(!savedUser) {
-                    alert("No account found! Please sign up first.");
-                    return;
-                }
+      </div>
 
-                let userObj = JSON.parse(savedUser);
-                if(userObj.email === email && userObj.password === pass) {
-                    localStorage.setItem("isLoggedIn", "true");
-                    grantAccess(userObj.name, userObj.phone, userObj.email);
-                } else {
-                    alert("Invalid email or password!");
-                }
-            });
-        });
+    </section>
 
-        function grantAccess(name, phone, email) {
-            document.getElementById("authOverlay").style.display = "none";
-            document.getElementById("mainContent").style.display = "block";
 
-            document.getElementById("custName").value = name;
-            document.getElementById("custPhone").value = phone;
-            document.getElementById("custEmail").value = email;
+    <!-- =========================
+         PRODUCTS
+         ========================= -->
+
+    <section id="shop" class="products-section">
+
+      <div class="section-heading">
+
+        <h2>Featured Products</h2>
+
+        <p>
+          Some popular products from DG Store.
+        </p>
+
+      </div>
+
+      <div class="search-area">
+
+        <input
+          type="search"
+          id="productSearch"
+          placeholder="Search products..."
+          onkeyup="searchProducts()"
+        >
+
+      </div>
+
+      <div class="product-grid" id="productGrid">
+
+        <div class="product-card" data-name="wireless earbuds electronics">
+
+          <div class="product-image">
+            🎧
+          </div>
+
+          <div class="product-info">
+
+            <h3>Wireless Earbuds</h3>
+
+            <p>Compact wireless audio.</p>
+
+            <div class="price">₹499</div>
+
+            <a href="#contact" class="buy-btn">
+              Enquire Now
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <div class="product-card" data-name="smart watch electronics">
+
+          <div class="product-image">
+            ⌚
+          </div>
+
+          <div class="product-info">
+
+            <h3>Smart Watch</h3>
+
+            <p>Smart everyday companion.</p>
+
+            <div class="price">₹799</div>
+
+            <a href="#contact" class="buy-btn">
+              Enquire Now
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <div class="product-card" data-name="beauty skincare">
+
+          <div class="product-image">
+            💄
+          </div>
+
+          <div class="product-info">
+
+            <h3>Beauty Essentials</h3>
+
+            <p>Everyday beauty products.</p>
+
+            <div class="price">₹299</div>
+
+            <a href="#contact" class="buy-btn">
+              Enquire Now
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <div class="product-card" data-name="home essentials">
+
+          <div class="product-image">
+            🏠
+          </div>
+
+          <div class="product-info">
+
+            <h3>Home Essentials</h3>
+
+            <p>Useful products for everyday life.</p>
+
+            <div class="price">₹399</div>
+
+            <a href="#contact" class="buy-btn">
+              Enquire Now
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTACT
+         ========================= -->
+
+    <section id="contact">
+
+      <div class="contact-box">
+
+        <div>
+
+          <h2>Need Assistance?</h2>
+
+          <p>
+            Have a question about a product?
+            Contact DG Store and our team will help you.
+          </p>
+
+          <!-- Replace this number with the real store number -->
+          <a
+            class="whatsapp"
+            href="https://wa.me/"
+            target="_blank"
+          >
+            💬 Chat on WhatsApp
+          </a>
+
+        </div>
+
+
+        <div class="contact-details">
+
+          <!-- Replace these with the real details -->
+
+          <div class="contact-item">
+            <strong>📞 Phone</strong><br>
+            Add store phone number
+          </div>
+
+          <div class="contact-item">
+            <strong>✉ Email</strong><br>
+            Add store email
+          </div>
+
+          <div class="contact-item">
+            <strong>🕘 Support</strong><br>
+            Customer assistance available
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+       ========================= -->
+
+  <footer>
+
+    <div class="footer-content">
+
+      <div>
+
+        <h3>DG Store</h3>
+
+        <p>
+          Your one-stop destination for electronics,
+          beauty products and everyday essentials.
+        </p>
+
+      </div>
+
+      <div>
+
+        <h3>Quick Links</h3>
+
+        <a href="#home">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="#categories">Categories</a>
+        <a href="#contact">Contact</a>
+
+      </div>
+
+      <div>
+
+        <h3>Categories</h3>
+
+        <a href="#shop">Electronics</a>
+        <a href="#shop">Beauty & Care</a>
+        <a href="#shop">Essentials</a>
+
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 DG Store. All rights reserved.
+      <br>
+      <span>Your Satisfaction • Our Priority</span>
+    </div>
+
+  </footer>
+
+
+  <!-- =========================
+       JAVASCRIPT
+       ========================= -->
+
+  <script>
+
+    function searchProducts() {
+
+      const search =
+        document
+          .getElementById("productSearch")
+          .value
+          .toLowerCase();
+
+      const products =
+        document.querySelectorAll(".product-card");
+
+      products.forEach(function(product) {
+
+        const name =
+          product
+            .getAttribute("data-name")
+            .toLowerCase();
+
+        if (name.includes(search)) {
+          product.style.display = "";
+        } else {
+          product.style.display = "none";
         }
 
-        function logoutUser() {
-            localStorage.setItem("isLoggedIn", "false");
-            location.reload();
-        }
+      });
 
-        function shareApp() {
-            let appUrl = window.location.href;
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Online Shopping Store',
-                    text: 'Check out Beauty and Electronics under ₹1,000!',
-                    url: appUrl
-                });
-            } else {
-                navigator.clipboard.writeText(appUrl);
-                alert("Store App Link copied to clipboard!\n" + appUrl);
-            }
-        }
+    }
 
-        function loadProducts() {
-            let grid = document.getElementById('productGrid');
-            if(!grid) return;
-            let htmlContent = '';
 
-            let beautyNames = ["Herbal Face Cream", "Lipstick Matte Pink", "Night Repair Serum", "Sunscreen Gel SPF 50", "Hair Growth Oil", "Eyeliner Waterproof", "Vitamin C Face Wash", "Rose Water Toner", "Moisturizing Lotion", "Nail Polish Combo"];
-            let beautyImages = ["1522337360788-8b13dee7a37e", "1512496015851-a90fb38ba796", "1571781926291-c477ebfd024b", "1535585209827-a15fcdbc4c2d", "1556228720-195a672e8a03", "1526947425960-945c6e72858f", "1598440947619-2c35fc9aa908", "1608248597359-f5383a54b395", "1516975080664-ed2fc6a32937"];
+    function showMessage(message) {
+      alert(message);
+    }
 
-            let elecNames = ["Bluetooth Wireless Earbuds", "Smart Fitness Band", "Mini USB Desk Fan", "Fast Charging Cable", "Portable Power Bank 10000mAh", "RGB Gaming Mouse", "Noise Cancelling Earphones", "LED Desk Light", "Wireless Speaker", "Phone Holder Stand"];
-            let electronicImages = ["1505740420928-5e560c06d30e", "1526738549149-8e07eca6c147", "1546868871-7041f2a55e12", "1585790050230-5dd28404ccb9", "1511707171634-5f897ff02aa9", "1550745165-9bc0b252726f", "1523275335684-37898b6baf30", "1593305841991-05c297ba4575", "1588872657578-7efd1f1555ed"];
+  </script>
 
-            for (let i = 1; i <= 50; i++) {
-                let price = 149 + ((i - 1) * 12);
-                let pName = beautyNames[(i - 1) % beautyNames.length] + " Vol " + Math.ceil(i/10);
-                let mainImg = beautyImages[(i - 1) % beautyImages.length];
-                let imgList = [
-                    `https://images.unsplash.com/photo-${mainImg}?w=500`,
-                    `https://images.unsplash.com/photo-${beautyImages[i % beautyImages.length]}?w=500`,
-                    `https://images.unsplash.com/photo-${beautyImages[(i+1) % beautyImages.length]}?w=500`
-                ];
-
-                htmlContent += `
-                    <div class="product-card" data-category="beauty" data-name="${pName}">
-                        <img src="${imgList[0]}" alt="${pName}" onclick='openDetailModal("${pName}", ${price}, ${JSON.stringify(imgList)})'>
-                        <h4>${pName}</h4>
-                        <p>₹${price}</p>
-                        <div class="card-actions">
-                            <span class="action-icon" onclick="toggleLike(this)">🤍</span>
-                            <span class="action-icon" onclick="shareItemDirect('${pName}')">↗️</span>
-                        </div>
-                        <button class="buy-btn" onclick="openOrderModal('${pName}', ${price})">Buy Now</button>
-                    </div>
-                `;
-            }
-
-            for (let i = 1; i <= 50; i++) {
-                let price = 249 + ((i - 1) * 14);
-                let pName = elecNames[(i - 1) % elecNames.length] + " Pro " + Math.ceil(i/10);
-                let mainImg = electronicImages[(i - 1) % electronicImages.length];
-                let imgList = [
-                    `https://images.unsplash.com/photo-${mainImg}?w=500`,
-                    `https://images.unsplash.com/photo-${electronicImages[i % electronicImages.length]}?w=500`,
-                    `https://images.unsplash.com/photo-${electronicImages[(i+1) % electronicImages.length]}?w=500`
-                ];
-
-                htmlContent += `
-                    <div class="product-card" data-category="electronics" data-name="${pName}">
-                        <img src="${imgList[0]}" alt="${pName}" onclick='openDetailModal("${pName}", ${price}, ${JSON.stringify(imgList)})'>
-                        <h4>${pName}</h4>
-                        <p>₹${price}</p>
-                        <div class="card-actions">
-                            <span class="action-icon" onclick="toggleLike(this)">🤍</span>
-                            <span class="action-icon" onclick="shareItemDirect('${pName}')">↗️</span>
-                        </div>
-                        <button class="buy-btn" onclick="openOrderModal('${pName}', ${price})">Buy Now</button>
-                    </div>
-                `;
-            }
-
-            grid.innerHTML = htmlContent;
-        }
-
-        function openDetailModal(name, price, images) {
-            activeProductForShare = name;
-            document.getElementById("modalProductName").innerText = name;
-            document.getElementById("modalProductPrice").innerText = "₹" + price;
-
-            let slider = document.getElementById("gallerySlider");
-            let imgHTML = "";
-            images.forEach(url => {
-                imgHTML += `<img src="${url}" alt="${name}">`;
-            });
-            slider.innerHTML = imgHTML;
-
-            document.getElementById("modalBuyBtn").onclick = function() {
-                closeDetailModal();
-                openOrderModal(name, price);
-            };
-
-            document.getElementById("detailModal").style.display = "flex";
-        }
-
-        function closeDetailModal() {
-            document.getElementById("detailModal").style.display = "none";
-        }
-
-        function toggleLike(element) {
-            element.innerText = (element.innerText === "🤍") ? "❤️" : "🤍";
-        }
-
-        function toggleModalLike(btn) {
-            btn.innerText = btn.innerText.includes("❤️") ? "🤍 Liked" : "❤️ Like";
-        }
-
-        function shareItemDirect(pName) {
-            let message = `Check out this product: ${pName} on our store! ${window.location.href}`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
-        }
-
-        function shareSingleProduct() {
-            shareItemDirect(activeProductForShare);
-        }
-
-        function setCategory(cat, btn) {
-            currentCategory = cat;
-            let btns = document.getElementsByClassName('category-btn');
-            for (let b of btns) b.classList.remove('active');
-            btn.classList.add('active');
-            filterProducts();
-        }
-
-        function filterProducts() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.getElementsByClassName('product-card');
-
-            for (let i = 0; i < cards.length; i++) {
-                let name = cards[i].getAttribute('data-name').toLowerCase();
-                let category = cards[i].getAttribute('data-category');
-                
-                let matchesCategory = (currentCategory === 'all' || category === currentCategory);
-                let matchesSearch = name.includes(input);
-
-                cards[i].style.display = (matchesCategory && matchesSearch) ? "" : "none";
-            }
-        }
-
-        function openOrderModal(productName, productPrice) {
-            document.getElementById('selectedProductName').value = productName;
-            document.getElementById('selectedProductPrice').value = productPrice;
-            document.getElementById('custQty').value = "1";
-            document.getElementById('orderModal').style.display = 'flex';
-        }
-
-        function closeOrderModal() {
-            document.getElementById('orderModal').style.display = 'none';
-        }
-
-        function sendOrder(event) {
-            // 🚀 FormSubmit API + Direct WhatsApp Redirection
-            let pName = document.getElementById('selectedProductName').value;
-            let unitPrice = parseInt(document.getElementById('selectedProductPrice').value);
-            let qty = parseInt(document.getElementById('custQty').value);
-            let totalPrice = unitPrice * qty;
-
-            let name = document.getElementById('custName').value;
-            let phone = document.getElementById('custPhone').value;
-            let email = document.getElementById('custEmail').value;
-            let address = document.getElementById('custAddress').value;
-            let pincode = document.getElementById('custPincode').value;
-            let payMethod = document.querySelector('input[name="Payment Method"]:checked').value;
-
-            let randomOrderId = "#ORD" + Math.floor(10000 + Math.random() * 90000);
-            
-            let today = new Date();
-            today.setDate(today.getDate() + 4);
-            let deliveryDateStr = today.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-
-            // 📲 WhatsApp URL Generation
-            let whatsappMessage = `*NEW ORDER DETAILS*%0A%0A` +
-                                  `*Order ID:* ${randomOrderId}%0A` +
-                                  `*Product:* ${pName}%0A` +
-                                  `*Quantity:* ${qty}%0A` +
-                                  `*Total Amount:* ₹${totalPrice}%0A` +
-                                  `*Payment Mode:* ${payMethod}%0A%0A` +
-                                  `*Customer Name:* ${name}%0A` +
-                                  `*Mobile:* ${phone}%0A` +
-                                  `*Email:* ${email}%0A` +
-                                  `*Address:* ${address}%0A` +
-                                  `*Pincode:* ${pincode}`;
-
-            let whatsappUrl = `https://wa.me/918859058786?text=${whatsappMessage}`;
-
-            // UPI Redirect if chosen
-            if (payMethod.includes('UPI')) {
-                let upiUrl = `upi://pay?pa=8859058786@paytm&pn=OnlineStore&am=13&cu=INR&tn=Advance%20Payment%20for%20${encodeURIComponent(pName)}`;
-                window.location.href = upiUrl;
-            }
-
-            // Show Live Tracking Screen
-            document.getElementById('trackOrderId').innerText = randomOrderId;
-            document.getElementById('trackProductName').innerText = pName;
-            document.getElementById('trackProductQty').innerText = qty;
-            document.getElementById('deliveryDateText').innerText = deliveryDateStr;
-            document.getElementById('trackingCard').style.display = 'block';
-
-            document.getElementById('trackingCard').scrollIntoView({ behavior: 'smooth' });
-
-            // 📲 Instantly open WhatsApp with all filled details
-            window.open(whatsappUrl, '_blank');
-
-            // Close Modal Window
-            closeOrderModal();
-        }
-
-        function setStars(count) {
-            selectedStarCount = count;
-            let stars = document.getElementById('starContainer').children;
-            for (let i = 0; i < stars.length; i++) {
-                if (i < count) {
-                    stars[i].classList.add('selected');
-                } else {
-                    stars[i].classList.remove('selected');
-                }
-            }
-        }
-
-        function submitRating() {
-            let pName = document.getElementById('trackProductName').innerText;
-            let orderId = document.getElementById('trackOrderId').innerText;
-            let review = document.getElementById('reviewText').value;
-
-            let reviewMessage = `*PRODUCT RATING & REVIEW*%0A%0A` +
-                                `*Order ID:* ${orderId}%0A` +
-                                `*Product:* ${pName}%0A` +
-                                `*Rating:* ${selectedStarCount} / 5 Stars ⭐%0A` +
-                                `*Review:* ${review || 'No written review'}`;
-
-            let whatsappUrl = `https://wa.me/918859058786?text=${reviewMessage}`;
-            window.open(whatsappUrl, '_blank');
-            alert("Thank you for your rating!");
-        }
-    </script>
 </body>
 </html>
