@@ -3,2345 +3,367 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#681329">
+<meta name="description" content="Shop beauty, skincare, electronics and everyday products at DG Store.">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/dg-store-icon.svg" type="image/svg+xml">
 <title>DG Store | Official Online Store</title>
+<style>
+:root{--burgundy:#681329;--dark:#420817;--light:#f4e9e9;--cream:#fbf7f3;--white:#fff;--ink:#171316;--gray:#716a6c;--border:#e6d9dc;--green:#137a55;--gold:#c6a15c;--shadow:0 10px 35px rgba(50,8,20,.09)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--ink)}button,input,textarea,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+header{position:sticky;top:0;z-index:1000;height:72px;background:var(--dark);color:white;box-shadow:0 3px 20px #0002}.header{max-width:1200px;height:100%;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between}.logo{display:flex;align-items:center;gap:11px}.logo-icon{width:40px;height:40px;border:2px solid white;border-radius:9px;display:grid;place-items:center;font-size:20px}.logo-name{font-size:24px;font-weight:800}.logo-sub{font-size:10px;color:#e6d8dc}.desktop-nav{display:flex;gap:27px}.desktop-nav a{font-size:14px;font-weight:600}.desktop-nav a:hover{color:var(--gold)}.menu-btn{width:44px;height:44px;border:1px solid #ffffff66;border-radius:9px;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.menu-btn span{width:21px;height:2px;background:white;border-radius:3px}
+.overlay{position:fixed;inset:0;background:#0007;z-index:2000;display:none}.overlay.show{display:block}.side-menu{position:fixed;top:0;right:-380px;width:360px;max-width:90%;height:100dvh;background:white;z-index:3000;transition:.3s;box-shadow:-10px 0 40px #0003;overflow:auto}.side-menu.show{right:0}.menu-head{height:72px;padding:0 20px;background:var(--dark);color:white;display:flex;align-items:center;justify-content:space-between}.close-btn,.modal-close{width:38px;height:38px;border:1px solid #ffffff66;background:transparent;color:white;border-radius:8px;font-size:23px}.menu-items{padding:15px}.menu-item{width:100%;border:0;background:white;padding:13px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-weight:600;text-align:left}.menu-item:hover{background:var(--light);color:var(--burgundy)}.menu-left{display:flex;align-items:center;gap:13px}.menu-icon{width:36px;height:36px;border-radius:8px;background:#f3e4e7;display:grid;place-items:center;color:var(--burgundy)}.count{min-width:25px;height:25px;padding:0 7px;background:var(--burgundy);color:white;border-radius:20px;display:grid;place-items:center;font-size:12px}
+.hero{min-height:470px;background:linear-gradient(105deg,var(--cream) 0%,var(--cream) 61%,var(--burgundy) 61%,var(--dark) 100%);display:flex;align-items:center}.hero-inner{width:min(1150px,90%);margin:auto;display:grid;grid-template-columns:1fr .8fr;gap:50px;align-items:center}.hero-label{display:inline-block;background:#f1dfe3;color:var(--burgundy);padding:8px 14px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:20px}.hero h1{color:var(--dark);font-size:clamp(44px,6vw,70px);line-height:1;letter-spacing:-2px;margin-bottom:20px}.hero h1 span{color:var(--burgundy)}.hero p{color:var(--gray);max-width:580px;font-size:18px;margin-bottom:25px}.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}.primary,.secondary{display:inline-block;padding:13px 23px;border-radius:28px;font-weight:700}.primary{background:var(--burgundy);color:white;border:1px solid var(--burgundy)}.secondary{background:transparent;color:var(--burgundy);border:1px solid var(--burgundy)}.primary:hover{background:var(--dark)}.secondary:hover{background:var(--burgundy);color:white}.hero-box{height:300px;border-radius:28px;background:#ffffff1a;border:1px solid #ffffff40;display:grid;place-items:center;text-align:center;color:white;box-shadow:0 25px 60px #0003}.hero-box .bag{font-size:80px;margin-bottom:12px}.hero-box h2{font-size:30px}.hero-box p{color:#ead9dd;margin-top:5px;font-size:14px}
+.search-wrap{width:min(750px,90%);margin:30px auto}.search{width:100%;padding:16px 22px;border:1px solid var(--border);border-radius:30px;outline:none;background:white;font-size:15px;box-shadow:0 5px 20px #0001}.search:focus{border-color:var(--burgundy)}.section{padding:65px 5%}.heading{text-align:center;max-width:650px;margin:0 auto 35px}.heading h2{color:var(--dark);font-size:34px;margin-bottom:8px}.heading p{color:var(--gray)}.categories,.products{max-width:1150px;margin:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.category{background:white;border:1px solid var(--border);padding:24px 20px;border-radius:17px;transition:.2s}.category:hover,.product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.category-icon{width:52px;height:52px;background:#f3e3e7;color:var(--burgundy);border-radius:50%;display:grid;place-items:center;font-size:22px;margin-bottom:14px}.category h3{color:var(--burgundy);margin-bottom:6px}.category p{color:var(--gray);font-size:13px}.products-section{background:#f7eeee}.product{position:relative;background:white;border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.2s}.product-img{width:100%;height:205px;object-fit:cover;display:block;background:#eee}.wishlist{position:absolute;right:12px;top:12px;width:38px;height:38px;border:0;border-radius:50%;background:white;color:var(--burgundy);font-size:20px;box-shadow:0 4px 15px #0002}.wishlist.active{background:var(--burgundy);color:white}.product-info{padding:17px}.product-info h3{font-size:17px;margin-bottom:6px}.product-info p{color:var(--gray);font-size:13px;line-height:1.45;min-height:36px;margin-bottom:10px}.price{color:var(--burgundy);font-size:21px;font-weight:800;margin-bottom:13px}.product-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cart-btn,.buy-btn,.small-btn{padding:10px 6px;border-radius:8px;font-size:12px;font-weight:700}.cart-btn{border:1px solid var(--burgundy);color:var(--burgundy);background:white}.buy-btn{border:1px solid var(--burgundy);background:var(--burgundy);color:white}.buy-btn:hover{background:var(--dark)}.empty-products{grid-column:1/-1;text-align:center;color:var(--gray);padding:30px}
+.modal{position:fixed;inset:0;background:#0009;z-index:4000;display:none;align-items:center;justify-content:center;padding:16px}.modal.show{display:flex}.modal-box{width:min(650px,100%);max-height:92dvh;overflow-y:auto;background:white;border-radius:18px;box-shadow:0 20px 60px #0004}.modal-header{position:sticky;top:0;background:var(--dark);color:white;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;z-index:1}.modal-header h2{font-size:20px}.modal-body{padding:20px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-bottom:13px}.field.full{grid-column:1/-1}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;outline:none;background:white}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field textarea:focus{border-color:var(--burgundy)}.place-order{width:100%;border:0;background:var(--burgundy);color:white;padding:14px;border-radius:9px;font-weight:800;margin-top:5px}.place-order:hover{background:var(--dark)}.note{font-size:12px;color:var(--gray);line-height:1.5;margin:10px 0}.list-card{display:flex;gap:13px;padding:12px;border:1px solid var(--border);border-radius:12px;margin-bottom:12px;background:white}.list-card img{width:85px;height:85px;border-radius:9px;object-fit:cover;background:#eee}.list-details{flex:1;min-width:0}.list-details h3{font-size:16px;margin-bottom:5px}.list-details p{color:var(--gray);font-size:12px;margin:4px 0;overflow-wrap:anywhere}.list-price{color:var(--burgundy);font-weight:800}.status{display:inline-block;background:#e3f3ed;color:var(--green);padding:5px 9px;border-radius:15px;font-size:11px;font-weight:800;margin-top:5px}.empty{text-align:center;padding:32px 12px;color:var(--gray)}.empty-icon{font-size:45px;margin-bottom:8px}.inline-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.small-btn{border:1px solid var(--border);background:white;color:var(--burgundy);padding:7px 10px}.danger{background:#fff0f1;color:#a0192d;border-color:#f0c6cd}.total-row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:16px;margin-top:15px;font-size:18px}.toast{position:fixed;right:20px;bottom:20px;z-index:6000;background:var(--green);color:white;padding:14px 18px;border-radius:11px;max-width:calc(100% - 40px);box-shadow:0 12px 35px #0003;transform:translateY(130px);opacity:0;transition:.25s}.toast.show{transform:translateY(0);opacity:1}.toast strong{display:block;margin-bottom:3px}
+footer{background:#2a050e;color:white;padding:40px 5% 22px}.footer{max-width:1150px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:35px}.footer h3{margin-bottom:10px}.footer p,.footer a{color:#cdbfc3;font-size:13px;line-height:1.6}.footer a{display:block;margin:6px 0}.copyright{max-width:1150px;margin:25px auto 0;padding-top:17px;border-top:1px solid #ffffff20;text-align:center;color:#cdbfc3;font-size:12px}.copyright span{color:var(--gold)}
+@media(max-width:900px){.desktop-nav{display:none}.hero{background:var(--cream);padding:50px 0}.hero-inner{grid-template-columns:1fr;text-align:center}.hero p{margin-left:auto;margin-right:auto}.hero-buttons{justify-content:center}.hero-box{display:none}.categories,.products{grid-template-columns:repeat(2,minmax(0,1fr))}.footer{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.logo-name{font-size:21px}.logo-sub{display:none}.hero h1{font-size:43px}.categories,.products,.footer{grid-template-columns:1fr}.product-buttons{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.section{padding:48px 5%}.heading h2{font-size:29px}}
+
+/* DG Store install / add-to-home-screen helper */
+.install-app-btn{position:fixed;left:14px;bottom:18px;z-index:5500;border:0;border-radius:999px;padding:13px 17px;background:#681329;color:#fff;font-weight:800;box-shadow:0 8px 24px #0003;display:flex;align-items:center;gap:8px}
+.install-app-btn:active{transform:scale(.98)}
+.install-help{position:fixed;inset:0;z-index:7000;background:#0008;display:none;align-items:center;justify-content:center;padding:18px}
+.install-help.show{display:flex}
+.install-help-card{background:#fff;color:#171316;width:min(460px,100%);max-height:85dvh;overflow:auto;border-radius:18px;padding:22px;box-shadow:0 20px 60px #0004}
+.install-help-card h2{color:#420817;margin-bottom:10px;font-size:22px}
+.install-help-card p,.install-help-card li{font-size:14px;line-height:1.55;color:#51494c}
+.install-help-card ol{padding-left:22px;margin:12px 0}
+.install-help-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.install-help-actions button{padding:11px 15px;border-radius:9px;border:1px solid #681329;font-weight:700}
+.install-help-close{background:#681329;color:#fff}
+.install-help-open{background:#fff;color:#681329}
+@media(max-width:480px){.install-app-btn{left:10px;bottom:12px;padding:11px 13px;font-size:13px}}
+
+</style>
 
 <style>
-:root{
-  --burgundy:#681329;
-  --burgundy-dark:#420817;
-  --burgundy-light:#8d2948;
-  --cream:#fbf7f3;
-  --soft:#f4e9e9;
-  --white:#fff;
-  --black:#171316;
-  --gray:#716a6c;
-  --border:#e6d9dc;
-  --green:#137a55;
-  --gold:#c6a15c;
-  --shadow:0 10px 35px rgba(50,8,20,.09);
-}
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--cream);
-  color:var(--black);
-}
-
-button,input{
-  font-family:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-a{
-  text-decoration:none;
-  color:inherit;
-}
-
-/* ================= HEADER ================= */
-
-header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  height:74px;
-  background:var(--burgundy-dark);
-  color:white;
-  box-shadow:0 3px 20px rgba(0,0,0,.16);
-}
-
-.header{
-  max-width:1200px;
-  height:100%;
-  margin:auto;
-  padding:0 22px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.logo-icon{
-  width:40px;
-  height:40px;
-  border:2px solid white;
-  border-radius:9px;
-  display:grid;
-  place-items:center;
-  font-size:20px;
-}
-
-.logo-name{
-  font-size:24px;
-  font-weight:800;
-}
-
-.logo-sub{
-  font-size:10px;
-  color:#e6d8dc;
-}
-
-.desktop-nav{
-  display:flex;
-  gap:27px;
-}
-
-.desktop-nav a{
-  color:white;
-  font-size:14px;
-  font-weight:600;
-}
-
-.desktop-nav a:hover{
-  color:var(--gold);
-}
-
-.menu-btn{
-  width:44px;
-  height:44px;
-  border:1px solid rgba(255,255,255,.4);
-  border-radius:9px;
-  background:transparent;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
-}
-
-.menu-btn span{
-  width:21px;
-  height:2px;
-  background:white;
-  border-radius:3px;
-}
-
-/* ================= SIDE MENU ================= */
-
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.45);
-  z-index:2000;
-  display:none;
-}
-
-.overlay.show{
-  display:block;
-}
-
-.side-menu{
-  position:fixed;
-  top:0;
-  right:-380px;
-  width:360px;
-  max-width:90%;
-  height:100vh;
-  background:white;
-  z-index:3000;
-  transition:.3s;
-  box-shadow:-10px 0 40px rgba(0,0,0,.2);
-}
-
-.side-menu.show{
-  right:0;
-}
-
-.menu-head{
-  height:74px;
-  padding:0 20px;
-  background:var(--burgundy-dark);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.menu-head h2{
-  font-size:21px;
-}
-
-.close-btn{
-  width:38px;
-  height:38px;
-  border:1px solid rgba(255,255,255,.4);
-  background:transparent;
-  color:white;
-  border-radius:8px;
-  font-size:23px;
-}
-
-.menu-items{
-  padding:15px;
-}
-
-.menu-item{
-  width:100%;
-  border:0;
-  background:white;
-  padding:15px;
-  border-radius:10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:7px;
-  font-weight:600;
-}
-
-.menu-item:hover{
-  background:var(--soft);
-  color:var(--burgundy);
-}
-
-.menu-left{
-  display:flex;
-  align-items:center;
-  gap:13px;
-}
-
-.menu-icon{
-  width:36px;
-  height:36px;
-  border-radius:8px;
-  background:#f3e4e7;
-  display:grid;
-  place-items:center;
-  color:var(--burgundy);
-}
-
-.count{
-  min-width:25px;
-  height:25px;
-  padding:0 7px;
-  background:var(--burgundy);
-  color:white;
-  border-radius:20px;
-  display:grid;
-  place-items:center;
-  font-size:12px;
-}
-
-/* ================= HERO ================= */
-
-.hero{
-  min-height:510px;
-  background:
-    linear-gradient(
-      105deg,
-      var(--cream) 0%,
-      var(--cream) 61%,
-      var(--burgundy) 61%,
-      var(--burgundy-dark) 100%
-    );
-  display:flex;
-  align-items:center;
-}
-
-.hero-inner{
-  width:min(1150px,90%);
-  margin:auto;
-  display:grid;
-  grid-template-columns:1fr .8fr;
-  gap:50px;
-  align-items:center;
-}
-
-.hero-label{
-  display:inline-block;
-  background:#f1dfe3;
-  color:var(--burgundy);
-  padding:8px 14px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:20px;
-}
-
-.hero h1{
-  color:var(--burgundy-dark);
-  font-size:clamp(44px,6vw,70px);
-  line-height:1;
-  letter-spacing:-2px;
-  margin-bottom:20px;
-}
-
-.hero h1 span{
-  color:var(--burgundy);
-}
-
-.hero p{
-  color:var(--gray);
-  max-width:580px;
-  font-size:18px;
-  margin-bottom:30px;
-}
-
-.hero-buttons{
-  display:flex;
-  gap:12px;
-}
-
-.primary{
-  background:var(--burgundy);
-  color:white;
-  border:0;
-  padding:14px 27px;
-  border-radius:28px;
-  font-weight:700;
-}
-
-.primary:hover{
-  background:var(--burgundy-dark);
-}
-
-.secondary{
-  background:transparent;
-  color:var(--burgundy);
-  border:1px solid var(--burgundy);
-  padding:13px 26px;
-  border-radius:28px;
-  font-weight:700;
-}
-
-.secondary:hover{
-  background:var(--burgundy);
-  color:white;
-}
-
-.hero-box{
-  height:330px;
-  border-radius:28px;
-  background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.25);
-  display:grid;
-  place-items:center;
-  text-align:center;
-  color:white;
-  box-shadow:0 25px 60px rgba(0,0,0,.2);
-}
-
-.hero-box .bag{
-  font-size:85px;
-  margin-bottom:12px;
-}
-
-.hero-box h2{
-  font-size:30px;
-}
-
-.hero-box p{
-  color:#ead9dd;
-  margin-top:5px;
-  font-size:14px;
-}
-
-/* ================= SEARCH ================= */
-
-.search-wrap{
-  width:min(750px,90%);
-  margin:35px auto;
-}
-
-.search{
-  width:100%;
-  padding:17px 22px;
-  border:1px solid var(--border);
-  border-radius:30px;
-  outline:none;
-  background:white;
-  font-size:15px;
-  box-shadow:0 5px 20px rgba(0,0,0,.04);
-}
-
-.search:focus{
-  border-color:var(--burgundy);
-}
-
-/* ================= SECTIONS ================= */
-
-.section{
-  padding:70px 5%;
-}
-
-.heading{
-  text-align:center;
-  max-width:650px;
-  margin:0 auto 40px;
-}
-
-.heading h2{
-  color:var(--burgundy-dark);
-  font-size:35px;
-  margin-bottom:8px;
-}
-
-.heading p{
-  color:var(--gray);
-}
-
-/* ================= CATEGORIES ================= */
-
-.categories{
-  max-width:1150px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:20px;
-}
-
-.category{
-  background:white;
-  border:1px solid var(--border);
-  padding:27px 22px;
-  border-radius:17px;
-  transition:.2s;
-}
-
-.category:hover{
-  transform:translateY(-5px);
-  box-shadow:var(--shadow);
-}
-
-.category-icon{
-  width:52px;
-  height:52px;
-  background:#f3e3e7;
-  color:var(--burgundy);
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  font-size:22px;
-  margin-bottom:15px;
-}
-
-.category h3{
-  color:var(--burgundy);
-  margin-bottom:6px;
-}
-
-.category p{
-  color:var(--gray);
-  font-size:13px;
-}
-
-/* ================= PRODUCTS ================= */
-
-.products-section{
-  background:#f7eeee;
-}
-
-.products{
-  max-width:1150px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:22px;
-}
-
-.product{
-  position:relative;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:18px;
-  overflow:hidden;
-  transition:.25s;
-}
-
-.product:hover{
-  transform:translateY(-5px);
-  box-shadow:var(--shadow);
-}
-
-.product-img{
-  width:100%;
-  height:210px;
-  object-fit:cover;
-  display:block;
-}
-
-.wishlist{
-  position:absolute;
-  right:12px;
-  top:12px;
-  width:39px;
-  height:39px;
-  border:0;
-  border-radius:50%;
-  background:white;
-  color:var(--burgundy);
-  font-size:19px;
-  box-shadow:0 4px 15px rgba(0,0,0,.12);
-}
-
-.wishlist.active{
-  background:var(--burgundy);
-  color:white;
-}
-
-.product-info{
-  padding:19px;
-}
-
-.product-info h3{
-  font-size:17px;
-  margin-bottom:5px;
-}
-
-.product-info p{
-  color:var(--gray);
-  font-size:13px;
-  margin-bottom:12px;
-}
-
-.price{
-  color:var(--burgundy);
-  font-size:21px;
-  font-weight:800;
-  margin-bottom:15px;
-}
-
-.product-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.cart-btn,
-.buy-btn{
-  padding:10px 5px;
-  border-radius:8px;
-  font-size:12px;
-  font-weight:700;
-}
-
-.cart-btn{
-  border:1px solid var(--burgundy);
-  color:var(--burgundy);
-  background:white;
-}
-
-.buy-btn{
-  border:1px solid var(--burgundy);
-  background:var(--burgundy);
-  color:white;
-}
-
-.cart-btn:hover{
-  background:#f5e7ea;
-}
-
-.buy-btn:hover{
-  background:var(--burgundy-dark);
-}
-
-/* ================= MODAL ================= */
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:4000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:min(620px,100%);
-  max-height:90vh;
-  overflow-y:auto;
-  background:white;
-  border-radius:18px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
-}
-
-.modal-header{
-  background:var(--burgundy-dark);
-  color:white;
-  padding:18px 22px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.modal-header h2{
-  font-size:21px;
-}
-
-.modal-close{
-  width:34px;
-  height:34px;
-  border:0;
-  border-radius:7px;
-  background:rgba(255,255,255,.12);
-  color:white;
-  font-size:21px;
-}
-
-.modal-body{
-  padding:22px;
-}
-
-/* ================= CHECKOUT ================= */
-
-.checkout-product{
-  display:flex;
-  gap:15px;
-  align-items:center;
-  padding:12px;
-  background:var(--soft);
-  border-radius:10px;
-  margin-bottom:20px;
-}
-
-.checkout-product img{
-  width:70px;
-  height:70px;
-  object-fit:cover;
-  border-radius:8px;
-}
-
-.checkout-product strong{
-  display:block;
-  margin-bottom:4px;
-}
-
-.checkout-product span{
-  color:var(--burgundy);
-  font-weight:700;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.field{
-  margin-bottom:13px;
-}
-
-.field.full{
-  grid-column:1/-1;
-}
-
-.field label{
-  display:block;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:6px;
-}
-
-.field input{
-  width:100%;
-  padding:12px 13px;
-  border:1px solid var(--border);
-  border-radius:8px;
-  outline:none;
-}
-
-.field input:focus{
-  border-color:var(--burgundy);
-}
-
-.place-order{
-  width:100%;
-  border:0;
-  background:var(--burgundy);
-  color:white;
-  padding:14px;
-  border-radius:9px;
-  font-weight:800;
-  margin-top:5px;
-}
-
-.place-order:hover{
-  background:var(--burgundy-dark);
-}
-
-/* ================= LIST MODAL ================= */
-
-.list-card{
-  display:flex;
-  gap:14px;
-  padding:13px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  margin-bottom:12px;
-  background:white;
-}
-
-.list-card img{
-  width:90px;
-  height:90px;
-  border-radius:9px;
-  object-fit:cover;
-}
-
-.list-details{
-  flex:1;
-}
-
-.list-details h3{
-  font-size:16px;
-  margin-bottom:5px;
-}
-
-.list-details p{
-  color:var(--gray);
-  font-size:13px;
-  margin:3px 0;
-}
-
-.list-price{
-  color:var(--burgundy);
-  font-weight:800;
-}
-
-.status{
-  display:inline-block;
-  background:#e3f3ed;
-  color:var(--green);
-  padding:5px 9px;
-  border-radius:15px;
-  font-size:11px;
-  font-weight:800;
-  margin-top:5px;
-}
-
-.empty{
-  text-align:center;
-  padding:40px 15px;
-  color:var(--gray);
-}
-
-.empty-icon{
-  font-size:48px;
-  margin-bottom:10px;
-}
-
-/* ================= TOAST ================= */
-
-.toast{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:6000;
-  background:var(--green);
-  color:white;
-  padding:16px 20px;
-  border-radius:11px;
-  min-width:280px;
-  box-shadow:0 12px 35px rgba(0,0,0,.2);
-  transform:translateY(130px);
-  opacity:0;
-  transition:.3s;
-}
-
-.toast.show{
-  transform:translateY(0);
-  opacity:1;
-}
-
-.toast strong{
-  display:block;
-  margin-bottom:3px;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-  background:#2a050e;
-  color:white;
-  padding:42px 5% 25px;
-}
-
-.footer{
-  max-width:1150px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:40px;
-}
-
-.footer h3{
-  margin-bottom:10px;
-}
-
-.footer p,
-.footer a{
-  color:#cdbfc3;
-  font-size:13px;
-}
-
-.footer a{
-  display:block;
-  margin:7px 0;
-}
-
-.footer a:hover{
-  color:var(--gold);
-}
-
-.copyright{
-  max-width:1150px;
-  margin:30px auto 0;
-  padding-top:18px;
-  border-top:1px solid rgba(255,255,255,.12);
-  text-align:center;
-  color:#cdbfc3;
-  font-size:12px;
-}
-
-.copyright span{
-  color:var(--gold);
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:900px){
-
-  .desktop-nav{
-    display:none;
-  }
-
-  .hero{
-    background:var(--cream);
-    padding:60px 5%;
-  }
-
-  .hero-inner{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .hero p{
-    margin-left:auto;
-    margin-right:auto;
-  }
-
-  .hero-buttons{
-    justify-content:center;
-  }
-
-  .hero-box{
-    display:none;
-  }
-
-  .categories,
-  .products{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .footer{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:560px){
-
-  .logo-name{
-    font-size:21px;
-  }
-
-  .logo-sub{
-    display:none;
-  }
-
-  .hero h1{
-    font-size:43px;
-  }
-
-  .categories,
-  .products,
-  .footer{
-    grid-template-columns:1fr;
-  }
-
-  .product-buttons{
-    grid-template-columns:1fr;
-  }
-
-  .form-grid{
-    grid-template-columns:1fr;
-  }
-
-  .field.full{
-    grid-column:auto;
-  }
-
-  .toast{
-    left:15px;
-    right:15px;
-    bottom:15px;
-  }
-}
+/* Product detail and checkout enhancements */
+.product-img,.product-info h3{cursor:pointer}
+.product-detail-layout{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.product-detail-image{width:100%;max-height:350px;object-fit:contain;background:#f8f1f2;border-radius:12px}
+.detail-brand{color:var(--gray);font-size:14px;margin:7px 0 12px}
+.detail-description{line-height:1.6;margin:12px 0;color:#494246;white-space:pre-wrap}
+.detail-points{font-size:13px;color:var(--gray);line-height:1.8;margin:10px 0}
+.checkout-total{background:#f8f1f2;padding:14px;border-radius:10px;margin:12px 0}
+.tracking{display:flex;gap:0;justify-content:space-between;margin:18px 0 10px;position:relative}
+.track-step{flex:1;text-align:center;font-size:11px;color:#82777b;position:relative;padding-top:26px}
+.track-step:before{content:"";position:absolute;top:0;left:calc(50% - 9px);width:18px;height:18px;border-radius:50%;background:#ddd;border:2px solid #ddd;z-index:1}
+.track-step:after{content:"";position:absolute;top:8px;left:0;width:100%;height:3px;background:#ddd}
+.track-step:first-child:after{left:50%;width:50%}.track-step:last-child:after{width:50%}
+.track-step.done{color:var(--green);font-weight:700}.track-step.done:before,.track-step.done:after{background:var(--green);border-color:var(--green)}
+@media(max-width:600px){.product-detail-layout{grid-template-columns:1fr}.product-detail-image{max-height:240px}.track-step{font-size:9px}}
 </style>
+
 </head>
-
 <body>
-
-<!-- ================= HEADER ================= -->
-
-<header>
-  <div class="header">
-
-    <a href="#home" class="logo">
-      <div class="logo-icon">🛍</div>
-      <div>
-        <div class="logo-name">DG Store</div>
-        <div class="logo-sub">Official Online Store</div>
-      </div>
-    </a>
-
-    <nav class="desktop-nav">
-      <a href="#home">Home</a>
-      <a href="#categories">Categories</a>
-      <a href="#shop">Shop</a>
-    </nav>
-
-    <button class="menu-btn" onclick="openMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
-  </div>
-</header>
-
-
-<!-- ================= SIDE MENU ================= -->
-
+<header><div class="header">
+<a href="#home" class="logo"><div class="logo-icon">🛍</div><div><div class="logo-name">DG Store</div><div class="logo-sub">Official Online Store</div></div></a>
+<nav class="desktop-nav"><a href="#home">Home</a><a href="#categories">Categories</a><a href="#shop">Shop</a></nav>
+<button class="menu-btn" onclick="openMenu()" aria-label="Open menu"><span></span><span></span><span></span></button>
+</div></header>
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-<aside class="side-menu" id="sideMenu">
-
-  <div class="menu-head">
-    <h2>My DG Store</h2>
-
-    <button class="close-btn" onclick="closeMenu()">×</button>
-  </div>
-
-  <div class="menu-items">
-
-    <button class="menu-item" onclick="openOrders()">
-      <span class="menu-left">
-        <span class="menu-icon">📦</span>
-        My Orders
-      </span>
-
-      <span class="count" id="orderCount">0</span>
-    </button>
-
-
-    <button class="menu-item" onclick="openWishlist()">
-      <span class="menu-left">
-        <span class="menu-icon">♥</span>
-        Wishlist
-      </span>
-
-      <span class="count" id="wishlistCount">0</span>
-    </button>
-
-
-    <button class="menu-item" onclick="openCart()">
-      <span class="menu-left">
-        <span class="menu-icon">🛒</span>
-        Cart
-      </span>
-
-      <span class="count" id="cartCount">0</span>
-    </button>
-
-
-    <button class="menu-item" onclick="goShop()">
-      <span class="menu-left">
-        <span class="menu-icon">🛍</span>
-        Continue Shopping
-      </span>
-
-      <span>›</span>
-    </button>
-
-  </div>
-
-</aside>
-
-
-<!-- ================= HERO ================= -->
+<aside class="side-menu" id="sideMenu"><div class="menu-head"><h2>My DG Store</h2><button class="close-btn" onclick="closeMenu()" aria-label="Close menu">×</button></div>
+<div class="menu-items">
+<button class="menu-item" onclick="openOrders()"><span class="menu-left"><span class="menu-icon">📦</span>My Orders</span><span class="count" id="orderCount">0</span></button>
+<button class="menu-item" onclick="openWishlist()"><span class="menu-left"><span class="menu-icon">♥</span>Wishlist</span><span class="count" id="wishlistCount">0</span></button>
+<button class="menu-item" onclick="openCart()"><span class="menu-left"><span class="menu-icon">🛒</span>Cart</span><span class="count" id="cartCount">0</span></button>
+<button class="menu-item" onclick="openFeedback()"><span class="menu-left"><span class="menu-icon">💬</span>Feedback</span><span>›</span></button>
+<button class="menu-item" onclick="showMoreProducts()"><span class="menu-left"><span class="menu-icon">🎧</span>More Products</span><span>›</span></button>
+<button class="menu-item" onclick="openOwnerPanel()"><span class="menu-left"><span class="menu-icon">🔐</span>Owner Panel</span><span>›</span></button>
+<button class="menu-item" onclick="goShop()"><span class="menu-left"><span class="menu-icon">🛍</span>Continue Shopping</span><span>›</span></button>
+</div></aside>
 
 <main id="home">
-
-<section class="hero">
-
-  <div class="hero-inner">
-
-    <div>
-
-      <span class="hero-label">
-        ✦ Welcome to DG Store
-      </span>
-
-      <h1>
-        Shop Better.<br>
-        <span>Live Better.</span>
-      </h1>
-
-      <p>
-        Discover quality products at DG Store.
-        A simple, secure and professional shopping
-        experience.
-      </p>
-
-      <div class="hero-buttons">
-
-        <a href="#shop" class="primary">
-          Shop Now →
-        </a>
-
-        <a href="#categories" class="secondary">
-          Explore Categories
-        </a>
-
-      </div>
-
-    </div>
-
-    <div class="hero-box">
-
-      <div>
-        <div class="bag">🛍️</div>
-        <h2>DG Store</h2>
-        <p>Quality • Value • Convenience</p>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= SEARCH ================= -->
-
-<div class="search-wrap">
-
-  <input
-    id="search"
-    class="search"
-    type="search"
-    placeholder="Search products..."
-    oninput="searchProducts()"
-  >
-
-</div>
-
-
-<!-- ================= CATEGORIES ================= -->
-
-<section class="section" id="categories">
-
-  <div class="heading">
-    <h2>Shop by Category</h2>
-    <p>Explore our collection and find what you need.</p>
-  </div>
-
-  <div class="categories">
-
-    <div class="category">
-      <div class="category-icon">📱</div>
-      <h3>Electronics</h3>
-      <p>Modern gadgets and useful electronics.</p>
-    </div>
-
-    <div class="category">
-      <div class="category-icon">✨</div>
-      <h3>Beauty & Care</h3>
-      <p>Everyday beauty and personal care products.</p>
-    </div>
-
-    <div class="category">
-      <div class="category-icon">🏠</div>
-      <h3>Home Essentials</h3>
-      <p>Useful products for everyday living.</p>
-    </div>
-
-    <div class="category">
-      <div class="category-icon">🛍</div>
-      <h3>All Products</h3>
-      <p>Browse the complete DG Store collection.</p>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= PRODUCTS ================= -->
-
-<section class="section products-section" id="shop">
-
-  <div class="heading">
-    <h2>Featured Products</h2>
-    <p>Choose a product to add it to your cart or order it now.</p>
-  </div>
-
-
-  <div class="products">
-
-
-    <!-- PRODUCT 1 -->
-
-    <article class="product" data-name="wireless earbuds">
-
-      <button
-        class="wishlist"
-        id="wish1"
-        onclick="toggleWishlist(1)"
-      >♡</button>
-
-      <img
-        class="product-img"
-        src="https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=700&q=85"
-        alt="Wireless Earbuds"
-      >
-
-      <div class="product-info">
-
-        <h3>Wireless Earbuds</h3>
-
-        <p>Compact wireless audio with a modern design.</p>
-
-        <div class="price">₹499</div>
-
-        <div class="product-buttons">
-
-          <button class="cart-btn" onclick="addCart(1)">
-            Add to Cart
-          </button>
-
-          <button class="buy-btn" onclick="buyNow(1)">
-            Buy Now
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- PRODUCT 2 -->
-
-    <article class="product" data-name="smart watch">
-
-      <button
-        class="wishlist"
-        id="wish2"
-        onclick="toggleWishlist(2)"
-      >♡</button>
-
-      <img
-        class="product-img"
-        src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=85"
-        alt="Smart Watch"
-      >
-
-      <div class="product-info">
-
-        <h3>Smart Watch</h3>
-
-        <p>Elegant everyday smartwatch for your lifestyle.</p>
-
-        <div class="price">₹799</div>
-
-        <div class="product-buttons">
-
-          <button class="cart-btn" onclick="addCart(2)">
-            Add to Cart
-          </button>
-
-          <button class="buy-btn" onclick="buyNow(2)">
-            Buy Now
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- PRODUCT 3 -->
-
-    <article class="product" data-name="beauty essentials">
-
-      <button
-        class="wishlist"
-        id="wish3"
-        onclick="toggleWishlist(3)"
-      >♡</button>
-
-      <img
-        class="product-img"
-        src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=700&q=85"
-        alt="Beauty Products"
-      >
-
-      <div class="product-info">
-
-        <h3>Beauty Essentials</h3>
-
-        <p>Selected everyday beauty and care products.</p>
-
-        <div class="price">₹299</div>
-
-        <div class="product-buttons">
-
-          <button class="cart-btn" onclick="addCart(3)">
-            Add to Cart
-          </button>
-
-          <button class="buy-btn" onclick="buyNow(3)">
-            Buy Now
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- PRODUCT 4 -->
-
-    <article class="product" data-name="home essentials">
-
-      <button
-        class="wishlist"
-        id="wish4"
-        onclick="toggleWishlist(4)"
-      >♡</button>
-
-      <img
-        class="product-img"
-        src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=700&q=85"
-        alt="Home Essentials"
-      >
-
-      <div class="product-info">
-
-        <h3>Home Essentials</h3>
-
-        <p>Practical products for everyday home use.</p>
-
-        <div class="price">₹399</div>
-
-        <div class="product-buttons">
-
-          <button class="cart-btn" onclick="addCart(4)">
-            Add to Cart
-          </button>
-
-          <button class="buy-btn" onclick="buyNow(4)">
-            Buy Now
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-  </div>
-
-</section>
-
+<section class="hero"><div class="hero-inner"><div>
+<span class="hero-label">✦ Welcome to DG Store</span><h1>Shop Better.<br><span>Live Better.</span></h1>
+<p>Discover gadgets, audio accessories and everyday essentials at DG Store.</p>
+<div class="hero-buttons"><a href="#shop" class="primary">Shop Now →</a><a href="#categories" class="secondary">Explore Categories</a></div>
+</div><div class="hero-box"><div><div class="bag">🛍️</div><h2>DG Store</h2><p>Quality • Value • Convenience</p></div></div></div></section>
+<div class="search-wrap"><input id="search" class="search" type="search" placeholder="Search products..." oninput="searchProducts()"></div>
+<section class="section" id="categories"><div class="heading"><h2>Shop by Category</h2><p>Explore our collection and find what you need.</p></div>
+<div class="categories">
+<div class="category"><div class="category-icon">🎧</div><h3>Audio</h3><p>Headphones and wireless earbuds.</p></div>
+<div class="category"><div class="category-icon">⌚</div><h3>Smart Watches</h3><p>Wearable tech for everyday use.</p></div>
+<div class="category"><div class="category-icon">✨</div><h3>Beauty & Care</h3><p>Everyday beauty and personal care.</p></div>
+<div class="category"><div class="category-icon">🛍</div><h3>All Products</h3><p>Browse the DG Store collection.</p></div>
+</div></section>
+<section class="section products-section" id="shop"><div class="heading"><h2>Our Products</h2><p>Choose a product to add it to your cart or order it now.</p></div><div class="products" id="productsGrid"></div></section>
 </main>
 
-
-<!-- ================= CHECKOUT MODAL ================= -->
-
-<div class="modal" id="checkoutModal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-
-      <h2>Delivery Details</h2>
-
-      <button class="modal-close" onclick="closeModal('checkoutModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="modal-body">
-
-      <div id="checkoutProduct"></div>
-
-      <form id="checkoutForm">
-
-        <div class="form-grid">
-
-          <div class="field">
-            <label>Full Name</label>
-            <input id="name" required placeholder="Enter your name">
-          </div>
-
-          <div class="field">
-            <label>Phone Number</label>
-            <input
-              id="phone"
-              required
-              type="tel"
-              placeholder="Enter phone number"
-            >
-          </div>
-
-          <div class="field full">
-            <label>House / Street Address</label>
-            <input
-              id="address"
-              required
-              placeholder="House number, street, area"
-            >
-          </div>
-
-          <div class="field">
-            <label>City</label>
-            <input id="city" required placeholder="City">
-          </div>
-
-          <div class="field">
-            <label>State</label>
-            <input id="state" required placeholder="State">
-          </div>
-
-          <div class="field">
-            <label>PIN Code</label>
-            <input
-              id="pin"
-              required
-              inputmode="numeric"
-              placeholder="PIN code"
-            >
-          </div>
-
-        </div>
-
-        <button class="place-order" type="submit">
-          ✓ Place Order
-        </button>
-
-      </form>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- ================= LIST MODAL ================= -->
-
-<div class="modal" id="listModal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-
-      <h2 id="listTitle">My Orders</h2>
-
-      <button class="modal-close" onclick="closeModal('listModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="modal-body" id="listBody"></div>
-
-  </div>
-
-</div>
-
-
-<!-- ================= CART MODAL ================= -->
-
-<div class="modal" id="cartModal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-
-      <h2>My Cart</h2>
-
-      <button class="modal-close" onclick="closeModal('cartModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="modal-body" id="cartBody"></div>
-
-  </div>
-
-</div>
-
-
-<!-- ================= TOAST ================= -->
-
-<div class="toast" id="toast">
-
-  <strong id="toastTitle">Done</strong>
-
-  <span id="toastMessage"></span>
-
-</div>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-  <div class="footer">
-
-    <div>
-      <h3>DG Store</h3>
-
-      <p>
-        A clean and convenient online shopping
-        experience for everyday products.
-      </p>
-    </div>
-
-    <div>
-      <h3>Shop</h3>
-
-      <a href="#shop">Products</a>
-      <a href="#categories">Categories</a>
-      <a href="#home">Home</a>
-    </div>
-
-    <div>
-      <h3>My Store</h3>
-
-      <a href="#" onclick="openOrders();return false;">
-        My Orders
-      </a>
-
-      <a href="#" onclick="openWishlist();return false;">
-        Wishlist
-      </a>
-
-      <a href="#" onclick="openCart();return false;">
-        Cart
-      </a>
-    </div>
-
-  </div>
-
-  <div class="copyright">
-    © 2026 DG Store. All rights reserved.
-    <br>
-    <span>Your Satisfaction • Our Priority</span>
-  </div>
-
-</footer>
+<div class="modal" id="checkoutModal"><div class="modal-box"><div class="modal-header"><h2>Delivery Details</h2><button class="modal-close" onclick="closeModal('checkoutModal')">×</button></div><div class="modal-body">
+<div id="checkoutSummary"></div><form id="checkoutForm"><div class="form-grid">
+<div class="field"><label for="customerName">Full Name</label><input id="customerName" required autocomplete="name" placeholder="Enter your name"></div>
+<div class="field"><label for="customerPhone">Phone Number</label><input id="customerPhone" required type="tel" inputmode="tel" pattern="[0-9+() -]{8,18}" placeholder="Enter phone number"></div>
+<div class="field full"><label for="customerAddress">House / Street Address</label><input id="customerAddress" required autocomplete="street-address" placeholder="House number, street, area"></div>
+<div class="field"><label for="customerCity">City</label><input id="customerCity" required autocomplete="address-level2" placeholder="City"></div>
+<div class="field"><label for="customerState">State</label><input id="customerState" required autocomplete="address-level1" placeholder="State"></div>
+<div class="field"><label for="customerPin">PIN Code</label><input id="customerPin" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="6-digit PIN code"></div>
+</div><p class="note">Demo checkout: this saves the order only in this browser. It does not send an order to the store owner or arrange delivery.</p><button class="place-order" type="submit">✓ Place Order</button></form>
+</div></div></div>
+
+<div class="modal" id="listModal"><div class="modal-box"><div class="modal-header"><h2 id="listTitle">My Orders</h2><button class="modal-close" onclick="closeModal('listModal')">×</button></div><div class="modal-body" id="listBody"></div></div></div>
+<div class="modal" id="cartModal"><div class="modal-box"><div class="modal-header"><h2>My Cart</h2><button class="modal-close" onclick="closeModal('cartModal')">×</button></div><div class="modal-body" id="cartBody"></div></div></div>
+<div class="modal" id="feedbackModal"><div class="modal-box"><div class="modal-header"><h2>Feedback</h2><button class="modal-close" onclick="closeModal('feedbackModal')">×</button></div><div class="modal-body">
+<form id="feedbackForm"><div class="field"><label for="feedbackName">Your name (optional)</label><input id="feedbackName" placeholder="Name"></div><div class="field"><label for="feedbackText">Your feedback</label><textarea id="feedbackText" required maxlength="1000" placeholder="Tell us what we can improve..."></textarea></div><button class="place-order" type="submit">Submit Feedback</button><p class="note">Prototype feedback is saved in this browser only; it is not automatically sent to the owner.</p></form>
+</div></div></div>
+<div class="modal" id="ownerModal"><div class="modal-box"><div class="modal-header"><h2 id="ownerTitle">Owner Panel</h2><button class="modal-close" onclick="closeModal('ownerModal')">×</button></div><div class="modal-body" id="ownerBody"></div></div></div>
+<div class="toast" id="toast"><strong id="toastTitle">Done</strong><span id="toastMessage"></span></div>
+
+
+<div class="modal" id="productDetailModal"><div class="modal-box"><div class="modal-header"><h2>Product Details</h2><button class="modal-close" onclick="closeModal('productDetailModal')">×</button></div><div class="modal-body" id="productDetailBody"></div></div></div>
+<div class="modal" id="checkoutV2Modal"><div class="modal-box"><div class="modal-header"><h2>Delivery & Payment</h2><button class="modal-close" onclick="closeModal('checkoutV2Modal')">×</button></div><div class="modal-body">
+<div id="checkoutV2Summary"></div>
+<form id="checkoutV2Form"><div class="form-grid">
+<div class="field"><label for="v2Name">Full name</label><input id="v2Name" required autocomplete="name" placeholder="Your full name"></div>
+<div class="field"><label for="v2Phone">Phone number</label><input id="v2Phone" required type="tel" inputmode="tel" pattern="[0-9+() -]{8,18}" placeholder="Mobile number"></div>
+<div class="field full"><label for="v2House">House / building number</label><input id="v2House" required placeholder="House or building number"></div>
+<div class="field full"><label for="v2Street">Road / street address</label><input id="v2Street" required autocomplete="street-address" placeholder="Road, street, locality"></div>
+<div class="field"><label for="v2City">City / town</label><input id="v2City" required placeholder="City or town"></div>
+<div class="field"><label for="v2District">District</label><input id="v2District" required placeholder="e.g. Bijnor, Muzaffarnagar"></div>
+<div class="field"><label for="v2State">State</label><input id="v2State" required value="Uttar Pradesh" placeholder="State"></div>
+<div class="field"><label for="v2Pin">PIN code</label><input id="v2Pin" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="6-digit PIN code"></div>
+<div class="field full"><label for="v2Payment">Payment method</label><select id="v2Payment" required><option value="cod">Cash on Delivery (COD)</option><option value="online">PhonePe / UPI (setup required)</option></select></div>
+</div><div class="checkout-total" id="v2Totals"></div><p class="note" id="v2PaymentNote">Delivery charge is estimated by district. Final charge may depend on courier coverage.</p><button class="place-order" type="submit">Place Order</button><p class="note">Demo only: orders are saved in this browser. Email notifications and real online payment require a secure backend/payment provider.</p></form>
+</div></div></div>
+<div class="modal" id="cancelModal"><div class="modal-box"><div class="modal-header"><h2>Cancel Order</h2><button class="modal-close" onclick="closeModal('cancelModal')">×</button></div><div class="modal-body"><form id="cancelForm"><input type="hidden" id="cancelOrderId"><div class="field"><label for="cancelReason">Why do you want to cancel?</label><select id="cancelReason" required><option value="">Choose a reason</option><option>Ordered by mistake</option><option>Delivery taking too long</option><option>Found a better price</option><option>Changed my mind</option><option>Wrong product selected</option><option>Other</option></select></div><div class="field"><label for="cancelNote">Additional details (optional)</label><textarea id="cancelNote" maxlength="500" placeholder="Tell us more..."></textarea></div><button class="place-order" type="submit">Confirm Cancellation</button></form></div></div></div>
+
+<footer><div class="footer"><div><h3>DG Store</h3><p>A clean and convenient online shopping experience for everyday products.</p></div><div><h3>Shop</h3><a href="#shop">Products</a><a href="#categories">Categories</a><a href="#home">Home</a></div><div><h3>My Store</h3><a href="#" onclick="openOrders();return false">My Orders</a><a href="#" onclick="openWishlist();return false">Wishlist</a><a href="#" onclick="openCart();return false">Cart</a><a href="#" onclick="openFeedback();return false">Feedback</a></div></div><div class="copyright">© 2026 DG Store. All rights reserved.<br><span>Your Satisfaction • Our Priority</span></div></footer>
+
+<script>
+/*
+  DEMO SECURITY WARNING:
+  This is a single-browser prototype. The owner password and manager codes are
+  stored in browser JavaScript/localStorage and are NOT secure for a public shop.
+  Before publishing publicly, use real server-side authentication and a database.
+*/
+const OWNER_PASSWORD = "ChangeMe123!";
+const money = n => "₹" + Number(n).toLocaleString("en-IN");
+const starterProducts = [
+ {id:"zebronics-headphones",name:"Zebronics Headphones",brand:"Zebronics",price:599,description:"Wired headphones for everyday music and calls. Confirm exact model, features and price with your supplier.",image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=85",category:"Audio"},
+ {id:"realme-earbuds",name:"realme Earbuds",brand:"realme",price:999,description:"Earbuds listing. Confirm exact model, authenticity, warranty and supplier price before selling.",image:"https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=800&q=85",category:"Audio"},
+ {id:"t800-smart-watch",name:"T800 Smart Watch",brand:"T800",price:799,description:"Smartwatch listing. Confirm specifications, compatibility and supplier details before selling.",image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=85",category:"Smart Watches"},
+ {id:"lakme-rose-face-powder",name:"Lakmé Rose Face Powder",brand:"Lakmé",price:180,description:"Face powder listing. Choose the correct shade and check the sealed pack, expiry date and supplier authenticity before dispatch.",image:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&q=85",category:"Beauty & Care"},
+ {id:"lakme-9to5-compact",name:"Lakmé 9 to 5 Compact",brand:"Lakmé",price:260,description:"Compact powder listing. Shade availability may vary; confirm the exact variant, MRP and expiry with your supplier.",image:"https://images.unsplash.com/photo-1631214540242-9d3f3f1a4a2d?auto=format&fit=crop&w=800&q=85",category:"Beauty & Care"},
+ {id:"lakme-foundation",name:"Lakmé Foundation",brand:"Lakmé",price:450,description:"Foundation listing. Select the right variant and shade; confirm current price, authenticity and expiry with your supplier.",image:"https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=85",category:"Beauty & Care"},
+ {id:"lakme-lipstick",name:"Lakmé Matte Lipstick",brand:"Lakmé",price:350,description:"Matte lipstick listing. Colour and variant depend on stock; confirm shade, sealed packaging and expiry before dispatch.",image:"https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=800&q=85",category:"Beauty & Care"},
+ {id:"lakme-kajal",name:"Lakmé Eyeconic Kajal",brand:"Lakmé",price:180,description:"Kajal listing. Confirm the exact variant, packaging, MRP and expiry with your supplier.",image:"https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=85",category:"Beauty & Care"},
+ {id:"lakme-mascara",name:"Lakmé Mascara",brand:"Lakmé",price:320,description:"Mascara listing. Confirm variant, sealed packaging, authenticity and expiry before selling.",image:"https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?auto=format&fit=crop&w=800&q=85",category:"Beauty & Care"},
+ {id:"lakme-lip-love",name:"Lakmé Lip Care Balm",brand:"Lakmé",price:150,description:"Lip care listing. Confirm current variant, ingredients, MRP and expiry with your supplier.",image:"https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=800&q=85",category:"Beauty & Care"},
+ {id:"lakme-sunscreen",name:"Lakmé Sunscreen",brand:"Lakmé",price:299,description:"Sunscreen listing. SPF and formulation vary by product; verify exact pack details and expiry with your supplier.",image:"https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=800&q=85",category:"Beauty & Care"},
+ {id:"lakme-primer",name:"Lakmé Makeup Primer",brand:"Lakmé",price:499,description:"Primer listing. Confirm exact variant, sealed packaging, current price and expiry with your supplier.",image:"https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&w=800&q=85",category:"Beauty & Care"}
+];
+function loadJSON(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return v===null?fallback:v}catch(e){return fallback}}
+let products = loadJSON("dg_products_v2",null);
+if(!Array.isArray(products)||products.length===0){products=starterProducts.map(p=>({...p}));saveProducts()}
+else { const existingIds=new Set(products.map(p=>p.id)); let added=false; for(const p of starterProducts){if(!existingIds.has(p.id)){products.push({...p});added=true;}} if(added)saveProducts(); }
+let cart=loadJSON("dg_cart_v2",[]);
+let wishlist=loadJSON("dg_wishlist_v2",[]);
+let orders=loadJSON("dg_orders_v2",[]);
+let feedbackItems=loadJSON("dg_feedback_v2",[]);
+let managers=loadJSON("dg_managers_v2",[]);
+let currentCheckout=null;
+let toastTimer=null;
+function saveProducts(){localStorage.setItem("dg_products_v2",JSON.stringify(products))}
+function saveState(){localStorage.setItem("dg_cart_v2",JSON.stringify(cart));localStorage.setItem("dg_wishlist_v2",JSON.stringify(wishlist));localStorage.setItem("dg_orders_v2",JSON.stringify(orders));localStorage.setItem("dg_feedback_v2",JSON.stringify(feedbackItems));localStorage.setItem("dg_managers_v2",JSON.stringify(managers));updateCounts()}
+function safe(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function findProduct(id){return products.find(p=>p.id===id)}
+function openMenu(){document.getElementById("sideMenu").classList.add("show");document.getElementById("overlay").classList.add("show")}
+function closeMenu(){document.getElementById("sideMenu").classList.remove("show");document.getElementById("overlay").classList.remove("show")}
+function closeModal(id){document.getElementById(id).classList.remove("show")}
+function toast(title,message){document.getElementById("toastTitle").textContent=title;document.getElementById("toastMessage").textContent=message;const el=document.getElementById("toast");el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),3200)}
+function updateCounts(){document.getElementById("cartCount").textContent=cart.reduce((s,i)=>s+i.quantity,0);document.getElementById("wishlistCount").textContent=wishlist.length;document.getElementById("orderCount").textContent=orders.length}
+function renderProducts(query=""){const grid=document.getElementById("productsGrid");const q=query.toLowerCase().trim();const shown=products.filter(p=>(p.name+" "+p.brand+" "+p.description+" "+p.category).toLowerCase().includes(q));if(!shown.length){grid.innerHTML='<div class="empty-products">No products found. Try another search.</div>';return}
+grid.innerHTML=shown.map(p=>`<article class="product"><button class="wishlist ${wishlist.includes(p.id)?"active":""}" aria-label="Toggle wishlist" onclick="toggleWishlist('${safe(p.id)}')">${wishlist.includes(p.id)?"♥":"♡"}</button><img class="product-img" src="${safe(p.image)}" alt="${safe(p.name)}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f4e9e9/681329?text=DG+Store'"><div class="product-info"><h3>${safe(p.name)}</h3><p>${safe(p.description)}</p><div class="price">${money(p.price)}</div><div class="product-buttons"><button class="cart-btn" onclick="addCart('${safe(p.id)}')">Add to Cart</button><button class="buy-btn" onclick="buyNow('${safe(p.id)}')">Buy Now</button></div></div></article>`).join("")}
+function searchProducts(){renderProducts(document.getElementById("search").value)}
+function showMoreProducts(){closeMenu();document.getElementById("search").value="";renderProducts();document.getElementById("shop").scrollIntoView({behavior:"smooth"});toast("Product list","Browse all currently listed products.")}
+function goShop(){closeMenu();document.getElementById("shop").scrollIntoView({behavior:"smooth"})}
+function addCart(id){const p=findProduct(id);if(!p)return;const item=cart.find(i=>i.id===id);if(item)item.quantity++;else cart.push({id,quantity:1});saveState();toast("Added to Cart",p.name+" added to your cart.")}
+function removeCart(id){cart=cart.filter(i=>i.id!==id);saveState();openCart()}
+function changeQuantity(id,delta){const item=cart.find(i=>i.id===id);if(!item)return;item.quantity+=delta;if(item.quantity<=0)cart=cart.filter(i=>i.id!==id);saveState();openCart()}
+function toggleWishlist(id){const index=wishlist.indexOf(id);if(index<0){wishlist.push(id);toast("Wishlist","Product saved.");}else{wishlist.splice(index,1);toast("Wishlist","Product removed.");}saveState();renderProducts(document.getElementById("search").value)}
+function buyNow(id){const p=findProduct(id);if(p)openCheckout([{id:p.id,quantity:1}])}
+function openCheckout(items){const valid=items.filter(i=>findProduct(i.id)&&i.quantity>0);if(!valid.length){toast("Cart Empty","Add a product before checkout.");return}currentCheckout=valid.map(i=>({id:i.id,quantity:i.quantity}));const total=currentCheckout.reduce((s,i)=>s+findProduct(i.id).price*i.quantity,0);document.getElementById("checkoutSummary").innerHTML=currentCheckout.map(i=>{const p=findProduct(i.id);return `<div class="list-card"><img src="${safe(p.image)}" alt=""><div class="list-details"><h3>${safe(p.name)}</h3><p>Quantity: ${i.quantity}</p><div class="list-price">${money(p.price*i.quantity)}</div></div></div>`}).join("")+`<div class="total-row"><strong>Order total</strong><strong>${money(total)}</strong></div>`;closeModal("cartModal");document.getElementById("checkoutModal").classList.add("show")}
+document.getElementById("checkoutForm").addEventListener("submit",function(e){e.preventDefault();if(!currentCheckout||!currentCheckout.length)return;const customer={name:document.getElementById("customerName").value.trim(),phone:document.getElementById("customerPhone").value.trim(),address:document.getElementById("customerAddress").value.trim(),city:document.getElementById("customerCity").value.trim(),state:document.getElementById("customerState").value.trim(),pin:document.getElementById("customerPin").value.trim()};const items=currentCheckout.map(i=>{const p=findProduct(i.id);return {id:i.id,name:p.name,price:Number(p.price),quantity:i.quantity,image:p.image}});const total=items.reduce((s,i)=>s+i.price*i.quantity,0);orders.unshift({id:"DG"+Date.now().toString().slice(-8),items,total,customer,status:"Order placed (demo)",date:new Date().toLocaleString()});const checkedIds=currentCheckout.map(i=>i.id);cart=cart.filter(i=>!checkedIds.includes(i.id));saveState();currentCheckout=null;closeModal("checkoutModal");this.reset();toast("Order Saved","Order saved in this browser only.");});
+function openOrders(){closeMenu();document.getElementById("listTitle").textContent="My Orders";const body=document.getElementById("listBody");if(!orders.length)body.innerHTML='<div class="empty"><div class="empty-icon">📦</div><h3>No orders yet</h3><p>Products you order will appear here on this browser.</p></div>';else body.innerHTML=orders.map(o=>`<div class="list-card"><div class="list-details"><h3>Order ${safe(o.id)}</h3><p>${safe(o.date)}</p>${o.items.map(i=>`<p>${safe(i.name)} × ${i.quantity} — ${money(i.price*i.quantity)}</p>`).join("")}<div class="list-price">Total: ${money(o.total)}</div><span class="status">${safe(o.status)}</span><p><strong>Deliver to:</strong> ${safe(o.customer.name)}, ${safe(o.customer.phone)}, ${safe(o.customer.address)}, ${safe(o.customer.city)}, ${safe(o.customer.state)} - ${safe(o.customer.pin)}</p></div></div>`).join("");document.getElementById("listModal").classList.add("show")}
+function openWishlist(){closeMenu();document.getElementById("listTitle").textContent="My Wishlist";const body=document.getElementById("listBody");const saved=wishlist.map(findProduct).filter(Boolean);if(!saved.length)body.innerHTML='<div class="empty"><div class="empty-icon">♡</div><h3>Your wishlist is empty</h3><p>Tap a product heart to save it here.</p></div>';else body.innerHTML=saved.map(p=>`<div class="list-card"><img src="${safe(p.image)}" alt=""><div class="list-details"><h3>${safe(p.name)}</h3><div class="list-price">${money(p.price)}</div><div class="inline-actions"><button class="buy-btn" onclick="buyNow('${safe(p.id)}');closeModal('listModal')">Buy Now</button><button class="small-btn" onclick="toggleWishlist('${safe(p.id)}');openWishlist()">Remove</button></div></div></div>`).join("");document.getElementById("listModal").classList.add("show")}
+function openCart(){closeMenu();const body=document.getElementById("cartBody");const valid=cart.filter(i=>findProduct(i.id));cart=valid;if(!cart.length){body.innerHTML='<div class="empty"><div class="empty-icon">🛒</div><h3>Your cart is empty</h3><p>Add products to your cart to see them here.</p></div>'}else{const total=cart.reduce((s,i)=>s+findProduct(i.id).price*i.quantity,0);body.innerHTML=cart.map(i=>{const p=findProduct(i.id);return `<div class="list-card"><img src="${safe(p.image)}" alt=""><div class="list-details"><h3>${safe(p.name)}</h3><div class="list-price">${money(p.price)}</div><p>Quantity: ${i.quantity}</p><div class="inline-actions"><button class="small-btn" onclick="changeQuantity('${safe(i.id)}',-1)">−</button><button class="small-btn" onclick="changeQuantity('${safe(i.id)}',1)">+</button><button class="small-btn danger" onclick="removeCart('${safe(i.id)}')">Remove</button></div></div></div>`}).join("")+`<div class="total-row"><strong>Cart Total</strong><strong>${money(total)}</strong></div><button class="place-order" onclick="checkoutCart()">Proceed to Checkout</button>`}saveState();document.getElementById("cartModal").classList.add("show")}
+function checkoutCart(){if(!cart.length){toast("Cart Empty","Add a product before checkout.");return}openCheckout(cart)}
+function openFeedback(){closeMenu();document.getElementById("feedbackModal").classList.add("show")}
+document.getElementById("feedbackForm").addEventListener("submit",function(e){e.preventDefault();feedbackItems.unshift({name:document.getElementById("feedbackName").value.trim()||"Guest",message:document.getElementById("feedbackText").value.trim(),date:new Date().toLocaleString()});saveState();this.reset();closeModal("feedbackModal");toast("Feedback Saved","Saved in this browser only; not sent to the owner.")});
+
+function openOwnerPanel(){closeMenu();document.getElementById("ownerTitle").textContent="Owner / Product Manager";document.getElementById("ownerBody").innerHTML=`<p>Sign in to manage products and authorize managers.</p><form id="ownerLoginForm"><div class="field"><label for="ownerCode">Owner password or manager code</label><input id="ownerCode" type="password" required autocomplete="current-password" placeholder="Enter access code"></div><button class="place-order" type="submit">Sign In</button></form><p class="note"><strong>Prototype only:</strong> the starter owner password is shown in the HTML source. Change <code>OWNER_PASSWORD</code> in the code. This is not secure authentication and must not be used to protect a public store.</p>`;document.getElementById("ownerModal").classList.add("show");document.getElementById("ownerLoginForm").addEventListener("submit",function(e){e.preventDefault();const code=document.getElementById("ownerCode").value;const isOwner=code===OWNER_PASSWORD;const manager=managers.find(m=>m.code===code);if(!isOwner&&!manager){toast("Access Denied","Incorrect owner password or manager code.");return}renderOwnerDashboard(isOwner,manager?manager.name:"Owner")})}
+function renderOwnerDashboard(isOwner,roleName){document.getElementById("ownerTitle").textContent=roleName+" Dashboard";document.getElementById("ownerBody").innerHTML=`<p>Signed in as <strong>${safe(roleName)}</strong>. Add a product image, name, price and description below.</p><form id="productForm"><div class="field"><label for="pName">Product name</label><input id="pName" required maxlength="90" placeholder="e.g. Bluetooth Headphones"></div><div class="form-grid"><div class="field"><label for="pBrand">Brand</label><input id="pBrand" maxlength="60" placeholder="Brand name"></div><div class="field"><label for="pPrice">Price (₹)</label><input id="pPrice" required type="number" min="1" max="10000000" step="1" placeholder="499"></div><div class="field full"><label for="pDescription">Description</label><textarea id="pDescription" required maxlength="500" placeholder="Write product details..."></textarea></div><div class="field full"><label for="pImage">Product photo (click to choose)</label><input id="pImage" type="file" accept="image/*"><p class="note">Choose an image file. Images are stored in this browser; very large files may exceed browser storage limits.</p><img id="imagePreview" alt="Selected image preview" style="display:none;width:130px;height:110px;object-fit:cover;border-radius:10px;margin-top:8px"></div><div class="field full"><label for="pCategory">Category</label><select id="pCategory"><option>Audio</option><option>Smart Watches</option><option>Beauty & Care</option><option>Electronics</option><option>Home Essentials</option><option>Other</option></select></div></div><button class="place-order" type="submit">Publish Product</button></form><hr style="border:0;border-top:1px solid var(--border);margin:22px 0"><h3>Products currently listed (${products.length})</h3><div id="ownerProductList" style="margin-top:12px"></div>${isOwner?`<hr style="border:0;border-top:1px solid var(--border);margin:22px 0"><h3>Authorize a manager</h3><p class="note">Create a manager code and share it only with a trusted person. In this demo, codes are stored locally and are not secure.</p><form id="managerForm"><div class="field"><label for="managerName">Manager name</label><input id="managerName" required maxlength="60" placeholder="Name"></div><div class="field"><label for="managerCode">Manager access code</label><input id="managerCode" required minlength="6" maxlength="50" placeholder="Create a unique code"></div><button class="small-btn" type="submit">Authorize Manager</button></form><div id="managerList" style="margin-top:12px"></div>`:""}`;
+const imageInput=document.getElementById("pImage");imageInput.addEventListener("change",function(){const file=this.files[0];const preview=document.getElementById("imagePreview");if(!file){preview.style.display="none";return}if(!file.type.startsWith("image/")){toast("Invalid file","Please choose an image.");this.value="";return}const reader=new FileReader();reader.onload=()=>{preview.src=reader.result;preview.style.display="block"};reader.readAsDataURL(file)});
+document.getElementById("productForm").addEventListener("submit",async function(e){e.preventDefault();const file=imageInput.files[0];let image="https://placehold.co/600x400/f4e9e9/681329?text=DG+Store";if(file){if(file.size>1200000){toast("Image too large","Please choose an image under 1.2 MB for this browser demo.");return}image=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})}const p={id:"custom-"+Date.now(),name:document.getElementById("pName").value.trim(),brand:document.getElementById("pBrand").value.trim(),price:Number(document.getElementById("pPrice").value),description:document.getElementById("pDescription").value.trim(),image,category:document.getElementById("pCategory").value};products.unshift(p);saveProducts();renderProducts(document.getElementById("search").value);renderOwnerDashboard(isOwner,roleName);toast("Product Published",p.name+" added to this browser's store.");});
+renderOwnerProductList();
+if(isOwner){document.getElementById("managerForm").addEventListener("submit",function(e){e.preventDefault();const name=document.getElementById("managerName").value.trim();const code=document.getElementById("managerCode").value.trim();if(code===OWNER_PASSWORD||managers.some(m=>m.code===code)){toast("Choose another code","This code is already in use.");return}managers.push({name,code});saveState();renderOwnerDashboard(true,roleName);toast("Manager Authorized","Manager code saved in this browser.");});renderManagerList()}
+}
+function renderOwnerProductList(){const el=document.getElementById("ownerProductList");if(!el)return;if(!products.length){el.innerHTML="<p>No products listed.</p>";return}el.innerHTML=products.map(p=>`<div class="list-card"><img src="${safe(p.image)}" alt=""><div class="list-details"><h3>${safe(p.name)}</h3><div class="list-price">${money(p.price)}</div><div class="inline-actions"><button class="small-btn danger" onclick="deleteProduct('${safe(p.id)}')">Delete Product</button></div></div></div>`).join("")}
+function renderManagerList(){const el=document.getElementById("managerList");if(!el)return;el.innerHTML=managers.length?managers.map((m,i)=>`<div class="list-card"><div class="list-details"><strong>${safe(m.name)}</strong><p>Manager access enabled</p><button class="small-btn danger" onclick="removeManager(${i})">Revoke access</button></div></div>`).join(""):"<p class='note'>No managers authorized yet.</p>"}
+function deleteProduct(id){if(typeof dgCurrentIsOwner!=="undefined"&&!dgCurrentIsOwner){toast("Permission denied","Managers can add products but cannot delete them.");return}if(!confirm("Delete this product from this browser's store?"))return;products=products.filter(p=>p.id!==id);cart=cart.filter(i=>i.id!==id);wishlist=wishlist.filter(i=>i!==id);saveProducts();saveState();renderProducts(document.getElementById("search").value);renderOwnerProductList();toast("Product Deleted","Product removed from this browser.")}
+function removeManager(index){managers.splice(index,1);saveState();renderManagerList();toast("Access Revoked","Manager code removed from this browser.")}
+function openOrdersForOwner(){openOrders()}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"))}});
+updateCounts();renderProducts();
+</script>
+
+<script>
+/* DG Store enhanced customer flow. Live email/payment require backend integration. */
+let activeCheckoutItems=[];
+let currentDetailId=null;
+const TRACK_STEPS=["Order placed","Shipped","Out for delivery","Delivered"];
+function productById(id){return products.find(p=>String(p.id)===String(id))}
+function renderProducts(query=""){
+ const grid=document.getElementById("productsGrid"),q=String(query).toLowerCase().trim();
+ const shown=products.filter(p=>(p.name+" "+(p.brand||"")+" "+p.description+" "+(p.category||"")).toLowerCase().includes(q));
+ if(!shown.length){grid.innerHTML='<div class="empty-products">No products found. Try another search.</div>';return}
+ grid.innerHTML=shown.map(p=>`<article class="product"><button class="wishlist ${wishlist.includes(p.id)?"active":""}" aria-label="Toggle wishlist" onclick="event.stopPropagation();toggleWishlist('${safe(p.id)}')">${wishlist.includes(p.id)?"♥":"♡"}</button><img class="product-img" src="${safe(p.image)}" alt="${safe(p.name)}" onclick="showProductDetails('${safe(p.id)}')" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f4e9e9/681329?text=DG+Store'"><div class="product-info"><h3 onclick="showProductDetails('${safe(p.id)}')">${safe(p.name)}</h3><p>${safe(p.description)}</p><div class="price">${money(p.price)}</div><div class="product-buttons"><button class="cart-btn" onclick="addCart('${safe(p.id)}')">Add to Cart</button><button class="buy-btn" onclick="buyNow('${safe(p.id)}')">Buy Now</button></div></div></article>`).join("");
+}
+function showProductDetails(id){
+ const p=productById(id);if(!p)return;currentDetailId=id;
+ document.getElementById("productDetailBody").innerHTML=`<div class="product-detail-layout"><div><img class="product-detail-image" src="${safe(p.image)}" alt="${safe(p.name)}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f4e9e9/681329?text=DG+Store'"></div><div><h2>${safe(p.name)}</h2><div class="detail-brand"><strong>Company / Brand:</strong> ${safe(p.brand||"Brand details not provided")}</div><div class="price">${money(p.price)}</div><div class="detail-description">${safe(p.description||"Product description not available yet.")}</div><div class="detail-points"><div><strong>Category:</strong> ${safe(p.category||"General")}</div><div><strong>Delivery:</strong> Charge shown at checkout</div><div><strong>Payment:</strong> COD or online option (online payment activates after setup)</div></div><div class="product-buttons"><button class="cart-btn" onclick="addCart('${safe(p.id)}')">Add to Cart</button><button class="buy-btn" onclick="buyNow('${safe(p.id)}')">Buy Now</button></div><button class="secondary" style="width:100%;margin-top:9px" onclick="shareProduct('${safe(p.id)}')">↗ Share Product</button></div></div>`;
+ document.getElementById("productDetailModal").classList.add("show");
+}
+async function shareProduct(id){const p=productById(id);if(!p)return;const shareData={title:p.name+" | DG Store",text:p.name+" — "+money(p.price)+"\n"+p.description,url:location.href.split("#")[0]+"#shop"};try{if(navigator.share)await navigator.share(shareData);else if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(shareData.text+"\n"+shareData.url);toast("Share details copied","You can paste the product details to share.");}else{prompt("Copy and share this product information:",shareData.text+"\n"+shareData.url)}}catch(e){if(e.name!=="AbortError")toast("Share unavailable","Please copy the product name and share it manually.")}}
+function deliveryCharge(district){return String(district||"").trim().toLowerCase()==="bijnor"?15:30}
+function updateCheckoutTotals(){const district=document.getElementById("v2District").value;const method=document.getElementById("v2Payment").value;const subtotal=activeCheckoutItems.reduce((sum,i)=>{const p=productById(i.id);return sum+(p?p.price*i.quantity:0)},0);const charge=deliveryCharge(district);document.getElementById("v2Totals").innerHTML=`<div style="display:flex;justify-content:space-between;margin:5px 0"><span>Products subtotal</span><strong>${money(subtotal)}</strong></div><div style="display:flex;justify-content:space-between;margin:5px 0"><span>Delivery charge ${district.trim()?"("+safe(district)+")":""}</span><strong>${money(charge)}</strong></div><div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:10px;margin-top:10px;font-size:18px"><strong>Total</strong><strong>${money(subtotal+charge)}</strong></div>`;
+ document.getElementById("v2PaymentNote").textContent=method==="online"?"PhonePe / UPI recipient: Arham Ali · 8859058786@ybl. Payment opens in a supported UPI app; order is not marked paid until a verified payment gateway is connected.":"Cash on Delivery selected. Bijnor district delivery: ₹15; other districts: ₹30 (demo rates; confirm courier coverage)."}
+function openCheckout(items){activeCheckoutItems=items.map(i=>({id:i.id,quantity:i.quantity})).filter(i=>productById(i.id));if(!activeCheckoutItems.length){toast("Cart Empty","Add a product before checkout.");return}const summary=document.getElementById("checkoutV2Summary");summary.innerHTML=activeCheckoutItems.map(i=>{const p=productById(i.id);return `<div class="list-card"><img src="${safe(p.image)}" alt=""><div class="list-details"><h3>${safe(p.name)}</h3><p>Quantity: ${i.quantity}</p><div class="list-price">${money(p.price*i.quantity)}</div></div></div>`}).join("");document.getElementById("v2District").value="";document.getElementById("v2Payment").value="cod";updateCheckoutTotals();closeModal("productDetailModal");closeModal("cartModal");document.getElementById("checkoutV2Modal").classList.add("show")}
+function buyNow(id){const p=productById(id);if(p)openCheckout([{id:p.id,quantity:1}])}
+function checkoutCart(){if(!cart.length){toast("Cart Empty","Add a product before checkout.");return}openCheckout(cart)}
+document.getElementById("v2District").addEventListener("input",updateCheckoutTotals);
+document.getElementById("v2Payment").addEventListener("change",updateCheckoutTotals);
+document.getElementById("checkoutV2Form").addEventListener("submit",function(e){
+ e.preventDefault();const method=document.getElementById("v2Payment").value;
+ if(method==="online"){toast("Online payment not connected","Choose COD for this demo. Online payment needs payment gateway setup.");return}
+ const customer={name:document.getElementById("v2Name").value.trim(),phone:document.getElementById("v2Phone").value.trim(),house:document.getElementById("v2House").value.trim(),street:document.getElementById("v2Street").value.trim(),city:document.getElementById("v2City").value.trim(),district:document.getElementById("v2District").value.trim(),state:document.getElementById("v2State").value.trim(),pin:document.getElementById("v2Pin").value.trim()};
+ const items=activeCheckoutItems.map(i=>{const p=productById(i.id);return {id:p.id,name:p.name,price:Number(p.price),quantity:i.quantity,image:p.image,brand:p.brand||""}});
+ const subtotal=items.reduce((sum,i)=>sum+i.price*i.quantity,0),charge=deliveryCharge(customer.district),now=Date.now();
+ const order={id:"DG"+now.toString().slice(-8),items,total:subtotal+charge,subtotal,deliveryCharge:charge,paymentMethod:"Cash on Delivery",customer,status:"Order placed",trackingIndex:0,createdAt:now,cancellableUntil:now+24*60*60*1000,date:new Date(now).toLocaleString(),cancelled:false};
+ orders.unshift(order);const boughtIds=activeCheckoutItems.map(i=>i.id);cart=cart.filter(i=>!boughtIds.includes(i.id));saveState();activeCheckoutItems=[];closeModal("checkoutV2Modal");this.reset();toast("Order placed","Order saved in this browser. Email notification needs backend setup.");openOrders();
+});
+function trackingMarkup(order){const idx=Math.max(0,Math.min(Number(order.trackingIndex)||0,3));return `<div class="tracking">${TRACK_STEPS.map((step,i)=>`<div class="track-step ${i<=idx?"done":""}">${step}</div>`).join("")}</div><p class="note">Tracking shown here is a demo status, not a live courier feed.</p>`}
+function openOrders(){closeMenu();document.getElementById("listTitle").textContent="My Orders";const body=document.getElementById("listBody");if(!orders.length){body.innerHTML='<div class="empty"><div class="empty-icon">📦</div><h3>No orders yet</h3><p>Your orders will appear here in this browser.</p></div>'}else{body.innerHTML=orders.map(o=>{const items=o.items||[{name:o.name,price:o.price,quantity:1,image:o.image}];const cancelled=!!o.cancelled;const canCancel=!cancelled&&o.status!=="Delivered"&&Date.now()<=Number(o.cancellableUntil||0);return `<div class="list-card"><div class="list-details"><h3>Order ${safe(o.id)}</h3><p>${safe(o.date||"")}</p>${items.map(i=>`<p>${safe(i.name)} × ${i.quantity||1} — ${money(i.price*(i.quantity||1))}</p>`).join("")}<div class="list-price">Subtotal: ${money(o.subtotal??o.price??0)} · Delivery: ${money(o.deliveryCharge||0)} · Total: ${money(o.total??o.price??0)}</div><p><strong>Payment:</strong> ${safe(o.paymentMethod||"Not specified")}</p>${cancelled?`<span class="status" style="background:#fff0f1;color:#a0192d">Cancelled</span><p>Reason: ${safe(o.cancelReason||"")}${o.cancelNote?" — "+safe(o.cancelNote):""}</p>`:trackingMarkup(o)}<p><strong>Deliver to:</strong> ${safe(o.customer.name)}, ${safe(o.customer.phone)}, ${safe(o.customer.house||o.customer.address||"")}, ${safe(o.customer.street||"")}, ${safe(o.customer.city)}, District ${safe(o.customer.district||o.customer.city)}, ${safe(o.customer.state)} - ${safe(o.customer.pin)}</p>${canCancel?`<p class="note">Cancellation available for 24 hours after ordering.</p><button class="small-btn danger" onclick="startCancel('${safe(o.id)}')">Cancel Order</button>`:(!cancelled&&o.status!=="Delivered"?'<p class="note">Cancellation window closed after 24 hours.</p>':"")}</div></div>`}).join("")}document.getElementById("listModal").classList.add("show")}
+function startCancel(id){const o=orders.find(x=>x.id===id);if(!o||o.cancelled||Date.now()>Number(o.cancellableUntil||0)){toast("Cancellation unavailable","The 24-hour cancellation window has ended.");openOrders();return}document.getElementById("cancelOrderId").value=id;document.getElementById("cancelForm").reset();document.getElementById("cancelOrderId").value=id;document.getElementById("cancelModal").classList.add("show")}
+document.getElementById("cancelForm").addEventListener("submit",function(e){e.preventDefault();const id=document.getElementById("cancelOrderId").value,o=orders.find(x=>x.id===id);if(!o||o.cancelled||Date.now()>Number(o.cancellableUntil||0)){closeModal("cancelModal");toast("Cancellation unavailable","The 24-hour cancellation window has ended.");openOrders();return}o.cancelled=true;o.status="Cancelled";o.cancelReason=document.getElementById("cancelReason").value;o.cancelNote=document.getElementById("cancelNote").value.trim();o.cancelledAt=Date.now();saveState();closeModal("cancelModal");openOrders();toast("Order cancelled","Cancellation saved in this browser.");});
+/* Keep the owner able to update demo tracking statuses in this browser. */
+function enhancedOpenOwnerPanel(){closeMenu();document.getElementById("ownerTitle").textContent="Owner / Product Manager";document.getElementById("ownerBody").innerHTML=`<p>Sign in to manage products and orders.</p><form id="ownerLoginForm"><div class="field"><label for="ownerCode">Owner password or manager code</label><input id="ownerCode" type="password" required placeholder="Enter access code"></div><button class="place-order" type="submit">Sign In</button></form><p class="note">Demo only: access code is stored in front-end code/browser and is not secure for a public website.</p>`;document.getElementById("ownerModal").classList.add("show");document.getElementById("ownerLoginForm").addEventListener("submit",function(e){e.preventDefault();const code=document.getElementById("ownerCode").value,isOwner=code===OWNER_PASSWORD,manager=managers.find(m=>m.code===code);if(!isOwner&&!manager){toast("Access Denied","Incorrect access code.");return}renderOwnerDashboard(isOwner,manager?manager.name:"Owner")})}
+const oldRenderOwnerDashboard=renderOwnerDashboard;
+function enhancedRenderOwnerDashboard(isOwner,roleName){oldRenderOwnerDashboard(isOwner,roleName);const body=document.getElementById("ownerBody");const section=document.createElement("section");section.style.marginTop="24px";section.innerHTML=`<hr style="border:0;border-top:1px solid var(--border);margin:20px 0"><h3>Manage orders / tracking</h3><p class="note">Choose the real status only after checking the parcel. This demo does not connect to a courier.</p><div id="ownerOrdersList" style="margin-top:12px"></div>`;body.appendChild(section);renderOwnerOrders()}
+window.openOwnerPanel=enhancedOpenOwnerPanel;
+window.renderOwnerDashboard=enhancedRenderOwnerDashboard;
+function renderOwnerOrders(){const el=document.getElementById("ownerOrdersList");if(!el)return;if(!orders.length){el.innerHTML="<p class='note'>No orders in this browser yet.</p>";return}el.innerHTML=orders.map(o=>`<div class="list-card"><div class="list-details"><strong>${safe(o.id)} — ${safe((o.items||[]).map(i=>i.name).join(", ")||o.name||"Order")}</strong><p>${safe(o.customer?.name||"")} · ${money(o.total??o.price??0)}</p><p>Current status: ${safe(o.status||"Order placed")}${o.cancelled?" (cancelled)":""}</p>${!o.cancelled?`<div class="field"><label>Status</label><select onchange="setOrderStatus('${safe(o.id)}',this.value)">${TRACK_STEPS.map((st,i)=>`<option value="${i}" ${Number(o.trackingIndex||0)===i?"selected":""}>${st}</option>`).join("")}</select></div>`:""}</div></div>`).join("")}
+function setOrderStatus(id,index){const o=orders.find(x=>x.id===id);if(!o||o.cancelled)return;o.trackingIndex=Number(index);o.status=TRACK_STEPS[o.trackingIndex];if(o.status==="Delivered")o.deliveredAt=Date.now();saveState();renderOwnerOrders();toast("Tracking updated","Status updated in this browser only. Email alerts need backend setup.")}
+</script>
 
 
 <script>
-
-/* ==========================================================
-   PRODUCT DATABASE
-   ========================================================== */
-
-const products = {
-
-  1:{
-    id:1,
-    name:"Wireless Earbuds",
-    price:499,
-    image:"https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=700&q=85"
-  },
-
-  2:{
-    id:2,
-    name:"Smart Watch",
-    price:799,
-    image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=85"
-  },
-
-  3:{
-    id:3,
-    name:"Beauty Essentials",
-    price:299,
-    image:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=700&q=85"
-  },
-
-  4:{
-    id:4,
-    name:"Home Essentials",
-    price:399,
-    image:"https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=700&q=85"
-  }
-
-};
-
-
-/* ==========================================================
-   LOAD SAVED DATA
-   ========================================================== */
-
-let cart =
-  JSON.parse(localStorage.getItem("dg_cart")) || [];
-
-let wishlist =
-  JSON.parse(localStorage.getItem("dg_wishlist")) || [];
-
-let orders =
-  JSON.parse(localStorage.getItem("dg_orders")) || [];
-
-
-/* ==========================================================
-   MENU
-   ========================================================== */
-
-function openMenu(){
-
-  document
-    .getElementById("sideMenu")
-    .classList.add("show");
-
-  document
-    .getElementById("overlay")
-    .classList.add("show");
-
+/* DG Store enhancement layer. Real email delivery and verified payment require a deployed backend. */
+const DG_PHONEPE_NUMBER = "8859058786";
+const DG_PHONEPE_UPI_ID = "8859058786@ybl";
+let dgCurrentIsOwner = true;
+function dgShowConfirmation(order, paid=false){
+ let el=document.getElementById('dgGreenConfirmation');
+ if(!el){el=document.createElement('div');el.id='dgGreenConfirmation';el.className='modal';el.innerHTML='<div class="modal-box" style="max-width:540px"><div id="dgGreenPage" style="background:#16834a;color:white;padding:36px 24px;text-align:center;border-radius:16px"><div style="font-size:64px;line-height:1">✓</div><h2 style="font-size:28px;margin:14px 0">Order confirmed!</h2><p id="dgConfirmText" style="line-height:1.6"></p><div id="dgConfirmId" style="font-weight:800;margin:14px 0"></div><button class="place-order" style="background:white;color:#16834a" onclick="document.getElementById(\'dgGreenConfirmation\').classList.remove(\'show\');openOrders()">View my orders</button><p style="font-size:12px;margin-top:14px">DG Store · Thank you for shopping with us</p></div></div>';document.body.appendChild(el)}
+ document.getElementById('dgConfirmText').textContent=paid?'Payment has been verified and your order is confirmed.': 'Your order has been recorded with Cash on Delivery. We will contact you about delivery.';
+ document.getElementById('dgConfirmId').textContent='Order ID: '+order.id;
+ el.classList.add('show');
 }
-
-function closeMenu(){
-
-  document
-    .getElementById("sideMenu")
-    .classList.remove("show");
-
-  document
-    .getElementById("overlay")
-    .classList.remove("show");
-
+async function dgSendOwnerEmail(type,payload){
+ try{const r=await fetch('/api/notifications',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type,payload})});if(!r.ok)throw new Error('Backend unavailable');return true;}catch(e){console.warn('DG Store email notification is not configured. Deploy the backend /api/notifications endpoint to send private owner email.',e);return false;}
 }
+// Owner-only delete control. Managers can add products but cannot delete any product.
+const dgOriginalOwnerPanel=window.renderOwnerDashboard;
+window.renderOwnerDashboard=function(isOwner,roleName){dgCurrentIsOwner=!!isOwner;dgOriginalOwnerPanel(isOwner,roleName);};
+window.renderOwnerProductList=function(){const el=document.getElementById('ownerProductList');if(!el)return;if(!products.length){el.innerHTML='<p>No products listed.</p>';return}el.innerHTML=products.map(p=>`<div class="list-card"><img src="${safe(p.image)}" alt=""><div class="list-details"><h3>${safe(p.name)}</h3><div class="list-price">${money(p.price)}</div><p>${safe(p.brand||'')}</p><div class="inline-actions">${dgCurrentIsOwner?`<button class="small-btn danger" onclick="deleteProduct('${safe(p.id)}')">Delete Product (Owner only)</button>`:'<span class="status">Managers cannot delete products</span>'}</div></div></div>`).join('')};
+// Wrap product publishing to notify the owner privately when a manager adds a listing.
+const dgOriginalRenderOwnerDashboard=window.renderOwnerDashboard;
+window.renderOwnerDashboard=function(isOwner,roleName){dgCurrentIsOwner=!!isOwner;dgOriginalRenderOwnerDashboard(isOwner,roleName);const form=document.getElementById('productForm');if(form){form.addEventListener('submit',function(){if(!isOwner){const detail={manager:roleName,productName:document.getElementById('pName')?.value||'',brand:document.getElementById('pBrand')?.value||'',price:document.getElementById('pPrice')?.value||'',time:new Date().toISOString()};dgSendOwnerEmail('manager_product_added',detail).then(ok=>toast(ok?'Owner notified':'Product added in this browser','Email notification '+(ok?'sent to store owner.':'needs backend email setup.')));}},true)}};
+// Capture checkout submission so online payment never creates a fake paid order.
+const dgCheckoutForm=document.getElementById('checkoutV2Form');
+if(dgCheckoutForm)dgCheckoutForm.addEventListener('submit',async function(e){
+ e.preventDefault();e.stopImmediatePropagation();
+ const method=document.getElementById('v2Payment').value;
+ const customer={name:document.getElementById('v2Name').value.trim(),phone:document.getElementById('v2Phone').value.trim(),house:document.getElementById('v2House').value.trim(),street:document.getElementById('v2Street').value.trim(),city:document.getElementById('v2City').value.trim(),district:document.getElementById('v2District').value.trim(),state:document.getElementById('v2State').value.trim(),pin:document.getElementById('v2Pin').value.trim()};
+ if(method==='online'){
+   if(!DG_PHONEPE_UPI_ID){toast('PhonePe setup needed','Add the verified UPI ID first.');return;}
+   const subtotal=activeCheckoutItems.reduce((sum,i)=>{const p=productById(i.id);return sum+(p?p.price*i.quantity:0)},0),charge=deliveryCharge(customer.district),total=subtotal+charge;
+   const orderId='DG'+Date.now().toString().slice(-8);
+   const upi='upi://pay?pa='+encodeURIComponent(DG_PHONEPE_UPI_ID)+'&pn='+encodeURIComponent('Arham Ali')+'&am='+encodeURIComponent(total.toFixed(2))+'&cu=INR&tn='+encodeURIComponent('DG Store order '+orderId);
+   try{window.location.href=upi;}catch(err){toast('Could not open UPI app','Please try again on a phone with a UPI app installed.');}return;
+ }
+ const items=activeCheckoutItems.map(i=>{const p=productById(i.id);return {id:p.id,name:p.name,price:Number(p.price),quantity:i.quantity,image:p.image,brand:p.brand||''}});
+ const subtotal=items.reduce((sum,i)=>sum+i.price*i.quantity,0),charge=deliveryCharge(customer.district),now=Date.now();
+ const order={id:'DG'+now.toString().slice(-8),items,total:subtotal+charge,subtotal,deliveryCharge:charge,paymentMethod:'Cash on Delivery',customer,status:'Order placed',trackingIndex:0,createdAt:now,cancellableUntil:now+24*60*60*1000,date:new Date(now).toLocaleString(),cancelled:false};
+ orders.unshift(order);const boughtIds=activeCheckoutItems.map(i=>i.id);cart=cart.filter(i=>!boughtIds.includes(i.id));saveState();activeCheckoutItems=[];closeModal('checkoutV2Modal');this.reset();dgShowConfirmation(order,false);openOrders();
+ const sent=await dgSendOwnerEmail('new_order',order);if(!sent)toast('Order saved; email not set up','The order is saved in this browser only. Deploy the private email backend to receive customer details.');
+},true);
+</script>
 
 
-/* ==========================================================
-   CART
-   ========================================================== */
+<script>
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(err => console.warn('PWA offline setup unavailable', err))); }
+</script>
 
-function addCart(id){
-
-  const product = products[id];
-
-  const existing =
-    cart.find(item => item.id === id);
-
-  if(existing){
-
-    existing.quantity++;
-
-  }else{
-
-    cart.push({
-      id:id,
-      quantity:1
-    });
-
-  }
-
-  save();
-
-  toast(
-    "Added to Cart",
-    product.name + " was added to your cart."
-  );
-
-}
-
-
-function removeCart(id){
-
-  cart =
-    cart.filter(item => item.id !== id);
-
-  save();
-
-  openCart();
-
-}
-
-
-function changeQuantity(id,amount){
-
-  const item =
-    cart.find(item => item.id === id);
-
-  if(!item) return;
-
-  item.quantity += amount;
-
-  if(item.quantity <= 0){
-
-    cart =
-      cart.filter(item => item.id !== id);
-
-  }
-
-  save();
-
-  openCart();
-
-}
-
-
-/* ==========================================================
-   BUY NOW
-   ========================================================== */
-
-function buyNow(id){
-
-  openCheckout(id);
-
-}
-
-
-/* ==========================================================
-   CHECKOUT
-   ========================================================== */
-
-function openCheckout(id){
-
-  const product = products[id];
-
-  document.getElementById("checkoutProduct").innerHTML = `
-
-    <div class="checkout-product">
-
-      <img
-        src="${product.image}"
-        alt="${product.name}"
-      >
-
-      <div>
-
-        <strong>${product.name}</strong>
-
-        <span>₹${product.price}</span>
-
-      </div>
-
+<button id="dgInstallAppButton" class="install-app-btn" type="button" aria-label="Install DG Store or add to home screen">＋ Install / Add to Home Screen</button>
+<div id="dgInstallHelp" class="install-help" role="dialog" aria-modal="true" aria-labelledby="dgInstallHelpTitle">
+  <div class="install-help-card">
+    <h2 id="dgInstallHelpTitle">Install DG Store</h2>
+    <p id="dgInstallHelpIntro">You can add DG Store to your phone's home screen for app-like access.</p>
+    <ol id="dgInstallHelpSteps">
+      <li>Open the published DG Store website in Chrome.</li>
+      <li>Tap Chrome's three-dot menu (⋮).</li>
+      <li>Choose <strong>Install app</strong> or <strong>Add to Home screen</strong>, then confirm.</li>
+    </ol>
+    <p id="dgInstallHelpNote"><strong>Important:</strong> Install options usually appear only when DG Store is published on an HTTPS website. Opening index.html directly from Downloads cannot install the PWA.</p>
+    <div class="install-help-actions">
+      <button id="dgInstallTryButton" class="install-help-close" type="button" style="display:none">Install now</button>
+      <button id="dgInstallHelpClose" class="install-help-open" type="button">Got it</button>
     </div>
-
-  `;
-
-  document.getElementById("checkoutForm").dataset.productId = id;
-
-  document
-    .getElementById("checkoutModal")
-    .classList.add("show");
-
-}
-
-
-document
-  .getElementById("checkoutForm")
-  .addEventListener("submit",function(event){
-
-    event.preventDefault();
-
-    const id =
-      Number(this.dataset.productId);
-
-    const product =
-      products[id];
-
-    const customer = {
-
-      name:
-        document.getElementById("name").value.trim(),
-
-      phone:
-        document.getElementById("phone").value.trim(),
-
-      address:
-        document.getElementById("address").value.trim(),
-
-      city:
-        document.getElementById("city").value.trim(),
-
-      state:
-        document.getElementById("state").value.trim(),
-
-      pin:
-        document.getElementById("pin").value.trim()
-
-    };
-
-
-    const order = {
-
-      id:
-        "DG" +
-        Date.now().toString().slice(-8),
-
-      productId:id,
-
-      name:product.name,
-
-      price:product.price,
-
-      image:product.image,
-
-      status:"Order Placed",
-
-      customer:customer,
-
-      date:new Date().toLocaleString()
-
-    };
-
-
-    orders.unshift(order);
-
-    cart =
-      cart.filter(item => item.id !== id);
-
-    save();
-
-    closeModal("checkoutModal");
-
-    this.reset();
-
-    toast(
-      "✓ Order Placed",
-      "Your order has been placed successfully."
-    );
-
-});
-
-
-/* ==========================================================
-   WISHLIST
-   ========================================================== */
-
-function toggleWishlist(id){
-
-  const button =
-    document.getElementById("wish"+id);
-
-  const index =
-    wishlist.indexOf(id);
-
-  if(index === -1){
-
-    wishlist.push(id);
-
-    button.classList.add("active");
-
-    button.textContent="♥";
-
-    toast(
-      "Added to Wishlist",
-      products[id].name +
-      " was added to your wishlist."
-    );
-
-  }else{
-
-    wishlist.splice(index,1);
-
-    button.classList.remove("active");
-
-    button.textContent="♡";
-
-    toast(
-      "Removed from Wishlist",
-      products[id].name +
-      " was removed from your wishlist."
-    );
-
-  }
-
-  save();
-
-}
-
-
-/* ==========================================================
-   ORDERS
-   ========================================================== */
-
-function openOrders(){
-
-  closeMenu();
-
-  document.getElementById("listTitle").textContent =
-    "My Orders";
-
-  const body =
-    document.getElementById("listBody");
-
-  if(orders.length === 0){
-
-    body.innerHTML = `
-
-      <div class="empty">
-
-        <div class="empty-icon">📦</div>
-
-        <h3>No orders yet</h3>
-
-        <p>
-          Products you order will appear here.
-        </p>
-
-      </div>
-
-    `;
-
-  }else{
-
-    body.innerHTML =
-      orders.map(order => `
-
-        <div class="list-card">
-
-          <img
-            src="${order.image}"
-            alt="${order.name}"
-          >
-
-          <div class="list-details">
-
-            <h3>${order.name}</h3>
-
-            <div class="list-price">
-              ₹${order.price}
-            </div>
-
-            <p>
-              Order ID: ${order.id}
-            </p>
-
-            <p>
-              ${order.date}
-            </p>
-
-            <span class="status">
-              ✓ ${order.status}
-            </span>
-
-            <p>
-              <strong>Deliver to:</strong><br>
-              ${order.customer.name},
-              ${order.customer.address},
-              ${order.customer.city},
-              ${order.customer.state} -
-              ${order.customer.pin}
-            </p>
-
-          </div>
-
-        </div>
-
-      `).join("");
-
-  }
-
-  document
-    .getElementById("listModal")
-    .classList.add("show");
-
-}
-
-
-/* ==========================================================
-   WISHLIST PAGE
-   ========================================================== */
-
-function openWishlist(){
-
-  closeMenu();
-
-  document.getElementById("listTitle").textContent =
-    "My Wishlist";
-
-  const body =
-    document.getElementById("listBody");
-
-  if(wishlist.length === 0){
-
-    body.innerHTML = `
-
-      <div class="empty">
-
-        <div class="empty-icon">♡</div>
-
-        <h3>Your wishlist is empty</h3>
-
-        <p>
-          Tap the heart on a product to save it here.
-        </p>
-
-      </div>
-
-    `;
-
-  }else{
-
-    body.innerHTML =
-      wishlist.map(id => {
-
-        const product =
-          products[id];
-
-        return `
-
-          <div class="list-card">
-
-            <img
-              src="${product.image}"
-              alt="${product.name}"
-            >
-
-            <div class="list-details">
-
-              <h3>
-                ${product.name}
-              </h3>
-
-              <div class="list-price">
-                ₹${product.price}
-              </div>
-
-              <p>
-                Saved to your wishlist
-              </p>
-
-              <button
-                class="buy-btn"
-                style="margin-top:8px;padding:9px 14px;"
-                onclick="openCheckout(${id});closeModal('listModal')"
-              >
-                Buy Now
-              </button>
-
-            </div>
-
-          </div>
-
-        `;
-
-      }).join("");
-
-  }
-
-  document
-    .getElementById("listModal")
-    .classList.add("show");
-
-}
-
-
-/* ==========================================================
-   CART PAGE
-   ========================================================== */
-
-function openCart(){
-
-  closeMenu();
-
-  const body =
-    document.getElementById("cartBody");
-
-  if(cart.length === 0){
-
-    body.innerHTML = `
-
-      <div class="empty">
-
-        <div class="empty-icon">🛒</div>
-
-        <h3>Your cart is empty</h3>
-
-        <p>
-          Add products to your cart to see them here.
-        </p>
-
-      </div>
-
-    `;
-
-  }else{
-
-    let total = 0;
-
-    cart.forEach(item => {
-
-      total +=
-        products[item.id].price *
-        item.quantity;
-
-    });
-
-
-    body.innerHTML =
-
-      cart.map(item => {
-
-        const product =
-          products[item.id];
-
-        return `
-
-          <div class="list-card">
-
-            <img
-              src="${product.image}"
-              alt="${product.name}"
-            >
-
-            <div class="list-details">
-
-              <h3>
-                ${product.name}
-              </h3>
-
-              <div class="list-price">
-                ₹${product.price}
-              </div>
-
-              <p>
-                Quantity: ${item.quantity}
-              </p>
-
-              <div
-                style="
-                  display:flex;
-                  gap:7px;
-                  margin-top:7px;
-                "
-              >
-
-                <button
-                  onclick="changeQuantity(${item.id},-1)"
-                  style="
-                    border:1px solid #ddd;
-                    background:white;
-                    padding:5px 10px;
-                    border-radius:6px;
-                  "
-                >
-                  −
-                </button>
-
-                <button
-                  onclick="changeQuantity(${item.id},1)"
-                  style="
-                    border:1px solid #ddd;
-                    background:white;
-                    padding:5px 10px;
-                    border-radius:6px;
-                  "
-                >
-                  +
-                </button>
-
-                <button
-                  onclick="removeCart(${item.id})"
-                  style="
-                    border:0;
-                    background:#f5e5e8;
-                    color:#681329;
-                    padding:5px 10px;
-                    border-radius:6px;
-                  "
-                >
-                  Remove
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        `;
-
-      }).join("") +
-
-      `
-
-        <div
-          style="
-            border-top:1px solid #e6d9dc;
-            padding-top:18px;
-            margin-top:15px;
-          "
-        >
-
-          <h3>
-            Cart Total:
-            <span style="color:#681329;">
-              ₹${total}
-            </span>
-          </h3>
-
-          <button
-            class="place-order"
-            style="margin-top:15px;"
-            onclick="checkoutCart()"
-          >
-            Proceed to Checkout
-          </button>
-
-        </div>
-
-      `;
-
-  }
-
-  document
-    .getElementById("cartModal")
-    .classList.add("show");
-
-}
-
-
-/* ==========================================================
-   CHECKOUT CART
-   ========================================================== */
-
-function checkoutCart(){
-
-  if(cart.length === 0){
-
-    toast(
-      "Cart Empty",
-      "Add a product before checkout."
-    );
-
-    return;
-
-  }
-
-  /*
-    For this simple version the checkout
-    uses the first cart item.
-  */
-
-  const first =
-    cart[0];
-
-  closeModal("cartModal");
-
-  openCheckout(first.id);
-
-}
-
-
-/* ==========================================================
-   SEARCH
-   ========================================================== */
-
-function searchProducts(){
-
-  const query =
-    document
-      .getElementById("search")
-      .value
-      .toLowerCase()
-      .trim();
-
-  document
-    .querySelectorAll(".product")
-    .forEach(product => {
-
-      const name =
-        product.dataset.name;
-
-      product.style.display =
-        name.includes(query)
-        ? ""
-        : "none";
-
-    });
-
-}
-
-
-/* ==========================================================
-   MODALS
-   ========================================================== */
-
-function closeModal(id){
-
-  document
-    .getElementById(id)
-    .classList.remove("show");
-
-}
-
-
-/* ==========================================================
-   CONTINUE SHOPPING
-   ========================================================== */
-
-function goShop(){
-
-  closeMenu();
-
-  document
-    .getElementById("shop")
-    .scrollIntoView({
-      behavior:"smooth"
-    });
-
-}
-
-
-/* ==========================================================
-   TOAST
-   ========================================================== */
-
-let toastTimer;
-
-function toast(title,message){
-
-  const box =
-    document.getElementById("toast");
-
-  document
-    .getElementById("toastTitle")
-    .textContent = title;
-
-  document
-    .getElementById("toastMessage")
-    .textContent = message;
-
-  box.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer =
-    setTimeout(() => {
-
-      box.classList.remove("show");
-
-    },3500);
-
-}
-
-
-/* ==========================================================
-   SAVE DATA
-   ========================================================== */
-
-function save(){
-
-  localStorage.setItem(
-    "dg_cart",
-    JSON.stringify(cart)
-  );
-
-  localStorage.setItem(
-    "dg_wishlist",
-    JSON.stringify(wishlist)
-  );
-
-  localStorage.setItem(
-    "dg_orders",
-    JSON.stringify(orders)
-  );
-
-  updateCounts();
-
-}
-
-
-/* ==========================================================
-   COUNTERS
-   ========================================================== */
-
-function updateCounts(){
-
-  document.getElementById("cartCount").textContent =
-    cart.reduce(
-      (sum,item) =>
-        sum + item.quantity,
-      0
-    );
-
-  document.getElementById("wishlistCount").textContent =
-    wishlist.length;
-
-  document.getElementById("orderCount").textContent =
-    orders.length;
-
-}
-
-
-/* ==========================================================
-   RESTORE WISHLIST HEARTS
-   ========================================================== */
-
-function restoreWishlist(){
-
-  wishlist.forEach(id => {
-
-    const button =
-      document.getElementById("wish"+id);
-
-    if(button){
-
-      button.classList.add("active");
-
-      button.textContent="♥";
-
-    }
-
+  </div>
+</div>
+<script>
+(function(){
+  let deferredInstallPrompt=null;
+  const installBtn=document.getElementById('dgInstallAppButton');
+  const help=document.getElementById('dgInstallHelp');
+  const tryBtn=document.getElementById('dgInstallTryButton');
+  const closeBtn=document.getElementById('dgInstallHelpClose');
+  const intro=document.getElementById('dgInstallHelpIntro');
+  const steps=document.getElementById('dgInstallHelpSteps');
+  const note=document.getElementById('dgInstallHelpNote');
+  function showHelp(){help.classList.add('show')}
+  function hideHelp(){help.classList.remove('show')}
+  window.addEventListener('beforeinstallprompt',function(event){
+    event.preventDefault();deferredInstallPrompt=event;tryBtn.style.display='inline-block';
+    intro.textContent='DG Store is ready to install on this device.';
+    note.textContent='Tap Install now and confirm the prompt to add DG Store to your home screen.';
   });
-
-}
-
-
-/* ==========================================================
-   INITIALIZE
-   ========================================================== */
-
-updateCounts();
-
-restoreWishlist();
-
+  window.addEventListener('appinstalled',function(){
+    deferredInstallPrompt=null;tryBtn.style.display='none';
+    intro.textContent='DG Store has been installed successfully.';steps.style.display='none';
+    note.textContent='You can now open DG Store from your home screen.';showHelp();
+  });
+  installBtn.addEventListener('click',async function(){
+    if(deferredInstallPrompt){
+      try{deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;tryBtn.style.display='none';}
+      catch(e){showHelp();}
+      return;
+    }
+    if(location.protocol==='file:' || !window.isSecureContext){
+      intro.textContent='DG Store is currently opened as a local file, so direct installation is unavailable.';
+      note.innerHTML='<strong>Next step:</strong> publish the website on an HTTPS hosting service first. After it is online, open its https:// link in Chrome; then the install option can appear.';
+    } else {
+      intro.textContent='Your browser has not provided a direct install prompt yet. You can still try adding the website from Chrome’s menu.';
+      note.innerHTML='Open Chrome’s three-dot menu (⋮) and look for <strong>Install app</strong> or <strong>Add to Home screen</strong>. If neither appears, the website may need to be published with its PWA files correctly configured.';
+    }
+    showHelp();
+  });
+  tryBtn.addEventListener('click',async function(){if(!deferredInstallPrompt)return;try{deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;tryBtn.style.display='none';}catch(e){intro.textContent='The install prompt could not be opened. Use Chrome’s menu if available.';}});
+  closeBtn.addEventListener('click',hideHelp);
+  help.addEventListener('click',function(e){if(e.target===help)hideHelp()});
+})();
 </script>
 
 </body>
